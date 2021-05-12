@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Agent.cpp" />
+    <ClCompile Include="src\AgentManager.cpp" />
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\CFont.cpp" />
     <ClCompile Include="src\CTexture.cpp" />
@@ -31,6 +33,8 @@
     <ClCompile Include="src\UIShape.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Agent.h" />
+    <ClInclude Include="include\AgentManager.h" />
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\CFont.h" />
     <ClInclude Include="include\CTexture.h" />

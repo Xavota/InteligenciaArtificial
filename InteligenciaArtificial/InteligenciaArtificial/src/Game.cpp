@@ -28,14 +28,10 @@ void Game::run()
 
 void Game::init()
 {
-	m_window = new sf::RenderWindow(sf::VideoMode(500, 500), "SFML Template");
-	m_shape.setFillColor(sf::Color::Red);
-	m_shape.setPosition({100, 100});
-	m_shape.setRadius(25);
-	gl::DeltaTime::AddTimer("test");
-	gl::DeltaTime::SetTimer("test", 2);
-	gl::DeltaTime::AddTimer("test2");
-	gl::DeltaTime::StopTimer("test2");
+	m_window = getGameWindow(1920, 1080);
+
+	m_manager.Init(50, 1910, 1070, sf::Color::Red, eBEHAVIOUR::SEEK);
+	m_manager.Init(50, 1910, 1070, sf::Color::Blue, eBEHAVIOUR::FLEE);
 }
 
 void Game::update()
@@ -65,6 +61,7 @@ void Game::update()
 			gl::DeltaTime::StartTimer("test");
 		}
 	}
+	m_manager.Update();
 }
 
 void Game::processEvents()
@@ -90,11 +87,20 @@ void Game::processEvents()
 void Game::render()
 {
 	m_window->clear();
-	m_window->draw(m_shape);
+	m_manager.Render(m_window);
 	m_window->display();
 }
 
 void Game::destroy()
 {
+	m_manager.Destroy();
 	delete m_window;
+}
+
+sf::RenderWindow* getGameWindow(int x, int y)
+{
+	static sf::RenderWindow* window = nullptr;
+	if (window == nullptr)
+		window = new sf::RenderWindow(sf::VideoMode(x, y), "AI");
+	return window;
 }

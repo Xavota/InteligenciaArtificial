@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <AgentManager.h>
 class Game
 {
 public:
@@ -19,9 +20,9 @@ private:
 
 private:
 	sf::RenderWindow* m_window;
+	sf::Time timePerFrame = sf::seconds(1.f / 60.f);
 
-	sf::CircleShape m_shape;
-
-	sf::Time timePerFrame = sf::seconds(1.f / 60.f);;
+	AgentManager m_manager;
 };
 
+sf::RenderWindow* getGameWindow(int x = 500, int y = 500);
