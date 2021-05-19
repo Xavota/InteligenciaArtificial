@@ -30,8 +30,8 @@ void Game::init()
 {
 	m_window = getGameWindow(1920, 1080);
 
-	m_manager.Init(50, 1910, 1070, sf::Color::Red, eBEHAVIOUR::SEEK);
-	m_manager.Init(50, 1910, 1070, sf::Color::Blue, eBEHAVIOUR::FLEE);
+	m_manager.Init(2, 1910, 1070, sf::Color::Red);
+	//m_manager.Init(50, 1910, 1070, sf::Color::Blue);
 }
 
 void Game::update()
@@ -86,7 +86,27 @@ void Game::processEvents()
 
 void Game::render()
 {
+	static sf::CircleShape m1(5.f);
+	m1.setPosition({500, 500});
+	m1.setFillColor(sf::Color::Green);
+	static sf::CircleShape m2(5.f);
+	m2.setPosition({ 1000, 500 });
+	m2.setFillColor(sf::Color::Green);
+	static sf::CircleShape m3(5.f);
+	m3.setPosition({ 1000, 1000 });
+	m3.setFillColor(sf::Color::Green);
+	static sf::CircleShape m4(5.f);
+	m4.setPosition({ 500, 1000 });
+	m4.setFillColor(sf::Color::Green);
+	static sf::CircleShape m5(5.f);
+	m5.setPosition({ 750, 750 });
+	m5.setFillColor(sf::Color::Yellow);
 	m_window->clear();
+	m_window->draw(m1);
+	m_window->draw(m2);
+	m_window->draw(m3);
+	m_window->draw(m4);
+	m_window->draw(m5);
 	m_manager.Render(m_window);
 	m_window->display();
 }
