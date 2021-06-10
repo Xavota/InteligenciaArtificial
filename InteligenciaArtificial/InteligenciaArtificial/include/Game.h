@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <AgentManager.h>
+#include "AgentManager.h"
+#include "Flag.h"
 class Game
 {
 public:
@@ -19,10 +20,23 @@ private:
 	void destroy();
 
 private:
+	void Restart();
+
+private:
 	sf::RenderWindow* m_window;
 	sf::Time timePerFrame = sf::seconds(1.f / 60.f);
 
 	AgentManager m_manager;
+	Flag m_flag;
+
+	int m_leftPoints = 0;
+	int m_rightPoints = 0;
+
+	sf::Text m_pointsText;
+
+	bool m_Finished = false;
+
+	sf::RectangleShape m_stage;
 };
 
 sf::RenderWindow* getGameWindow(int x = 500, int y = 500);

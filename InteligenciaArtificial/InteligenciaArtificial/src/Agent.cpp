@@ -1,23 +1,40 @@
 #include "Agent.h"
 #include "Globals.h"
 
-Agent::Agent(float x, float y, sf::Color color)
+Agent::Agent(int x, int y, sf::Color color, std::string teamName)
 {
-	Init(x, y, color);
+	Init(x, y, color, teamName);
 }
 
-void Agent::Init(float x, float y, sf::Color color)
+void Agent::Init(int x, int y, sf::Color color, std::string teamName)
 {
+	m_teamName = teamName;
+
 	m_shape.setPosition(x, y);
-	m_shape.setSize({10, 10});
+	m_shape.setSize({50, 50});
 	m_shape.setFillColor(color);
 	m_shape.setOrigin({m_shape.getSize().x / 2, m_shape.getSize().y / 2 });
-
+	m_shape.setTexture(gl::CTexture::GetTexture("Agent"));
+	
+	float angle = rand() % 360;
+	m_orientation = normalizeVector(sf::Vector2f(cos(angle * 3.1415 / 180), sin(angle * 3.1415 / 180)));
 
 	m_orientationVector.setFillColor(sf::Color::Green);
 	m_orientationVector.setOrigin({ 1.5,0 });
 	m_finalForce.setFillColor(sf::Color::Magenta);
 	m_finalForce.setOrigin({ 1.5,0 });
+
+	PP = sf::CircleShape(5);
+	PP.setOrigin({5,5});
+	PA = sf::CircleShape(3);
+	PA.setOrigin({ 3,3 });
+	PA.setFillColor(sf::Color::Blue);
+	PB = sf::CircleShape(2);
+	PB.setOrigin({ 2,2 });
+	PC = sf::CircleShape(2);
+	PC.setOrigin({ 2,2 });
+	PD = sf::CircleShape(2);
+	PD.setOrigin({ 2,2 });
 }
 
 Agent::~Agent()
@@ -63,6 +80,16 @@ void Agent::Update()
 			}
 			m_evadeTargets.clear();
 			break;
+		case eBEHAVIOUR::PATH_FOLLOWING:
+			forceSum += PathFollow();
+			break;
+		case eBEHAVIOUR::COLLITION_AVOIDANCE:
+			forceSum += AvoidObstacles();
+			m_avoidObstacles.clear();
+			break;
+		case eBEHAVIOUR::FLOCKING:
+			forceSum += Flocking();
+			break;
 		}
 	}
 	m_currentBehaviours.clear();
@@ -100,9 +127,14 @@ void Agent::Render(sf::RenderWindow* window)
 	//window->draw(m_orientationVector);
 	for (sf::RectangleShape& s : m_forces)
 	{
-	//	window->draw(s);
+		//window->draw(s);
 	}
 	//window->draw(m_finalForce);
+	//window->draw(PP);
+	//window->draw(PA);
+	//window->draw(PB);
+	//window->draw(PC);
+	//window->draw(PD);
 }
 
 void Agent::Destroy()
@@ -112,64 +144,110 @@ void Agent::Destroy()
 void Agent::AddSeekTarget(sf::Vector2f target)
 {
 	m_seekTargets.push_back(target);
-	for (eBEHAVIOUR b : m_currentBehaviours)
+	if (!HasBehaviour(eBEHAVIOUR::SEEK)) 
 	{
-		if (b == eBEHAVIOUR::SEEK)
-			break;
+		m_currentBehaviours.push_back(eBEHAVIOUR::SEEK);
 	}
-	m_currentBehaviours.push_back(eBEHAVIOUR::SEEK);
 }
 
 void Agent::AddFleeTarget(sf::Vector2f target)
 {
 	m_fleeTargets.push_back(target);
-	for (eBEHAVIOUR b : m_currentBehaviours)
+	if (!HasBehaviour(eBEHAVIOUR::FLEE))
 	{
-		if (b == eBEHAVIOUR::FLEE)
-			break;
+		m_currentBehaviours.push_back(eBEHAVIOUR::FLEE);
 	}
-	m_currentBehaviours.push_back(eBEHAVIOUR::FLEE);
 }
 
 void Agent::AddWanderBehaviour()
 {
-	for (eBEHAVIOUR b : m_currentBehaviours)
+	if (!HasBehaviour(eBEHAVIOUR::WANDER))
 	{
-		if (b == eBEHAVIOUR::WANDER)
-			break;
+		m_currentBehaviours.push_back(eBEHAVIOUR::WANDER);
 	}
-	m_currentBehaviours.push_back(eBEHAVIOUR::WANDER);
 }
 
 void Agent::AddPursuitTarget(sf::Vector2f target, sf::Vector2f velocity)
 {
-	m_pursuitTargets.push_back(EvadePursuitData{target, velocity});
-	for (eBEHAVIOUR b : m_currentBehaviours)
+	m_pursuitTargets.push_back(EvadePursuitData{ target, velocity });
+	if (!HasBehaviour(eBEHAVIOUR::PURSUIT))
 	{
-		if (b == eBEHAVIOUR::PURSUIT)
-			break;
+		m_currentBehaviours.push_back(eBEHAVIOUR::PURSUIT);
 	}
-	m_currentBehaviours.push_back(eBEHAVIOUR::PURSUIT);
 }
 
 void Agent::AddEvadeTarget(sf::Vector2f target, sf::Vector2f velocity)
 {
 	m_evadeTargets.push_back(EvadePursuitData{ target, velocity });
+	if (!HasBehaviour(eBEHAVIOUR::EVADE))
+	{
+		m_currentBehaviours.push_back(eBEHAVIOUR::EVADE);
+	}
+}
+
+void Agent::AddObstacleToAvoid(sf::Vector2f obstacle, float radious)
+{
+	m_avoidObstacles.push_back(Obstacle{ obstacle, radious });
+	if (!HasBehaviour(eBEHAVIOUR::COLLITION_AVOIDANCE))
+	{
+		m_currentBehaviours.push_back(eBEHAVIOUR::COLLITION_AVOIDANCE);
+	}
+}
+
+void Agent::AddFollowPathPoint(sf::Vector2f point)
+{
+	m_followPathPoints.push_back(point);
+}
+
+void Agent::SetFollowPathMode(ePATH_FOLLOWING_TYPE type)
+{
+	m_followPathType = type;
+	if (!HasBehaviour(eBEHAVIOUR::PATH_FOLLOWING))
+	{
+		m_currentBehaviours.push_back(eBEHAVIOUR::PATH_FOLLOWING);
+	}
+}
+
+void Agent::AddFlockingBehaviour()
+{
+	if (!HasBehaviour(eBEHAVIOUR::FLOCKING))
+	{
+		m_currentBehaviours.push_back(eBEHAVIOUR::FLOCKING);
+	}
+}
+
+void Agent::SetFlockingAgentsGroup(vector<Agent*> agents)
+{
+	m_flockingGroup = agents;
+}
+
+bool Agent::IsFlocking()
+{
+	return HasBehaviour(eBEHAVIOUR::FLOCKING);
+}
+
+float Agent::GetFlockingGroupRadious()
+{
+	return m_flockignGroupRadious;
+}
+
+bool Agent::HasBehaviour(eBEHAVIOUR behaviour)
+{
 	for (eBEHAVIOUR b : m_currentBehaviours)
 	{
-		if (b == eBEHAVIOUR::EVADE)
-			break;
+		if (b == behaviour)
+			return true;
 	}
-	m_currentBehaviours.push_back(eBEHAVIOUR::EVADE);
+	return false;
 }
 
 sf::Vector2f Agent::Seek(sf::Vector2f target)
 {
 	sf::Vector2f desiredDirection = target - m_shape.getPosition();
 	sf::Vector2f steering = truncateVector(normalizeVector(desiredDirection) + m_orientation, vectorLength(desiredDirection));
-	m_forces.push_back(sf::RectangleShape());
+	/*m_forces.push_back(sf::RectangleShape());
 	placeLineFromTwoPoints(m_forces[m_forces.size()-1], m_shape.getPosition(), m_shape.getPosition() + steering);
-	m_forces[m_forces.size() - 1].setFillColor(sf::Color(255, 255, 125));
+	m_forces[m_forces.size() - 1].setFillColor(sf::Color(255, 255, 125));/**/
 	return steering;
 }
 
@@ -177,9 +255,9 @@ sf::Vector2f Agent::Flee(sf::Vector2f target)
 {
 	sf::Vector2f desiredDirection = m_shape.getPosition() - target;
 	sf::Vector2f steering = truncateVector(normalizeVector(desiredDirection) + m_orientation, 50000 / vectorLength(desiredDirection));
-	m_forces.push_back(sf::RectangleShape());
+	/*m_forces.push_back(sf::RectangleShape());
 	placeLineFromTwoPoints(m_forces[m_forces.size() - 1], m_shape.getPosition(), m_shape.getPosition() + steering);
-	m_forces[m_forces.size() - 1].setFillColor(sf::Color(255, 255, 255));
+	m_forces[m_forces.size() - 1].setFillColor(sf::Color(255, 255, 255));/**/
 	return steering;
 }
 
@@ -237,7 +315,215 @@ sf::Vector2f Agent::Evade(sf::Vector2f target, sf::Vector2f velocity)
 {
 	float T = vectorLength(m_shape.getPosition() - target) / m_force;
 
-	return Flee(target + velocity * T);
+	return Flee(target + velocity * T);	
+}
+
+sf::Vector2f Agent::AvoidObstacles()
+{
+	Obstacle mostThreateningObstacle = Obstacle{{0,0}, 0};
+	sf::Vector2f ortoVec;
+
+	for (Obstacle& o : m_avoidObstacles)
+	{
+		sf::Vector2f oV;
+		bool intersect = IsSeeingObstacle(o.obstaclePos, o.obstacleRadious, oV);
+
+		if (intersect &&
+		   (mostThreateningObstacle.obstacleRadious == 0 ||
+		   distanceVector(m_shape.getPosition(), o.obstaclePos) < 
+		   distanceVector(m_shape.getPosition(), mostThreateningObstacle.obstaclePos)))
+		{
+			mostThreateningObstacle = o;
+			ortoVec = oV;
+		}
+	}
+
+	if (mostThreateningObstacle.obstacleRadious != 0)
+	{
+		return truncateVector(ortoVec, m_maxAvoidForce / ((distanceVector(m_shape.getPosition(), mostThreateningObstacle.obstaclePos) - mostThreateningObstacle.obstacleRadious)));
+	}
+
+	return sf::Vector2f();
+}
+
+bool Agent::IsSeeingObstacle(sf::Vector2f obsPos, float obsRad, sf::Vector2f& out_ortoVec)
+{
+	sf::Vector2f E = obsPos;
+
+	sf::Vector2f rightVec = rightVector(m_orientation);
+	sf::Vector2f A = m_shape.getPosition() + rightVec * (m_shape.getSize().x / 2 + m_extraRectangleWidth) - m_orientation * (m_shape.getSize().y / 2);
+	sf::Vector2f B = A + m_orientation * m_maxSeeAhead;
+	sf::Vector2f C = B + -rightVec * (m_shape.getSize().x + 2 * m_extraRectangleWidth);
+	sf::Vector2f D = A + -rightVec * (m_shape.getSize().x + 2 * m_extraRectangleWidth);
+	PP.setPosition(m_shape.getPosition());
+	PA.setPosition(A);
+	PB.setPosition(B);
+	PC.setPosition(C);
+	PD.setPosition(D);
+
+	if (distanceVector(A, E) < obsRad)
+	{
+		out_ortoVec = E - A;
+		return true;
+	}
+	else if (distanceVector(B, E) < obsRad)
+	{
+		out_ortoVec = E - B;
+		return true;
+	}
+	else if (distanceVector(C, E) < obsRad)
+	{
+		out_ortoVec = E - C;
+		return true;
+	}
+	else if (distanceVector(D, E) < obsRad)
+	{
+		out_ortoVec = E - D;
+		return true;
+	}
+	else
+	{	
+		sf::Vector2f AB = B - A;
+		sf::Vector2f AE = E - A;
+		float lenghtAF = dot(AB, AE) / vectorLength(AB);
+		if (lenghtAF > 0 && lenghtAF <= m_maxSeeAhead)
+		{
+			sf::Vector2f AF = normalizeVector(AB) * lenghtAF;
+			sf::Vector2f F = A + AF;
+			if (distanceVector(F, E) < obsRad)
+			{
+				out_ortoVec = F - E;
+				return true;
+			}			
+		}
+
+
+		sf::Vector2f CD = D - C;
+		sf::Vector2f CE = E - C;
+		float lenghtCH = dot(CD, CE) / vectorLength(CD);
+		if (lenghtCH > 0 && lenghtCH <= m_maxSeeAhead)
+		{
+			sf::Vector2f CH = normalizeVector(CD) * lenghtCH;
+			sf::Vector2f H = C + CH;
+			if (distanceVector(H, E) < obsRad)
+			{
+				out_ortoVec = H - E;
+				return true;
+			}
+		}
+
+
+		sf::Vector2f BC = C - B;
+		sf::Vector2f BE = E - B;
+		float lenghtBG = dot(BC, BE) / vectorLength(BC);
+		if (lenghtBG > 0 && lenghtBG <= m_shape.getSize().x + m_extraRectangleWidth)
+		{
+			sf::Vector2f BG = normalizeVector(BC) * lenghtBG;
+			sf::Vector2f G = B + BG;
+			if (distanceVector(G, E) < obsRad)
+			{
+				out_ortoVec = G - E;
+				return true;
+			}
+		}
+
+
+		sf::Vector2f DA = A - D;
+		sf::Vector2f DE = E - D;
+		float lenghtDI = dot(DA, DE) / vectorLength(DA);
+		if (lenghtDI > 0 && lenghtDI <= m_shape.getSize().x + m_extraRectangleWidth)
+		{
+			sf::Vector2f DI = normalizeVector(DA) * lenghtDI;
+			sf::Vector2f I = D + DI;
+			if (distanceVector(I, E) < obsRad)
+			{
+				out_ortoVec = I - E;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+sf::Vector2f Agent::PathFollow()
+{
+	size_t pathCount = m_followPathPoints.size();
+	unsigned int regresion = (m_followPathIndex < pathCount ? 0 : (m_followPathIndex - pathCount + 1) * 2);
+	sf::Vector2f pathPoint = m_followPathPoints[m_followPathIndex - regresion];
+	if (vectorLength(m_shape.getPosition() - pathPoint) <= m_followPathMinDistance)
+	{
+		switch (m_followPathType)
+		{
+		case ePATH_FOLLOWING_TYPE::FINITE:
+			if (m_followPathIndex + 1 < pathCount)
+			{
+				m_followPathIndex++;
+			}
+			break;
+		case ePATH_FOLLOWING_TYPE::CYCLIC:
+			m_followPathIndex = (m_followPathIndex + 1) % pathCount;
+			break;
+		case ePATH_FOLLOWING_TYPE::RETURN:
+			m_followPathIndex = (m_followPathIndex + 1) % ((pathCount - 1) * 2);
+			break;
+		}
+	}
+	regresion = (m_followPathIndex < pathCount ? 0 : (m_followPathIndex - pathCount + 1) * 2);
+	return Seek(m_followPathPoints[m_followPathIndex - regresion]);
+
+	//TODO: Agregar que la normal afecte a la fuerza
+}
+
+sf::Vector2f Agent::Flocking()
+{
+	if (m_flockingGroup.size() > 1)
+	{
+		sf::Vector2f flock = normalizeVector(Separation() + Cohesion() + Alignment()) * m_flockingForce;
+		m_flockingGroup.clear();
+		return flock;
+	}
+	else
+	{
+		return sf::Vector2f();
+	}
+}
+
+sf::Vector2f Agent::Separation()
+{
+	sf::Vector2f fleeForce;
+	for (Agent* a : m_flockingGroup)
+	{
+		if (a != this)
+			fleeForce += Flee(a->getPosition());
+	}
+	fleeForce = sf::Vector2f{ fleeForce.x / m_flockingGroup.size(), fleeForce.y / m_flockingGroup.size() };
+	//fleeForce = normalizeVector(fleeForce);
+	return fleeForce;
+}
+
+sf::Vector2f Agent::Cohesion()
+{
+	sf::Vector2f fleeForce;
+	for (Agent* a : m_flockingGroup)
+	{
+		fleeForce += a->getPosition();
+	}
+	fleeForce = sf::Vector2f{ fleeForce.x / m_flockingGroup.size(), fleeForce.y / m_flockingGroup.size() };
+	fleeForce = Seek(fleeForce);
+	//fleeForce = normalizeVector(fleeForce);
+	return fleeForce;
+}
+
+sf::Vector2f Agent::Alignment()
+{
+	sf::Vector2f fleeForce;
+	for (Agent* a : m_flockingGroup)
+	{
+		fleeForce += a->m_orientation * a->m_force;
+	}
+	fleeForce = sf::Vector2f{ fleeForce.x / m_flockingGroup.size(), fleeForce.y / m_flockingGroup.size() };
+	//fleeForce = normalizeVector(fleeForce);
+	return fleeForce;
 }
 
 float Agent::vectorLength(sf::Vector2f vec)
@@ -247,12 +533,32 @@ float Agent::vectorLength(sf::Vector2f vec)
 
 sf::Vector2f Agent::normalizeVector(sf::Vector2f vec)
 {
-	return vec / vectorLength(vec);
+	float len = vectorLength(vec);
+	if (len == 0)
+	{
+		return sf::Vector2f(0,0);
+	}
+	return vec / len;
 }
 
 sf::Vector2f Agent::truncateVector(sf::Vector2f vec, float length)
 {
 	return normalizeVector(vec) * length;
+}
+
+float Agent::distanceVector(sf::Vector2f vec1, sf::Vector2f vec2)
+{
+	return vectorLength(vec2 - vec1);
+}
+
+float Agent::dot(sf::Vector2f vec1, sf::Vector2f vec2)
+{
+	return vec1.x * vec2.x + vec1.y * vec2.y;
+}
+
+sf::Vector2f Agent::rightVector(sf::Vector2f vec)
+{
+	return sf::Vector2f(-vec.y, vec.x);
 }
 
 void Agent::placeLineFromTwoPoints(sf::RectangleShape& line, sf::Vector2f pos1, sf::Vector2f pos2)

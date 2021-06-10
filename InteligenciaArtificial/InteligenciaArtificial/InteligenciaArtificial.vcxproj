@@ -25,6 +25,7 @@
     <ClCompile Include="src\CFont.cpp" />
     <ClCompile Include="src\CTexture.cpp" />
     <ClCompile Include="src\DeltaTime.cpp" />
+    <ClCompile Include="src\Flag.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\MenuManager.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="include\CFont.h" />
     <ClInclude Include="include\CTexture.h" />
     <ClInclude Include="include\DeltaTime.h" />
+    <ClInclude Include="include\Flag.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Globals.h" />
     <ClInclude Include="include\Input.h" />

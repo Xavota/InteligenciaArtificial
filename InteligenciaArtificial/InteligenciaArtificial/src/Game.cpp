@@ -29,39 +29,364 @@ void Game::run()
 void Game::init()
 {
 	m_window = getGameWindow(1920, 1080);
+	gl::CTexture::AddTexture("Flag", "Flag.png");
+	gl::CTexture::AddTexture("Agent", "corredor.png");
+	gl::CTexture::AddTexture("Stage", "stage.png");
 
-	m_manager.Init(2, 1910, 1070, sf::Color::Red);
-	//m_manager.Init(50, 1910, 1070, sf::Color::Blue);
+	m_stage.setSize({1920, 1080});
+	m_stage.setTexture(gl::CTexture::GetTexture("Stage"));
+
+	m_manager.AddAgents(50, sf::IntRect(sf::Vector2i(0,0), sf::Vector2i(955, 1070)), sf::Color::Blue, "left");
+	m_manager.AddAgents(50, sf::IntRect(sf::Vector2i(955, 0), sf::Vector2i(955, 1070)), sf::Color::Red, "right");
+
+	m_flag.Init({ 960, 540 });
+	gl::CFont::AddFont("Points", "Caramel Sweets.ttf");
+	m_pointsText.setFont(*gl::CFont::GetFont("Points"));
+	m_pointsText.setCharacterSize(75);
+
+	m_pointsText.setPosition({ 960, 10 });
+	m_pointsText.setString("0 | 0");
+
+	m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0});
+
+
 }
 
 void Game::update()
 {
-	static bool uno = false;
-	if (gl::DeltaTime::TimerExist("test"))
+	static bool first = true;
+	if (first)
 	{
-		cout << gl::DeltaTime::GetTimer("test") << "\t" << gl::DeltaTime::GetTimer("test2") << endl;
-		if (gl::DeltaTime::GetTimer("test") > 5)
+		gl::DeltaTime::AddTimer("CatchFlag");
+		gl::DeltaTime::SetTimer("CatchFlag", 1.0f);
+		first = false;
+	}
+
+	if (!m_Finished)
+	{
+		int TimerCounter = 0;
+		for (Agent* a : m_manager.GetAgents())
 		{
-			if (!uno)
-			{
-				gl::DeltaTime::RestartTimer("test");
-				uno = true;
-				gl::DeltaTime::StopTimer("test");
-				gl::DeltaTime::StartTimer("test2");
+			sf::Vector2f position = a->getPosition();
+
+			sf::Vector2f limit;
+
+			sf::Vector2f orientation = a->getOrientation();
+			if (orientation.x > 0)
+			{	
+				float X = 1920;
+				float Ax = position.x;
+				float Ay = position.y;
+				float ax = orientation.x;
+				float ay = orientation.y;
+				float lenb = abs(X - Ax);
+
+				float distFact = lenb / abs(ax);
+
+				float Y = Ay + ay * distFact;
+
+				if (Y >= 0 && Y <= 1080)
+				{
+					limit = sf::Vector2f(X, Y);
+					float distanceToWall = Agent::distanceVector(position, limit);
+					//m_manager.AddFleeTarget(limit, { a });
+
+					if (!gl::DeltaTime::TimerExist("WallAvoid" + to_string(TimerCounter)))
+					{
+						gl::DeltaTime::AddTimer("WallAvoid" + to_string(TimerCounter));
+					}
+					
+					if (gl::DeltaTime::GetTimer("WallAvoid" + to_string(TimerCounter)) >= 0.5f && distanceToWall < 300)
+					{
+						sf::Vector2f seekPos = limit + sf::Vector2f(-1, 0) * (10000 / lenb);
+						m_manager.AddSeekTarget(seekPos, { a });
+						gl::DeltaTime::RestartTimer("WallAvoid" + to_string(TimerCounter));
+					}
+
+					if (distanceToWall <= 400)
+					{
+						a->SetIsSeeingWall(true);
+					}
+					else
+					{
+						a->SetIsSeeingWall(false);
+					}
+					continue;
+				}
 			}
-			else
+			else if (orientation.x < 0)
 			{
-				gl::DeltaTime::DeleteTimer("test");
+				float X = 0;
+				float Ax = position.x;
+				float Ay = position.y;
+				float ax = orientation.x;
+				float ay = orientation.y;
+				float lenb = abs(X - Ax);
+
+				float distFact = lenb / abs(ax);
+
+				float Y = Ay + ay * distFact;
+
+				if (Y >= 0 && Y <= 1080)
+				{
+					limit = sf::Vector2f(X, Y);
+					float distanceToWall = Agent::distanceVector(position, limit);
+					//m_manager.AddFleeTarget(limit, { a });
+					if (!gl::DeltaTime::TimerExist("WallAvoid" + to_string(TimerCounter)))
+					{
+						gl::DeltaTime::AddTimer("WallAvoid" + to_string(TimerCounter));
+					}
+
+					if (gl::DeltaTime::GetTimer("WallAvoid" + to_string(TimerCounter)) >= 0.5f && distanceToWall < 300)
+					{
+						sf::Vector2f seekPos = limit + sf::Vector2f(1, 0) * (10000 / lenb);
+						m_manager.AddSeekTarget(seekPos, { a });
+						gl::DeltaTime::RestartTimer("WallAvoid" + to_string(TimerCounter));
+					}
+
+					if (distanceToWall <= 400)
+					{
+						a->SetIsSeeingWall(true);
+					}
+					else
+					{
+						a->SetIsSeeingWall(false);
+					}
+					continue;
+				}
+			}
+
+			if (orientation.y > 0)
+			{
+				float Y = 1080;
+				float Ax = position.x;
+				float Ay = position.y;
+				float ax = orientation.x;
+				float ay = orientation.y;
+				float lenb = abs(Y - Ay);
+
+				float distFact = lenb / abs(ay);
+
+				float X = Ax + ax * distFact;
+
+				if (X >= 0 && X <= 1920)
+				{
+					limit = sf::Vector2f(X, Y);
+
+					float distanceToWall = Agent::distanceVector(position, limit);
+					//m_manager.AddFleeTarget(limit, { a });
+					if (!gl::DeltaTime::TimerExist("WallAvoid" + to_string(TimerCounter)))
+					{
+						gl::DeltaTime::AddTimer("WallAvoid" + to_string(TimerCounter));
+					}
+
+					if (gl::DeltaTime::GetTimer("WallAvoid" + to_string(TimerCounter)) >= 0.5f && distanceToWall < 300)
+					{
+						sf::Vector2f seekPos = limit + sf::Vector2f(0, -1) * (10000 / lenb);
+						m_manager.AddSeekTarget(seekPos, { a });
+						gl::DeltaTime::RestartTimer("WallAvoid" + to_string(TimerCounter));
+					}
+					if (distanceToWall <= 400)
+					{
+						a->SetIsSeeingWall(true);
+					}
+					else
+					{
+						a->SetIsSeeingWall(false);
+					}
+					continue;
+				}
+			}
+			else if (orientation.y < 0)
+			{
+				float Y = 0;
+				float Ax = position.x;
+				float Ay = position.y;
+				float ax = orientation.x;
+				float ay = orientation.y;
+				float lenb = abs(Y - Ay);
+
+				float distFact = lenb / abs(ay);
+
+				float X = Ax + ax * distFact;
+
+				if (X >= 0 && X <= 1920)
+				{
+					limit = sf::Vector2f(X, Y);
+					float distanceToWall = Agent::distanceVector(position, limit);
+					//m_manager.AddFleeTarget(limit, { a });
+					if (!gl::DeltaTime::TimerExist("WallAvoid" + to_string(TimerCounter)))
+					{
+						gl::DeltaTime::AddTimer("WallAvoid" + to_string(TimerCounter));
+					}
+
+					if (gl::DeltaTime::GetTimer("WallAvoid" + to_string(TimerCounter)) >= 0.5f && distanceToWall < 300)
+					{
+						sf::Vector2f seekPos = limit + sf::Vector2f(0, 1) * (10000 / lenb);
+						m_manager.AddSeekTarget(seekPos, { a });
+						gl::DeltaTime::RestartTimer("WallAvoid" + to_string(TimerCounter));
+					}
+
+					if (distanceToWall <= 400)
+					{
+						a->SetIsSeeingWall(true);
+					}
+					else
+					{
+						a->SetIsSeeingWall(false);
+					}
+					continue;
+				}
+			}
+			TimerCounter++;
+		}
+
+		std::vector<Agent*> agents = m_manager.GetAgents();
+		for (Agent* a : agents)
+		{
+			if ((Agent::distanceVector(a->getPosition(), m_flag.GetPosition()) <= m_flag.GetRadious() 
+				&& (m_flag.GetCarrier() == nullptr 
+					|| (a->GetTeam() != m_flag.GetCarrier()->GetTeam() 
+						&& gl::DeltaTime::GetTimer("CatchFlag") >= 1.0f)))
+				&& !a->GetIsSeeingWall())
+			{
+				m_flag.SetCarrier(a);
+				std::cout << "Team: " << a->GetTeam() << "\tTime: " << gl::DeltaTime::GetTimer("CatchFlag") << endl;
+				gl::DeltaTime::RestartTimer("CatchFlag");
 			}
 		}
-		if (gl::DeltaTime::GetTimer("test2") > 3)
+
+		Agent* carrier = m_flag.GetCarrier();
+		if (carrier != nullptr)
 		{
-			gl::DeltaTime::RestartTimer("test2");
-			gl::DeltaTime::StopTimer("test2");
-			gl::DeltaTime::StartTimer("test");
+			std::string team = carrier->GetTeam();
+			if (team == "left")
+			{
+				for (Agent* a : m_manager.GetAgents("right"))
+				{
+					if (!a->GetIsSeeingWall())
+						m_manager.AddPursuitTarget(carrier->getPosition(), carrier->getVelocity(), { a });
+					m_manager.AddEvadeTarget(a->getPosition(), a->getVelocity(), {carrier});
+				}
+				m_manager.AddSeekTarget({100, 540}, { carrier });
+				m_manager.AddWanderBehaviour(m_manager.GetAgents("left"));
+			}
+			else if(team == "right")
+			{
+
+				for (Agent* a : m_manager.GetAgents("left"))
+				{
+					if (!a->GetIsSeeingWall())
+						m_manager.AddPursuitTarget(carrier->getPosition(), carrier->getVelocity(), { a });
+					m_manager.AddEvadeTarget(a->getPosition(), a->getVelocity(), { carrier });
+				}
+				m_manager.AddSeekTarget({ 1820, 540 }, { carrier });
+				m_manager.AddWanderBehaviour(m_manager.GetAgents("right"));
+			}
+		}
+		else
+		{
+			for (Agent*& a : agents)
+			{
+				if (!a->GetIsSeeingWall())
+					m_manager.AddSeekTarget(m_flag.GetPosition(), { a });
+			}
+		}
+
+		for (Agent* a : m_manager.GetAgents("left"))
+		{
+			for (Agent* b : m_manager.GetAgents("right"))
+			{
+				if (Agent::distanceVector(a->getPosition(), b->getPosition()) <= 50 && a != carrier && b != carrier)
+				{	
+					if (!b->GetIsSeeingWall())
+						m_manager.AddFleeTarget(a->getPosition(), { b });
+					if (!a->GetIsSeeingWall())
+						m_manager.AddFleeTarget(b->getPosition(), { a });
+				}
+			}
+		}
+
+		m_manager.Update();
+		m_flag.Update();
+
+		if (carrier != nullptr)
+		{
+			if (m_flag.GetPosition().x < 0 || m_flag.GetPosition().x > 1920
+				|| m_flag.GetPosition().y < 0 || m_flag.GetPosition().y > 1080)
+			{
+				Restart();
+			}
+				
+			if (carrier->GetTeam() == "left" && m_flag.GetPosition().x < 300)
+			{
+				Restart();
+				m_leftPoints++;
+
+				m_pointsText.setString(to_string(m_leftPoints) + " | " + to_string(m_rightPoints));
+
+				m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0 });
+
+				if (m_leftPoints == 5)
+				{
+					m_Finished = true;
+					m_pointsText.setString("Left Wins!");
+					m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0 });
+				}
+			}
+			else if (carrier->GetTeam() == "right" && m_flag.GetPosition().x > 1620)
+			{
+				Restart();
+				m_rightPoints++;
+
+				m_pointsText.setString(to_string(m_leftPoints) + " | " + to_string(m_rightPoints));
+
+				m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0 });
+
+				if (m_rightPoints == 5)
+				{
+					m_Finished = true;
+					m_pointsText.setString("Right Wins!");
+					m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0 });
+				}
+			}
 		}
 	}
-	m_manager.Update();
+	else
+	{
+		if (!gl::DeltaTime::TimerExist("Finished"))
+		{
+			gl::DeltaTime::AddTimer("Finished");
+		}
+		else
+		{
+			gl::DeltaTime::StopTimer("Finished");
+		}
+
+		if (gl::DeltaTime::GetTimer("Finished") > 3.0f)
+		{
+			gl::DeltaTime::RestartTimer("Finished");
+			gl::DeltaTime::StopTimer("Finished");
+			gl::DeltaTime::RestartTimer("CatchFlag");
+			m_rightPoints = 0;
+			m_leftPoints = 0;
+
+			m_pointsText.setString("0 | 0");
+			m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0 });
+
+			Restart();
+
+			m_Finished = false;
+		}
+	}
+
+}
+
+void Game::Restart()
+{
+	m_flag.SetCarrier(nullptr);
+	m_flag.SetPosition({960,540});
+	m_manager.Restart();
 }
 
 void Game::processEvents()
@@ -86,34 +411,18 @@ void Game::processEvents()
 
 void Game::render()
 {
-	static sf::CircleShape m1(5.f);
-	m1.setPosition({500, 500});
-	m1.setFillColor(sf::Color::Green);
-	static sf::CircleShape m2(5.f);
-	m2.setPosition({ 1000, 500 });
-	m2.setFillColor(sf::Color::Green);
-	static sf::CircleShape m3(5.f);
-	m3.setPosition({ 1000, 1000 });
-	m3.setFillColor(sf::Color::Green);
-	static sf::CircleShape m4(5.f);
-	m4.setPosition({ 500, 1000 });
-	m4.setFillColor(sf::Color::Green);
-	static sf::CircleShape m5(5.f);
-	m5.setPosition({ 750, 750 });
-	m5.setFillColor(sf::Color::Yellow);
 	m_window->clear();
-	m_window->draw(m1);
-	m_window->draw(m2);
-	m_window->draw(m3);
-	m_window->draw(m4);
-	m_window->draw(m5);
+	m_window->draw(m_stage);
 	m_manager.Render(m_window);
+	m_flag.Render(m_window);
+	m_window->draw(m_pointsText);
 	m_window->display();
 }
 
 void Game::destroy()
 {
 	m_manager.Destroy();
+	m_flag.Destroy();
 	delete m_window;
 }
 
