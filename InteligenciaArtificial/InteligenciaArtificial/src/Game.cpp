@@ -360,7 +360,7 @@ void Game::update()
 		}
 		else
 		{
-			gl::DeltaTime::StopTimer("Finished");
+			gl::DeltaTime::StartTimer("Finished");
 		}
 
 		if (gl::DeltaTime::GetTimer("Finished") > 3.0f)
