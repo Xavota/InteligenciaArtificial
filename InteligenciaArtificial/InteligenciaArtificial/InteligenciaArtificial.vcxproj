@@ -23,13 +23,22 @@
     <ClCompile Include="src\AgentManager.cpp" />
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\CFont.cpp" />
+    <ClCompile Include="src\CrouchState.cpp" />
     <ClCompile Include="src\CTexture.cpp" />
     <ClCompile Include="src\DeltaTime.cpp" />
     <ClCompile Include="src\Flag.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\IdleState.cpp" />
     <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\KickState.cpp" />
     <ClCompile Include="src\MenuManager.cpp" />
+    <ClCompile Include="src\OnAirState.cpp" />
+    <ClCompile Include="src\OnGroundState.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PunchState.cpp" />
     <ClCompile Include="src\Source.cpp" />
+    <ClCompile Include="src\State.cpp" />
+    <ClCompile Include="src\StateMachine.cpp" />
     <ClCompile Include="src\UI.cpp" />
     <ClCompile Include="src\UIShape.cpp" />
   </ItemGroup>
@@ -38,13 +47,22 @@
     <ClInclude Include="include\AgentManager.h" />
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\CFont.h" />
+    <ClInclude Include="include\CrouchState.h" />
     <ClInclude Include="include\CTexture.h" />
     <ClInclude Include="include\DeltaTime.h" />
     <ClInclude Include="include\Flag.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Globals.h" />
+    <ClInclude Include="include\IdleState.h" />
     <ClInclude Include="include\Input.h" />
+    <ClInclude Include="include\KickState.h" />
     <ClInclude Include="include\MenuManager.h" />
+    <ClInclude Include="include\OnAirState.h" />
+    <ClInclude Include="include\OnGroundState.h" />
+    <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PunchState.h" />
+    <ClInclude Include="include\State.h" />
+    <ClInclude Include="include\StateMachine.h" />
     <ClInclude Include="include\UI.h" />
     <ClInclude Include="include\UIShape.h" />
   </ItemGroup>

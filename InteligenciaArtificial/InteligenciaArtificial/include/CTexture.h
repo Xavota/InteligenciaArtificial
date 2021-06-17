@@ -10,10 +10,11 @@ class CTexture
 {
 public:
 	static void AddTexture(string name, string fileName);
-	static void AddTexture(string name, sf::Texture tex);
-	static void AddTexture(string name, sf::RectangleShape shape);
-	static void AddTexture(string name, sf::CircleShape shape);
 	static void AddTexture(string name, sf::Image image);
+
+	static void AddTexture(string name, string fileName, sf::Color maskColor);
+	static void AddTexture(string name, sf::Image image, sf::Color maskColor);
+
 	static sf::Texture* GetTexture(string name);
 private:
 	static map<string, sf::Texture> m_textures;

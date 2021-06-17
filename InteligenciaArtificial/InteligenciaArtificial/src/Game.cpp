@@ -32,8 +32,9 @@ void Game::init()
 	gl::CTexture::AddTexture("Flag", "Flag.png");
 	gl::CTexture::AddTexture("Agent", "corredor.png");
 	gl::CTexture::AddTexture("Stage", "stage.png");
+	gl::CTexture::AddTexture("Player", "pj_animado.jpg");
 
-	m_stage.setSize({1920, 1080});
+	/*m_stage.setSize({1920, 1080});
 	m_stage.setTexture(gl::CTexture::GetTexture("Stage"));
 
 	m_manager.AddAgents(50, sf::IntRect(sf::Vector2i(0,0), sf::Vector2i(955, 1070)), sf::Color::Blue, "left");
@@ -47,14 +48,14 @@ void Game::init()
 	m_pointsText.setPosition({ 960, 10 });
 	m_pointsText.setString("0 | 0");
 
-	m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0});
+	m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0});*/
 
-
+	m_player.Init({100,100},{52,112},gl::CTexture::GetTexture("Player"), 500, 1000);
 }
 
 void Game::update()
 {
-	static bool first = true;
+	/*static bool first = true;
 	if (first)
 	{
 		gl::DeltaTime::AddTimer("CatchFlag");
@@ -378,15 +379,17 @@ void Game::update()
 
 			m_Finished = false;
 		}
-	}
+	}*/
 
+
+	m_player.Update();
 }
 
 void Game::Restart()
 {
-	m_flag.SetCarrier(nullptr);
+	/*m_flag.SetCarrier(nullptr);
 	m_flag.SetPosition({960,540});
-	m_manager.Restart();
+	m_manager.Restart();*/
 }
 
 void Game::processEvents()
@@ -412,17 +415,18 @@ void Game::processEvents()
 void Game::render()
 {
 	m_window->clear();
-	m_window->draw(m_stage);
-	m_manager.Render(m_window);
-	m_flag.Render(m_window);
-	m_window->draw(m_pointsText);
+	//m_window->draw(m_stage);
+	//m_manager.Render(m_window);
+	//m_flag.Render(m_window);
+	//m_window->draw(m_pointsText);
+	m_player.Render(m_window);
 	m_window->display();
 }
 
 void Game::destroy()
 {
-	m_manager.Destroy();
-	m_flag.Destroy();
+	//m_manager.Destroy();
+	//m_flag.Destroy();
 	delete m_window;
 }
 

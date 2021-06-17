@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include "AgentManager.h"
 #include "Flag.h"
+
+#include "Player.h"
+
 class Game
 {
 public:
@@ -26,7 +29,7 @@ private:
 	sf::RenderWindow* m_window;
 	sf::Time timePerFrame = sf::seconds(1.f / 60.f);
 
-	AgentManager m_manager;
+	/*AgentManager m_manager;
 	Flag m_flag;
 
 	int m_leftPoints = 0;
@@ -36,7 +39,9 @@ private:
 
 	bool m_Finished = false;
 
-	sf::RectangleShape m_stage;
+	sf::RectangleShape m_stage;*/
+
+	Player m_player;
 };
 
 sf::RenderWindow* getGameWindow(int x = 500, int y = 500);

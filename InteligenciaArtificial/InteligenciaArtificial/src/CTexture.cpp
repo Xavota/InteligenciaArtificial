@@ -12,23 +12,6 @@ void CTexture::AddTexture(string name, string fileName)
 	m_textures.insert(make_pair(name, tex));
 }
 
-void CTexture::AddTexture(string name, sf::Texture tex)
-{
-	m_textures.insert(make_pair(name, tex));
-}
-
-void CTexture::AddTexture(string name, sf::RectangleShape shape)
-{
-	sf::Texture tex = *shape.getTexture();
-	m_textures.insert(make_pair(name, tex));
-}
-
-void CTexture::AddTexture(string name, sf::CircleShape shape)
-{
-	sf::Texture tex = *shape.getTexture();
-	m_textures.insert(make_pair(name, tex));
-}
-
 void CTexture::AddTexture(string name, sf::Image image)
 {
 	sf::Texture tex;
@@ -37,6 +20,14 @@ void CTexture::AddTexture(string name, sf::Image image)
 		return;
 	}
 	m_textures.insert(make_pair(name, tex));
+}
+
+void CTexture::AddTexture(string name, string fileName, sf::Color maskColor)
+{
+}
+
+void CTexture::AddTexture(string name, sf::Image image, sf::Color maskColor)
+{
 }
 
 sf::Texture* CTexture::GetTexture(string name)
