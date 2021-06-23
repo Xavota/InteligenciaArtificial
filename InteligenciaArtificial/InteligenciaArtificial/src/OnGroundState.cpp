@@ -24,17 +24,17 @@ void OnGroundState::Enter(Player* a)
 	cout << "On ground" << endl;
 }
 
-State* OnGroundState::Update()
+eSTATE_TYPE OnGroundState::Update()
 {
 	if (gl::Input::GetKey(sf::Keyboard::LShift))
 	{
-		return new CrouchState();
+		return eSTATE_TYPE::CROUCH;
 	}
 	if (gl::Input::GetKeyPressed(sf::Keyboard::Z))
 	{
-		return new PunchState();
+		return eSTATE_TYPE::PUNCH;
 	}
-	return this;
+	return eSTATE_TYPE::STAND;
 }
 
 void OnGroundState::Exit()

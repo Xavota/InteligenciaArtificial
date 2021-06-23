@@ -8,7 +8,7 @@ public:
 	~CrouchState();
 
 	void Enter(Player* a);
-	State* Update();
+	eSTATE_TYPE Update();
 	void Exit();
 
 private:

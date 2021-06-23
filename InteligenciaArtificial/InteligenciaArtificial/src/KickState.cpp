@@ -23,16 +23,17 @@ void KickState::Enter(Player* a)
 	cout << "Kicking" << endl;
 }
 
-State* KickState::Update()
+eSTATE_TYPE KickState::Update()
 {
 	m_timer += gl::DeltaTime::Time();
 	if (m_timer >= 1.0f)
 	{
-		return new CrouchState();
+		return eSTATE_TYPE::CROUCH;
 	}
-	return this;
+	return eSTATE_TYPE::KICK;
 }
 
 void KickState::Exit()
 {
+	m_timer = 0;
 }

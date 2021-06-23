@@ -16,9 +16,9 @@ void OnAirState::Enter(Player* a)
 	m_player = a;
 }
 
-State* OnAirState::Update()
+eSTATE_TYPE OnAirState::Update()
 {
-	return this;
+	return eSTATE_TYPE::NONE;
 }
 
 void OnAirState::Exit()

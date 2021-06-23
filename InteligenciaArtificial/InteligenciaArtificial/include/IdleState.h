@@ -8,7 +8,7 @@ public:
 	~IdleState();
 
 	void Enter(Player* a);
-	State* Update();
+	eSTATE_TYPE Update();
 	void Exit();
 
 private:

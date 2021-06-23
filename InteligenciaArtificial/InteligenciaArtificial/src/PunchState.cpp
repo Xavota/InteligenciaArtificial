@@ -23,16 +23,17 @@ void PunchState::Enter(Player* a)
 	cout << "Punching" << endl;
 }
 
-State* PunchState::Update()
+eSTATE_TYPE PunchState::Update()
 {
 	m_timer += gl::DeltaTime::Time();
 	if (m_timer >= 1.0f)
 	{
-		return new OnGroundState();
+		return eSTATE_TYPE::STAND;
 	}
-	return this;
+	return eSTATE_TYPE::PUNCH;
 }
 
 void PunchState::Exit()
 {
+	m_timer = 0;
 }

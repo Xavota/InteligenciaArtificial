@@ -24,17 +24,17 @@ void CrouchState::Enter(Player* a)
 	cout << "Crouching" << endl;
 }
 
-State* CrouchState::Update()
+eSTATE_TYPE CrouchState::Update()
 {
 	if (!gl::Input::GetKey(sf::Keyboard::LShift))
 	{
-		return new OnGroundState();
+		return eSTATE_TYPE::STAND;
 	}
 	if (gl::Input::GetKeyPressed(sf::Keyboard::Z))
 	{
-		return new KickState();
+		return eSTATE_TYPE::KICK;
 	}
-	return this;
+	return eSTATE_TYPE::CROUCH;
 }
 
 void CrouchState::Exit()

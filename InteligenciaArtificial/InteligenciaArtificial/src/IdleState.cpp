@@ -16,9 +16,9 @@ void IdleState::Enter(Player* a)
 	m_player = a;
 }
 
-State* IdleState::Update()
+eSTATE_TYPE IdleState::Update()
 {
-	return this;
+	return eSTATE_TYPE::NONE;
 }
 
 void IdleState::Exit()
