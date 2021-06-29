@@ -35,6 +35,9 @@
     <ClCompile Include="src\OnAirState.cpp" />
     <ClCompile Include="src\OnGroundState.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PunchA.cpp" />
+    <ClCompile Include="src\PunchB.cpp" />
+    <ClCompile Include="src\PunchC.cpp" />
     <ClCompile Include="src\PunchState.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\State.cpp" />
@@ -60,6 +63,9 @@
     <ClInclude Include="include\OnAirState.h" />
     <ClInclude Include="include\OnGroundState.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PunchA.h" />
+    <ClInclude Include="include\PunchB.h" />
+    <ClInclude Include="include\PunchC.h" />
     <ClInclude Include="include\PunchState.h" />
     <ClInclude Include="include\State.h" />
     <ClInclude Include="include\StateMachine.h" />

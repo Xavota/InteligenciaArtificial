@@ -11,12 +11,11 @@ IdleState::~IdleState()
 {
 }
 
-void IdleState::Enter(Player* a)
+void IdleState::Enter()
 {
-	m_player = a;
 }
 
-eSTATE_TYPE IdleState::Update()
+eSTATE_TYPE IdleState::Update(Player* player)
 {
 	return eSTATE_TYPE::NONE;
 }

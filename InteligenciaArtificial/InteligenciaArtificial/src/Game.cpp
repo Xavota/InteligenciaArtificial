@@ -34,6 +34,7 @@ void Game::init()
 	gl::CTexture::AddTexture("Stage", "stage.png");
 	gl::CTexture::AddTexture("Player", "pj_animado.jpg");
 
+
 	/*m_stage.setSize({1920, 1080});
 	m_stage.setTexture(gl::CTexture::GetTexture("Stage"));
 
@@ -50,7 +51,8 @@ void Game::init()
 
 	m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0});*/
 
-	m_player.Init({100,100},{52,112},gl::CTexture::GetTexture("Player"), 500, 1000);
+	m_stateMachine.Init();
+	m_player.Init({100,100},{52,112},gl::CTexture::GetTexture("Player"), 500, 1000, &m_stateMachine);
 }
 
 void Game::update()

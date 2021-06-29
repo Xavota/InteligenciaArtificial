@@ -18,13 +18,13 @@ OnGroundState::~OnGroundState()
 {
 }
 
-void OnGroundState::Enter(Player* a)
+void OnGroundState::Enter()
 {
-	m_player = a;
+	system("cls");
 	cout << "On ground" << endl;
 }
 
-eSTATE_TYPE OnGroundState::Update()
+eSTATE_TYPE OnGroundState::Update(Player* player)
 {
 	if (gl::Input::GetKey(sf::Keyboard::LShift))
 	{

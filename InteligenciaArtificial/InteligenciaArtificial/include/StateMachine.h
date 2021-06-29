@@ -15,12 +15,12 @@ public:
 	  * @param      player: the player it will be controling
 	  * @bug	    No know Bugs
 	*/
-	void Init(Player* player);
+	void Init();
 	/**
 	  * @brief      Updates the state machine, and changes its internal states
 	  * @bug	    No know Bugs
 	*/
-	void Update();
+	void Update(Player* player);
 	/**
 	  * @brief      Frees the memory
 	  * @bug	    No know Bugs
@@ -28,9 +28,7 @@ public:
 	void Destroy();
 
 private:
-	Player* m_player;
 	State* m_state = nullptr;
 
 	std::vector<State*> m_states;
-	eSTATE_TYPE m_current = eSTATE_TYPE::NONE;
 };

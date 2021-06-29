@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "StateMachine.h"
+#include "PunchState.h"
+
+//enum class ePUNCH_TYPE;
 
 class Player
 {
@@ -17,7 +20,7 @@ public:
 	  * @param      jumpStrength: the jump force.
 	  * @bug	    No know Bugs
 	*/
-	void Init(sf::Vector2f pos, sf::Vector2f size, sf::Texture* tex, float velocity, float jumpStrength);
+	void Init(sf::Vector2f pos, sf::Vector2f size, sf::Texture* tex, float velocity, float jumpStrength, StateMachine* machine);
 	/**
 	  * @brief      Updates the logic of the player
 	  * @bug	    No know Bugs
@@ -35,11 +38,31 @@ public:
 	*/
 	void Destroy();
 
+	eSTATE_TYPE GetState();
+	void SetState(eSTATE_TYPE s);
+	ePUNCH_TYPE GetPunchState();
+	void SetPunchState(ePUNCH_TYPE s);
+
 private:
-	float m_velocity;
-	float m_jumpStrength;
+	/* View */
 	sf::RectangleShape m_shape;
 
-	StateMachine m_machine;
+
+	/* Movement */
+	float m_velocity;
+	float m_jumpStrength;
+
+
+	/* State Machine */
+	friend class PunchState;
+	friend class PunchA;
+	friend class PunchB;
+	friend class PunchC;
+	friend class KickState;
+	StateMachine* m_machine;
+	eSTATE_TYPE m_state = eSTATE_TYPE::STAND;
+	ePUNCH_TYPE m_punchState = ePUNCH_TYPE::PUNCHA;
+
+	float m_punchKickTimer = 0;
 };
 

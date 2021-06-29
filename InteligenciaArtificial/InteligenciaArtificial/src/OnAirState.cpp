@@ -11,12 +11,11 @@ OnAirState::~OnAirState()
 {
 }
 
-void OnAirState::Enter(Player* a)
+void OnAirState::Enter()
 {
-	m_player = a;
 }
 
-eSTATE_TYPE OnAirState::Update()
+eSTATE_TYPE OnAirState::Update(Player* player)
 {
 	return eSTATE_TYPE::NONE;
 }

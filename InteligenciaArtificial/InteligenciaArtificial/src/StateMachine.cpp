@@ -16,10 +16,8 @@ StateMachine::~StateMachine()
 {
 }
 
-void StateMachine::Init(Player* player)
+void StateMachine::Init()
 {
-	m_player = player;	
-
 	for (int i = 0; i < (int)eSTATE_TYPE::COUNT; i++)
 	{
 		switch ((eSTATE_TYPE)i)
@@ -40,19 +38,21 @@ void StateMachine::Init(Player* player)
 	}
 
 	m_state = m_states[0];
-	m_current = (eSTATE_TYPE)0;
 }
 
-void StateMachine::Update()
+void StateMachine::Update(Player* player)
 {
-	eSTATE_TYPE next = m_state->Update();
+	eSTATE_TYPE current = player->GetState();
+	m_state = m_states[int(current)];
 
-	if (next != m_current)
+	eSTATE_TYPE next = m_state->Update(player);
+
+	if (next != current)
 	{
 		m_state->Exit();
 		m_state = m_states[int(next)];
-		m_current = next;
-		m_state->Enter(m_player);
+		player->SetState(next);
+		m_state->Enter();
 	}
 
 

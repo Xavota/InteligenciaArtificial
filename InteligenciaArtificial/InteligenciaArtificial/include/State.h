@@ -22,12 +22,12 @@ public:
 	  * @param      player: the player that will be controlling
 	  * @bug	    No know Bugs
 	*/
-	virtual void Enter(Player* a) = 0;
+	virtual void Enter() = 0;
 	/**
 	  * @brief      Updates the state and handles the state changing. Returns the next state.
 	  * @bug	    No know Bugs
 	*/
-	virtual eSTATE_TYPE Update() = 0;
+	virtual eSTATE_TYPE Update(Player* player) = 0;
 	/**
 	  * @brief      Execute when the states finishes
 	  * @bug	    No know Bugs

@@ -18,13 +18,13 @@ CrouchState::~CrouchState()
 {
 }
 
-void CrouchState::Enter(Player* a)
+void CrouchState::Enter()
 {
-	m_player = a;
+	system("cls");
 	cout << "Crouching" << endl;
 }
 
-eSTATE_TYPE CrouchState::Update()
+eSTATE_TYPE CrouchState::Update(Player* player)
 {
 	if (!gl::Input::GetKey(sf::Keyboard::LShift))
 	{

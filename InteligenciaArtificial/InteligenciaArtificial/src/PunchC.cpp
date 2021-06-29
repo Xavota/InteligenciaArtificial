@@ -1,5 +1,4 @@
-#include "KickState.h"
-#include "CrouchState.h"	
+#include "PunchC.h"
 
 #include "Globals.h"
 #include "Player.h"
@@ -9,31 +8,31 @@
 using std::cout;
 using std::endl;
 
-KickState::KickState()
+PunchC::PunchC()
 {
 }
 
-KickState::~KickState()
+PunchC::~PunchC()
 {
 }
 
-void KickState::Enter()
+void PunchC::Enter()
 {
 	system("cls");
-	cout << "Kicking" << endl;
+	cout << "PunchC" << endl;
 }
 
-eSTATE_TYPE KickState::Update(Player* player)
+ePUNCH_TYPE PunchC::UpdatePunch(Player* player)
 {
 	player->m_punchKickTimer += gl::DeltaTime::Time();
 	if (player->m_punchKickTimer >= 1.0f)
 	{
 		player->m_punchKickTimer = 0;
-		return eSTATE_TYPE::CROUCH;
+		return ePUNCH_TYPE::RETURN;
 	}
-	return eSTATE_TYPE::KICK;
+	return ePUNCH_TYPE::PUNCHC;
 }
 
-void KickState::Exit()
+void PunchC::Exit()
 {
 }
