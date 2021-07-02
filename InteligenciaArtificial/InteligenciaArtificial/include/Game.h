@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "StateMachine.h"
 
+#include "Animation.h"
+
 class Game
 {
 public:
@@ -43,7 +45,9 @@ private:
 	sf::RectangleShape m_stage;*/
 
 	Player m_player;
+
 	StateMachine m_stateMachine;
+	Animation m_animMachine;
 };
 
 sf::RenderWindow* getGameWindow(int x = 500, int y = 500);

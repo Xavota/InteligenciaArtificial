@@ -21,6 +21,14 @@
   <ItemGroup>
     <ClCompile Include="src\Agent.cpp" />
     <ClCompile Include="src\AgentManager.cpp" />
+    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Anim_CrouchState.cpp" />
+    <ClCompile Include="src\Anim_IdleState.cpp" />
+    <ClCompile Include="src\Anim_KickState.cpp" />
+    <ClCompile Include="src\Anim_PunchAState.cpp" />
+    <ClCompile Include="src\Anim_PunchBState.cpp" />
+    <ClCompile Include="src\Anim_PunchCState.cpp" />
+    <ClCompile Include="src\Anim_State.cpp" />
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\CFont.cpp" />
     <ClCompile Include="src\CrouchState.cpp" />
@@ -48,6 +56,14 @@
   <ItemGroup>
     <ClInclude Include="include\Agent.h" />
     <ClInclude Include="include\AgentManager.h" />
+    <ClInclude Include="include\Animation.h" />
+    <ClInclude Include="include\Anim_CrouchState.h" />
+    <ClInclude Include="include\Anim_IdleState.h" />
+    <ClInclude Include="include\Anim_KickState.h" />
+    <ClInclude Include="include\Anim_PunchAState.h" />
+    <ClInclude Include="include\Anim_PunchBState.h" />
+    <ClInclude Include="include\Anim_PunchCState.h" />
+    <ClInclude Include="include\Anim_State.h" />
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\CFont.h" />
     <ClInclude Include="include\CrouchState.h" />

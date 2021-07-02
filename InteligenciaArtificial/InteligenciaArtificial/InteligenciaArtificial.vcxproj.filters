@@ -13,33 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\AnimStates">
+      <UniqueIdentifier>{f03668b4-4250-469f-8dde-171ea2fdedd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\FunctionStates">
+      <UniqueIdentifier>{8a0cac39-7337-4f19-a6a6-790a8ec0edb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Globals">
+      <UniqueIdentifier>{88aea3d4-ccd2-479a-9ed0-13059bf1215f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\AnimStates">
+      <UniqueIdentifier>{35ec8e0e-b0f6-4066-827e-47ca8435d2e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\FunctionStates">
+      <UniqueIdentifier>{91dea0f4-951b-4f28-ad87-9e57d0748f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Globals">
+      <UniqueIdentifier>{3cc786f2-2ed1-47f9-acda-a8b0a1707314}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Button.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CFont.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CTexture.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DeltaTime.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Input.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MenuManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\Source.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UI.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UIShape.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent.cpp">
@@ -54,72 +48,93 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\OnAirState.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OnGroundState.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\Player.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PunchState.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\State.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\StateMachine.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\CrouchState.cpp">
+    <ClCompile Include="src\Animation.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Anim_CrouchState.cpp">
+      <Filter>Archivos de origen\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Anim_IdleState.cpp">
+      <Filter>Archivos de origen\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Anim_KickState.cpp">
+      <Filter>Archivos de origen\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Anim_PunchAState.cpp">
+      <Filter>Archivos de origen\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Anim_PunchBState.cpp">
+      <Filter>Archivos de origen\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Anim_PunchCState.cpp">
+      <Filter>Archivos de origen\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Anim_State.cpp">
+      <Filter>Archivos de origen\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CrouchState.cpp">
+      <Filter>Archivos de origen\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\IdleState.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\KickState.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OnAirState.cpp">
+      <Filter>Archivos de origen\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OnGroundState.cpp">
+      <Filter>Archivos de origen\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\PunchA.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\PunchB.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\PunchC.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PunchState.cpp">
+      <Filter>Archivos de origen\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\State.cpp">
+      <Filter>Archivos de origen\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CFont.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CTexture.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeltaTime.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuManager.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UIShape.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Button.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\CFont.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\CTexture.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DeltaTime.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Game.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Globals.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Input.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MenuManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UI.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\UIShape.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent.h">
@@ -131,41 +146,92 @@
     <ClInclude Include="include\Flag.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\IdleState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\KickState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OnAirState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OnGroundState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Player.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PunchState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\State.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="include\StateMachine.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\CrouchState.h">
+    <ClInclude Include="include\Animation.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\PunchA.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="include\Anim_CrouchState.h">
+      <Filter>Archivos de encabezado\AnimStates</Filter>
     </ClInclude>
-    <ClInclude Include="include\PunchB.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="include\Anim_IdleState.h">
+      <Filter>Archivos de encabezado\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Anim_KickState.h">
+      <Filter>Archivos de encabezado\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Anim_PunchAState.h">
+      <Filter>Archivos de encabezado\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Anim_PunchBState.h">
+      <Filter>Archivos de encabezado\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Anim_PunchCState.h">
+      <Filter>Archivos de encabezado\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Anim_State.h">
+      <Filter>Archivos de encabezado\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\State.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PunchState.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\PunchC.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PunchB.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PunchA.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OnGroundState.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OnAirState.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\KickState.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IdleState.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CrouchState.h">
+      <Filter>Archivos de encabezado\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Button.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CFont.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CTexture.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DeltaTime.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Globals.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MenuManager.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UI.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIShape.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

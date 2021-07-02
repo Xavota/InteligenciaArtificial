@@ -32,7 +32,7 @@ void Game::init()
 	gl::CTexture::AddTexture("Flag", "Flag.png");
 	gl::CTexture::AddTexture("Agent", "corredor.png");
 	gl::CTexture::AddTexture("Stage", "stage.png");
-	gl::CTexture::AddTexture("Player", "pj_animado.jpg");
+	gl::CTexture::AddTexture("Player", "PlayerAnimSet.png", sf::Color(0, 255, 255));
 
 
 	/*m_stage.setSize({1920, 1080});
@@ -52,7 +52,8 @@ void Game::init()
 	m_pointsText.setOrigin({ m_pointsText.getGlobalBounds().width / 2, 0});*/
 
 	m_stateMachine.Init();
-	m_player.Init({100,100},{52,112},gl::CTexture::GetTexture("Player"), 500, 1000, &m_stateMachine);
+	m_animMachine.Init();
+	m_player.Init({100,100},{280,228},gl::CTexture::GetTexture("Player"), 500, 1000, &m_stateMachine, &m_animMachine);
 }
 
 void Game::update()
@@ -429,6 +430,8 @@ void Game::destroy()
 {
 	//m_manager.Destroy();
 	//m_flag.Destroy();
+	m_stateMachine.Destroy();
+	m_animMachine.Destroy();
 	delete m_window;
 }
 

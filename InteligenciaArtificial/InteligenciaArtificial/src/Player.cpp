@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::Init(sf::Vector2f pos, sf::Vector2f size, sf::Texture* tex, float velocity, float jumpStrength, StateMachine* machine)
+void Player::Init(sf::Vector2f pos, sf::Vector2f size, sf::Texture* tex, float velocity, float jumpStrength, StateMachine* machine, Animation* animMachine)
 {
 	m_shape.setPosition(pos);
 	m_shape.setSize(size);
@@ -11,11 +11,13 @@ void Player::Init(sf::Vector2f pos, sf::Vector2f size, sf::Texture* tex, float v
 	m_jumpStrength = jumpStrength;
 
 	m_machine = machine;
+	m_animMachine = animMachine;
 }
 
 void Player::Update()
 {
 	m_machine->Update(this);
+	m_animMachine->Update(this);
 }
 
 void Player::Render(sf::RenderWindow* window)
