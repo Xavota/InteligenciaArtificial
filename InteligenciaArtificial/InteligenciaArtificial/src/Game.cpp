@@ -561,12 +561,14 @@ void Game::RemoveTeammates(std::string teamName, unsigned int count)
 
 void Game::UpdateTeamColor(std::string teamName, sf::Color color)
 {
-	for (Team& t : m_teams)
+	for (int i = 0; i < m_teams.size(); i++)
 	{
-		if (t.m_name == teamName)
+		if (m_teams[i].m_name == teamName)
 		{
-			t.m_color = color;
-			m_manager.UpdateTeamColor(t.m_name, color);
+			m_teams[i].m_color = color;
+			m_manager.UpdateTeamColor(m_teams[i].m_name, color);
+
+			m_pointsTexts[i].setFillColor(color);
 		}
 	}
 }
