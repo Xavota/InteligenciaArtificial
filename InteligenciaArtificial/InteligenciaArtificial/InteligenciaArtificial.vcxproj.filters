@@ -13,23 +13,50 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Archivos de encabezado\AnimStates">
-      <UniqueIdentifier>{f03668b4-4250-469f-8dde-171ea2fdedd3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\FunctionStates">
-      <UniqueIdentifier>{8a0cac39-7337-4f19-a6a6-790a8ec0edb6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de encabezado\Globals">
       <UniqueIdentifier>{88aea3d4-ccd2-479a-9ed0-13059bf1215f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de origen\AnimStates">
-      <UniqueIdentifier>{35ec8e0e-b0f6-4066-827e-47ca8435d2e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\FunctionStates">
-      <UniqueIdentifier>{91dea0f4-951b-4f28-ad87-9e57d0748f14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de origen\Globals">
       <UniqueIdentifier>{3cc786f2-2ed1-47f9-acda-a8b0a1707314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\PlayerStates">
+      <UniqueIdentifier>{4dfb9fca-4229-4b43-b52a-727ba82aefd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\AgentStates">
+      <UniqueIdentifier>{0b3f3cf3-5b11-4896-9d66-e382c6c68905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\PlayerStates\AnimStates">
+      <UniqueIdentifier>{f03668b4-4250-469f-8dde-171ea2fdedd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\PlayerStates\FunctionStates">
+      <UniqueIdentifier>{8a0cac39-7337-4f19-a6a6-790a8ec0edb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\AgentStates\AnimStates">
+      <UniqueIdentifier>{c3126a0d-a99e-4ff3-9324-eb04bf8e69b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\AgentStates\FunctionStates">
+      <UniqueIdentifier>{793e8a50-3341-4d3a-b2ca-3a7cb70179e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\PlayerStates">
+      <UniqueIdentifier>{77bcda02-7a01-4240-9b23-643bf5c8adfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\PlayerStates\AnimStates">
+      <UniqueIdentifier>{35ec8e0e-b0f6-4066-827e-47ca8435d2e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\PlayerStates\FunctionStates">
+      <UniqueIdentifier>{91dea0f4-951b-4f28-ad87-9e57d0748f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\AgentStates">
+      <UniqueIdentifier>{244e7e0f-5ebe-4c09-8f09-6be4f2991d90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\AgentStates\AnimStates">
+      <UniqueIdentifier>{14e47bcc-cab7-4bea-8307-9816ddd16212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\AgentStates\FunctionStates">
+      <UniqueIdentifier>{f41316c4-db08-40a9-ad78-ff6464f6f035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\imgui">
+      <UniqueIdentifier>{b34de6d0-3697-4e19-92a3-2b859c10850b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,9 +64,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AgentManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Flag.cpp">
@@ -51,62 +75,56 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\StateMachine.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\Anim_CrouchState.cpp">
-      <Filter>Archivos de origen\AnimStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Anim_IdleState.cpp">
-      <Filter>Archivos de origen\AnimStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Anim_KickState.cpp">
-      <Filter>Archivos de origen\AnimStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Anim_PunchAState.cpp">
-      <Filter>Archivos de origen\AnimStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Anim_PunchBState.cpp">
-      <Filter>Archivos de origen\AnimStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Anim_PunchCState.cpp">
-      <Filter>Archivos de origen\AnimStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Anim_State.cpp">
-      <Filter>Archivos de origen\AnimStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\CrouchState.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\IdleState.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\KickState.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\OnAirState.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\OnGroundState.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\PunchA.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\PunchB.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\PunchC.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\PunchState.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\State.cpp">
-      <Filter>Archivos de origen\FunctionStates</Filter>
+      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Button.cpp">
       <Filter>Archivos de origen\Globals</Filter>
@@ -132,6 +150,75 @@
     <ClCompile Include="src\UIShape.cpp">
       <Filter>Archivos de origen\Globals</Filter>
     </ClCompile>
+    <ClCompile Include="src\Agent_AnimHasFlagState.cpp">
+      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_AnimLoseState.cpp">
+      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_AnimRunningState.cpp">
+      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_AnimState.cpp">
+      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_AnimWinState.cpp">
+      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_FollowCarrierState.cpp">
+      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_FollowFlagState.cpp">
+      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_HasFlagState.cpp">
+      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_ProtectFlagState.cpp">
+      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_State.cpp">
+      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_WinLoseState.cpp">
+      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_StateMachine.cpp">
+      <Filter>Archivos de origen\AgentStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>Archivos de origen\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AgentManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StateMachine.cpp">
+      <Filter>Archivos de origen\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_AnimMachine.cpp">
+      <Filter>Archivos de origen\AgentStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui_demo.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui_draw.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui-SFML.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui_tables.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master-sfml\imgui_widgets.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
@@ -149,62 +236,56 @@
     <ClInclude Include="include\Player.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\StateMachine.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Animation.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Anim_CrouchState.h">
-      <Filter>Archivos de encabezado\AnimStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Anim_IdleState.h">
-      <Filter>Archivos de encabezado\AnimStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Anim_KickState.h">
-      <Filter>Archivos de encabezado\AnimStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Anim_PunchAState.h">
-      <Filter>Archivos de encabezado\AnimStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Anim_PunchBState.h">
-      <Filter>Archivos de encabezado\AnimStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Anim_PunchCState.h">
-      <Filter>Archivos de encabezado\AnimStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Anim_State.h">
-      <Filter>Archivos de encabezado\AnimStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\State.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\PunchState.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\PunchC.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\PunchB.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\PunchA.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\OnGroundState.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\OnAirState.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\KickState.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\IdleState.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\CrouchState.h">
-      <Filter>Archivos de encabezado\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Button.h">
       <Filter>Archivos de encabezado\Globals</Filter>
@@ -231,6 +312,54 @@
       <Filter>Archivos de encabezado\Globals</Filter>
     </ClInclude>
     <ClInclude Include="include\UIShape.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StateMachine.h">
+      <Filter>Archivos de encabezado\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Animation.h">
+      <Filter>Archivos de encabezado\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_AnimHasFlagState.h">
+      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_AnimLoseState.h">
+      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_AnimRunningState.h">
+      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_AnimState.h">
+      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_AnimWinState.h">
+      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_AnimMachine.h">
+      <Filter>Archivos de encabezado\AgentStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_FollowCarrierState.h">
+      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_FollowFlagState.h">
+      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_HasFlagState.h">
+      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_ProtectFlagState.h">
+      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_State.h">
+      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_WinLoseState.h">
+      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_StateMachine.h">
+      <Filter>Archivos de encabezado\AgentStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera.h">
       <Filter>Archivos de encabezado\Globals</Filter>
     </ClInclude>
   </ItemGroup>

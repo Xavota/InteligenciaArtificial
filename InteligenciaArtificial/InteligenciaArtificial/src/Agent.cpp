@@ -1,20 +1,20 @@
 #include "Agent.h"
 #include "Globals.h"
 
-Agent::Agent(int x, int y, sf::Color color, std::string teamName)
+Agent::Agent(int x, int y, sf::Color color, std::string teamName, sf::Vector2f basePos, Agent_StateMachine* stMachine, Agent_AnimMachine* animMachine)
 {
-	Init(x, y, color, teamName);
+	Init(x, y, color, teamName, basePos, stMachine, animMachine);
 }
 
-void Agent::Init(int x, int y, sf::Color color, std::string teamName)
+void Agent::Init(int x, int y, sf::Color color, std::string teamName, sf::Vector2f basePos, Agent_StateMachine* stMachine, Agent_AnimMachine* animMachine)
 {
 	m_teamName = teamName;
 
 	m_shape.setPosition(x, y);
-	m_shape.setSize({50, 50});
+	m_shape.setSize({49, 68});
 	m_shape.setFillColor(color);
 	m_shape.setOrigin({m_shape.getSize().x / 2, m_shape.getSize().y / 2 });
-	m_shape.setTexture(gl::CTexture::GetTexture("Agent"));
+	//m_shape.setTexture(gl::CTexture::GetTexture("Agent"));
 	
 	float angle = rand() % 360;
 	m_orientation = normalizeVector(sf::Vector2f(cos(angle * 3.1415 / 180), sin(angle * 3.1415 / 180)));
@@ -35,6 +35,11 @@ void Agent::Init(int x, int y, sf::Color color, std::string teamName)
 	PC.setOrigin({ 2,2 });
 	PD = sf::CircleShape(2);
 	PD.setOrigin({ 2,2 });
+
+	m_basePos = basePos;
+
+	m_stateMachine = stMachine;
+	m_animMachine = animMachine;
 }
 
 Agent::~Agent()
@@ -114,6 +119,9 @@ void Agent::Update()
 
 	//directionMark = m_shape.getPosition() + truncateVector(forceSum, 50);
 	//placeLineFromTwoPoints(m_finalForce, m_shape.getPosition(), directionMark);
+
+	m_stateMachine->Update(this);
+	m_animMachine->Update(this);
 }
 
 void Agent::Move(sf::Vector2f velocity)
@@ -577,4 +585,54 @@ void Agent::placeLineFromTwoPoints(sf::RectangleShape& line, sf::Vector2f pos1, 
 	}
 
 	line.setRotation(angle - 90);/**/
+}
+
+eAGENT_STATE_TYPE Agent::GetState()
+{
+	return m_functStateType;
+}
+
+void Agent::SetState(eAGENT_STATE_TYPE state)
+{
+	m_functStateType = state;
+}
+
+sf::Vector2f Agent::GetBasePos()
+{
+	return m_basePos;
+}
+
+void Agent::UpdateBasePos(sf::Vector2f pos)
+{
+	m_basePos = pos;
+}
+
+sf::Color Agent::GetColor()
+{
+	return m_shape.getFillColor();
+}
+
+void Agent::UpdateColor(sf::Color color)
+{
+	m_shape.setFillColor(color);
+}
+
+eAGENT_ANIM_STATE_TYPE Agent::GetAnimState()
+{
+	return m_animStateType;
+}
+
+void Agent::SetAnimState(eAGENT_ANIM_STATE_TYPE state)
+{
+	m_animStateType = state;
+}
+
+void Agent::SetTexture(sf::Texture* tex)
+{
+	m_shape.setTexture(tex);
+}
+
+void Agent::SetTextureRect(sf::IntRect rect)
+{
+	m_shape.setTextureRect(rect);
 }

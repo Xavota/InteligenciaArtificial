@@ -17,12 +17,6 @@ void CFont::AddFont(string name, sf::Font font)
 	m_fonts.insert(make_pair(name, font));
 }
 
-void CFont::AddFont(string name, sf::Text text)
-{
-	sf::Font font = *text.getFont();
-	m_fonts.insert(make_pair(name, font));
-}
-
 sf::Font* CFont::GetFont(string name)
 {
 	if (m_fonts.find(name) != m_fonts.end()) {

@@ -8,15 +8,57 @@ namespace gl {
 class Input
 {
 public:
-	static bool GetKeyPressed(sf::Keyboard::Key);
-	static bool GetKey(sf::Keyboard::Key);
-	static bool GetKeyReleased(sf::Keyboard::Key);
+	/**
+	  * @brief      Returns true if the key was pressed in this update
+	  * @param      keyCode: the key checked
+	  * @bug	    No know Bugs
+	*/
+	static bool GetKeyPressed(sf::Keyboard::Key keyCode);
+	/**
+	  * @brief      Returns true if the key is being pressed in this update
+	  * @param      keyCode: the key checked
+	  * @bug	    No know Bugs
+	*/
+	static bool GetKey(sf::Keyboard::Key keyCode);
+	/**
+	  * @brief      Returns true if the key was pressed on the last update and not in this
+	  * @param      keyCode: the key checked
+	  * @bug	    No know Bugs
+	*/
+	static bool GetKeyReleased(sf::Keyboard::Key keyCode);
+	/**
+	  * @brief      Returns true if the mouse button was pressed in this update (0 = left, 1 = right, 3 = middle)
+	  * @param      keyCode: the key checked
+	  * @bug	    No know Bugs
+	*/
 	static bool GetMouseButtonDown(int button);
+	/**
+	  * @brief      Returns true if the mouse button is being pressed in this update (0 = left, 1 = right, 3 = middle)
+	  * @param      keyCode: the key checked
+	  * @bug	    No know Bugs
+	*/
 	static bool GetMouseButton(int button);
+	/**
+	  * @brief      Returns true if the mouse button was pressed on the last update and not in this (0 = left, 1 = right, 3 = middle)
+	  * @param      keyCode: the key checked
+	  * @bug	    No know Bugs
+	*/
 	static bool GetMouseButtonUp(int button);
+
 private:
-	static void HandleInputs(sf::Keyboard::Key, bool isPressed);
+	/**
+	  * @brief      Check the changes on the keys beign pressed or not
+	  * @param      keyCode: the key checked
+	  * @param      isPressed: if the key is beign pressed or not
+	  * @bug	    No know Bugs
+	*/
+	static void HandleInputs(sf::Keyboard::Key keyCode, bool isPressed);
+	/**
+	  * @brief      Updates the 'wasPressed' property, for the Pressed and Release functions
+	  * @bug	    No know Bugs
+	*/
 	static void Update();
+
 private:
 	friend class Game;
 	class KEY {

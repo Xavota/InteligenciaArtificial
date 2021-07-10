@@ -4,8 +4,10 @@
 #include <iostream>
 
 
-void AgentManager::Init()
+void AgentManager::Init(Agent_StateMachine* stMachine, Agent_AnimMachine* animMachine)
 {
+	m_stateMachine = stMachine;
+	m_animMachine = animMachine;
 }
 
 void AgentManager::Restart()
@@ -14,11 +16,11 @@ void AgentManager::Restart()
 	{
 		for (TeamsInfo& t : m_teams)
 		{
-			if (t.teamName == a.m_teamName)
+			if (t.m_teamName == a.m_teamName)
 			{
-				float posX = rand() % t.aperanceRange.width + t.aperanceRange.left;
-				float posY = rand() % t.aperanceRange.height + t.aperanceRange.top;
-				a.m_agent.Init(posX, posY, t.color, t.teamName);
+				float posX = rand() % t.m_aperanceRange.width + t.m_aperanceRange.left;
+				float posY = rand() % t.m_aperanceRange.height + t.m_aperanceRange.top;
+				a.m_agent.Init(posX, posY, t.m_color, t.m_teamName, t.m_basePos, m_stateMachine, m_animMachine);
 			}
 		}
 	}
@@ -47,15 +49,52 @@ void AgentManager::Destroy()
 	m_agents.clear();
 }
 
-void AgentManager::AddAgents(unsigned int agents, sf::IntRect aperanceRange, sf::Color color, std::string teamName)
+void AgentManager::AddAgents(unsigned int agents, sf::IntRect aperanceRange, sf::Color color, std::string teamName, sf::Vector2f basePos)
 {
+	bool teamExist = false;
+	for (TeamsInfo& t : m_teams)
+	{
+		if (t.m_teamName == teamName)
+		{
+			teamExist = true;
+			break;
+		}
+	}
+
+	if (!teamExist)
+		m_teams.push_back({ teamName, basePos, aperanceRange, color });
+
 	for (int i = 0; i < agents; i++)
 	{
 		float posX = rand() % aperanceRange.width + aperanceRange.left;
 		float posY = rand() % aperanceRange.height + aperanceRange.top;
-		m_agents.push_back(AgentStruct{Agent(posX, posY, color, teamName), teamName, sf::Vector2f{posX, posY}});
+		m_agents.push_back(AgentStruct{Agent(posX, posY, color, teamName, basePos, m_stateMachine, m_animMachine), teamName, sf::Vector2f{posX, posY}});
 	}
-	m_teams.push_back({teamName, aperanceRange, color});
+}
+
+void AgentManager::RemoveAgents(unsigned int agents, std::string teamName)
+{
+	for (int i = 0; i < agents; i++)
+	{
+		for (list<AgentStruct>::iterator it = m_agents.begin(); it != m_agents.end(); ++it)
+		{
+			if (it->m_teamName == teamName)
+			{
+				m_agents.erase(it);
+				break;
+			}
+		}
+	}
+}
+
+void AgentManager::RemoveAgent(unsigned int agentIndex)
+{
+	if (agentIndex < m_agents.size())
+	{
+		list<AgentStruct>::iterator it = m_agents.begin();
+		advance(it, agentIndex);
+		m_agents.erase(it);
+	}
 }
 
 std::vector<Agent*> AgentManager::GetAgents(std::string teamName)
@@ -80,6 +119,55 @@ std::vector<Agent*> AgentManager::GetAgents(std::string teamName)
 	}
 
 	return agents;
+}
+
+void AgentManager::UpdateTeamAperianceRange(std::string teamName, sf::IntRect range)
+{
+	for (TeamsInfo& t : m_teams)
+	{
+		if (t.m_teamName == teamName)
+		{
+			t.m_aperanceRange = range;
+		}
+	}
+}
+
+void AgentManager::UpdateTeamBasePos(std::string teamName, sf::Vector2f pos)
+{
+	for (AgentStruct& a : m_agents)
+	{
+		if (a.m_teamName == teamName)
+		{
+			a.m_agent.UpdateBasePos(pos);
+		}
+	}
+
+	for (TeamsInfo& t : m_teams)
+	{
+		if (t.m_teamName == teamName)
+		{
+			t.m_basePos = pos;
+		}
+	}
+}
+
+void AgentManager::UpdateTeamColor(std::string teamName, sf::Color color)
+{
+	for (AgentStruct& a : m_agents)
+	{
+		if (a.m_teamName == teamName)
+		{
+			a.m_agent.UpdateColor(color);
+		}
+	}
+
+	for (TeamsInfo& t : m_teams)
+	{
+		if (t.m_teamName == teamName)
+		{
+			t.m_color = color;
+		}
+	}
 }
 
 void AgentManager::AddSeekTarget(sf::Vector2f target, std::vector<Agent*> agents)
@@ -154,40 +242,28 @@ void AgentManager::AddFlockingBehaviour(std::vector<Agent*> agents)
 	}
 }
 
-std::string AgentManager::GetTeamName(Agent* agent)
-{
-	for (AgentStruct a : m_agents)
-	{
-		if (&(a.m_agent) == agent)
-		{
-			return a.m_teamName;
-		}
-	}
-	return "";
-}
-
 void AgentManager::SetFlockingBehaviours()
 {
 	vector<AgentStruct*> m_flockingAgents;
-	for (int i = 0; i < m_agents.size(); i++)
+	for (AgentStruct& a : m_agents)
 	{
-		if (m_agents[i].m_agent.IsFlocking())
-			m_flockingAgents.push_back(&m_agents[i]);
+		if (a.m_agent.IsFlocking())
+			m_flockingAgents.push_back(&a);
 	}
-	for (int i = 0; i < m_agents.size(); i++)
+	for (AgentStruct& a : m_agents)
 	{
-		if (m_agents[i].m_agent.IsFlocking())
+		if (a.m_agent.IsFlocking())
 		{
 			vector<Agent*> groupAgents;
 			for (int j = 0; j < m_flockingAgents.size(); j++)
 			{
-				if (Agent::distanceVector(m_agents[i].m_agent.getPosition(), m_flockingAgents[j]->m_agent.getPosition()) <= m_agents[i].m_agent.GetFlockingGroupRadious() 
-				&& m_agents[i].m_teamName == m_flockingAgents[j]->m_teamName)
+				if (Agent::distanceVector(a.m_agent.getPosition(), m_flockingAgents[j]->m_agent.getPosition()) <= a.m_agent.GetFlockingGroupRadious() 
+				&& a.m_teamName == m_flockingAgents[j]->m_teamName)
 				{
 					groupAgents.push_back(&m_flockingAgents[j]->m_agent);
 				}
 			}
-			m_agents[i].m_agent.SetFlockingAgentsGroup(groupAgents);
+			a.m_agent.SetFlockingAgentsGroup(groupAgents);
 		}
 	}
 	m_flockingAgents.clear();
