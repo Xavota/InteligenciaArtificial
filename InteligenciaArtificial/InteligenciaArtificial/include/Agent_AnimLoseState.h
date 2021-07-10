@@ -1,5 +1,9 @@
 #pragma once
 #include "Agent_AnimState.h"
+
+/**
+  * @brief		Animation state. Excecutes when the agent lose the game
+*/
 class Agent_AnimLoseState : public Agent_AnimState
 {
 public:

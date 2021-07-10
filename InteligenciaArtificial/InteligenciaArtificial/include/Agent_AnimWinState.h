@@ -1,6 +1,9 @@
 #pragma once
 #include "Agent_AnimState.h"
 
+/**
+  * @brief		Animation state. Excecutes when the agent wins the game
+*/
 class Agent_AnimWinState : public Agent_AnimState
 {
 public:

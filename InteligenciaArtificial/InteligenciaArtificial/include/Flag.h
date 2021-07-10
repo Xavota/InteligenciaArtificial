@@ -1,6 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 class Agent;
+
+/**
+  * @brief		The flag that will be captured
+*/
 class Flag
 {
 public:

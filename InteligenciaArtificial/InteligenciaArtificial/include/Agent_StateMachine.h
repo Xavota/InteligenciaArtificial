@@ -4,6 +4,9 @@
 
 class Agent;
 
+/**
+  * @brief		The functional state machine. Keeps track of all the states, updates them and change them if it need to.
+*/
 class Agent_StateMachine
 {
 public:

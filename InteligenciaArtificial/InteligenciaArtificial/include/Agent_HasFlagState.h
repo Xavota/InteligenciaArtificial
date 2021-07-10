@@ -1,5 +1,9 @@
 #pragma once
 #include "Agent_State.h"
+
+/**
+  * @brief		Functional state. Excecutes when the agent is carrying the flag to its base
+*/
 class Agent_HasFlagState : public Agent_State
 {
 public:

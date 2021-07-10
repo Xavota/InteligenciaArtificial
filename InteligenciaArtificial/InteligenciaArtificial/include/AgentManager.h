@@ -6,6 +6,9 @@
 
 #include "Agent_StateMachine.h"
 
+/**
+  * @brief      Keeps in line all of the agents. Stores them and updates them.
+*/
 class AgentManager
 {
 public:
@@ -173,6 +176,9 @@ private:
 	void SetFlockingBehaviours();
 
 private:
+	/**
+	  * @brief		Data for easy acces to the agents
+	*/
 	struct AgentStruct
 	{
 		Agent m_agent;
@@ -180,6 +186,9 @@ private:
 		sf::Vector2f m_initPos;
 	};
 
+	/**
+	  * @brief		Data for storing the teams
+	*/
 	struct TeamsInfo
 	{
 		std::string m_teamName;

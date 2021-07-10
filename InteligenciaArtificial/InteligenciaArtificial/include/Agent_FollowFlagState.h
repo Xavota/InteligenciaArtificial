@@ -1,5 +1,9 @@
 #pragma once
 #include "Agent_State.h"
+
+/**
+  * @brief		Functional state. Excecutes when the agent is following the un carried flag
+*/
 class Agent_FollowFlagState : public Agent_State
 {
 public:	

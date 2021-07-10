@@ -6,15 +6,18 @@
 #include "AgentManager.h"
 #include "Flag.h"
 
-#include "Player.h"
-#include "StateMachine.h"
+//#include "Player.h"
+//#include "StateMachine.h"
 
-#include "Animation.h"
+//#include "Animation.h"
 
 #include "Agent_StateMachine.h"
 
 #include "Camera.h"
 
+/**
+  * @brief		Struct for storing the teams
+*/
 struct Team
 {
 	std::string m_name;
@@ -28,6 +31,9 @@ struct Team
 	unsigned int m_teamMembers = 0;
 };
 
+/**
+  * @brief		The main class. Tells everything to work and contains the main loop.
+*/
 class Game
 {
 public:

@@ -2,6 +2,9 @@
 
 class Agent;
 
+/**
+  * @brief		The diferent functional states. Its used to identify in what state is an agent.
+*/
 enum class eAGENT_STATE_TYPE
 {
 	NONE = -1,
@@ -13,6 +16,9 @@ enum class eAGENT_STATE_TYPE
 	COUNT
 };
 
+/**
+  * @brief		Tha father of all the functional states.
+*/
 class Agent_State
 {
 public:

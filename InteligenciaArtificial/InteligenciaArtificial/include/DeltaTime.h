@@ -3,6 +3,10 @@
 #include <vector>
 
 namespace gl {
+	/**
+	  * @brief		Keeps track of the global time and can create, update and destroy timers 
+	  *             accesible in any part of the document
+	*/
 	class DeltaTime
 	{
 	public:
@@ -71,6 +75,9 @@ namespace gl {
 		static void Update(float time);
 
 	private:
+		/**
+		  * @brief		Data for the stores timers
+		*/
 		struct Timer
 		{
 			std::string name;

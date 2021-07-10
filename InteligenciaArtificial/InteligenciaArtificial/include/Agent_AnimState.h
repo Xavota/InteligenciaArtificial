@@ -4,6 +4,9 @@
 
 class Agent;
 
+/**
+  * @brief		The diferent animation states. Its used to identify in what state is an agent.
+*/
 enum class eAGENT_ANIM_STATE_TYPE
 {
 	NONE = -1,
@@ -14,6 +17,9 @@ enum class eAGENT_ANIM_STATE_TYPE
 	COUNT
 };
 
+/**
+  * @brief		The father of all the animation states.
+*/
 class Agent_AnimState
 {
 public:

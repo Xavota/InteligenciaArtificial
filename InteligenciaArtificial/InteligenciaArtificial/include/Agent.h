@@ -6,6 +6,9 @@ using std::vector;
 #include "Agent_StateMachine.h"
 #include "Agent_AnimMachine.h"
 
+/**
+  * @brief		The types of behaviours the agent can do
+*/
 enum class eBEHAVIOUR
 {
 	NONE = -1,
@@ -22,6 +25,9 @@ enum class eBEHAVIOUR
 	COUNT
 };
 
+/**
+  * @brief		The ways that the follow path can be done
+*/
 enum class ePATH_FOLLOWING_TYPE
 {
 	NONE = -1,
@@ -31,6 +37,9 @@ enum class ePATH_FOLLOWING_TYPE
 	COUNT
 };
 
+/**
+  * @brief		The agent, controlled by their own AI with steering behaviours
+*/
 class Agent
 {
 public:
@@ -443,12 +452,18 @@ public:
 	void SetTextureRect(sf::IntRect rect);
 
 private:
+	/**
+	  * @brief		Data for the evade/pursuit behaviours
+	*/
 	struct EvadePursuitData
 	{
 		sf::Vector2f agentPos;
 		sf::Vector2f agentVelocity;
 	};
 
+	/**
+	  * @brief		Data for the obstacles
+	*/
 	struct Obstacle
 	{
 		sf::Vector2f obstaclePos;

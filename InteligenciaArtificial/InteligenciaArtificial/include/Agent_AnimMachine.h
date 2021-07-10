@@ -2,6 +2,9 @@
 #include "Agent_AnimState.h"
 #include <vector>
 
+/**
+  * @brief		The animation state machine. Keeps track of all the states, updates them and change them if it need to.
+*/
 class Agent_AnimMachine
 {
 public:

@@ -1,5 +1,9 @@
 #pragma once
 #include "Agent_State.h"
+
+/**
+  * @brief		Functional state. Excecutes when the agent has won or lost the game
+*/
 class Agent_WinLoseState : public Agent_State
 {
 public:

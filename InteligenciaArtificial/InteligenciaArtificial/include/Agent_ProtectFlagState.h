@@ -1,5 +1,9 @@
 #pragma once
 #include "Agent_State.h"
+
+/**
+  * @brief		Functional state. Excecutes when the agent is protecting one of its teammates who has the flag
+*/
 class Agent_ProtectFlagState : public Agent_State
 {
 public:

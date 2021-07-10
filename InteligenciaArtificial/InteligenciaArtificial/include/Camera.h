@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+/**
+  * @brief		Its in charge of modifying the view of a window
+*/
 class Camera
 {
 public:

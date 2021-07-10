@@ -1,5 +1,9 @@
 #pragma once
 #include "Agent_AnimState.h"
+
+/**
+  * @brief		Animation state. Excecutes when the agent is carrying the flag
+*/
 class Agent_AnimHasFlagState : public Agent_AnimState
 {
 public:

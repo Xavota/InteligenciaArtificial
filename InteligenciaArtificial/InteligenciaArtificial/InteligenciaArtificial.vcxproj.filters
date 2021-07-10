@@ -72,60 +72,6 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Anim_CrouchState.cpp">
-      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Anim_IdleState.cpp">
-      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Anim_KickState.cpp">
-      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Anim_PunchAState.cpp">
-      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Anim_PunchBState.cpp">
-      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Anim_PunchCState.cpp">
-      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Anim_State.cpp">
-      <Filter>Archivos de origen\PlayerStates\AnimStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CrouchState.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IdleState.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\KickState.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OnAirState.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OnGroundState.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PunchA.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PunchB.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PunchC.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PunchState.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\State.cpp">
-      <Filter>Archivos de origen\PlayerStates\FunctionStates</Filter>
-    </ClCompile>
     <ClCompile Include="src\Button.cpp">
       <Filter>Archivos de origen\Globals</Filter>
     </ClCompile>
@@ -186,14 +132,8 @@
     <ClCompile Include="src\Agent_StateMachine.cpp">
       <Filter>Archivos de origen\AgentStates</Filter>
     </ClCompile>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>Archivos de origen\PlayerStates</Filter>
-    </ClCompile>
     <ClCompile Include="src\AgentManager.cpp">
       <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StateMachine.cpp">
-      <Filter>Archivos de origen\PlayerStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_AnimMachine.cpp">
       <Filter>Archivos de origen\AgentStates</Filter>
@@ -233,60 +173,6 @@
     <ClInclude Include="include\Flag.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\Player.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Anim_CrouchState.h">
-      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Anim_IdleState.h">
-      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Anim_KickState.h">
-      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Anim_PunchAState.h">
-      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Anim_PunchBState.h">
-      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Anim_PunchCState.h">
-      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Anim_State.h">
-      <Filter>Archivos de encabezado\PlayerStates\AnimStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\State.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PunchState.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PunchC.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PunchB.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PunchA.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OnGroundState.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OnAirState.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\KickState.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\IdleState.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\CrouchState.h">
-      <Filter>Archivos de encabezado\PlayerStates\FunctionStates</Filter>
-    </ClInclude>
     <ClInclude Include="include\Button.h">
       <Filter>Archivos de encabezado\Globals</Filter>
     </ClInclude>
@@ -313,12 +199,6 @@
     </ClInclude>
     <ClInclude Include="include\UIShape.h">
       <Filter>Archivos de encabezado\Globals</Filter>
-    </ClInclude>
-    <ClInclude Include="include\StateMachine.h">
-      <Filter>Archivos de encabezado\PlayerStates</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Animation.h">
-      <Filter>Archivos de encabezado\PlayerStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_AnimHasFlagState.h">
       <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
