@@ -55,4 +55,5 @@ eAGENT_ANIM_STATE_TYPE Agent_AnimHasFlagState::Update(Agent* agent)
 
 void Agent_AnimHasFlagState::Exit(Agent* agent)
 {
+	Agent_AnimState::Exit(agent);
 }

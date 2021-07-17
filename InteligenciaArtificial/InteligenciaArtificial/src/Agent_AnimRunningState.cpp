@@ -54,4 +54,5 @@ eAGENT_ANIM_STATE_TYPE Agent_AnimRunningState::Update(Agent* agent)
 
 void Agent_AnimRunningState::Exit(Agent* agent)
 {
+	Agent_AnimState::Exit(agent);
 }

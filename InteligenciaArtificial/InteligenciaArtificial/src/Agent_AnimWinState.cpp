@@ -36,4 +36,5 @@ eAGENT_ANIM_STATE_TYPE Agent_AnimWinState::Update(Agent* agent)
 
 void Agent_AnimWinState::Exit(Agent* agent)
 {
+	Agent_AnimState::Exit(agent);
 }

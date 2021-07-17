@@ -6,6 +6,10 @@
 #include "AgentManager.h"
 #include "Flag.h"
 
+#include "UI.h"
+#include "MenuManager.h"
+#include "Start_menu.h"
+
 //#include "Player.h"
 //#include "StateMachine.h"
 
@@ -41,6 +45,10 @@ public:
 
 	Game() = default;
 	~Game() = default;
+
+	static void Start(std::vector<void*> instance);
+	static void Quit(std::vector<void*> instance);
+
 private:
 	
 	/**
@@ -152,6 +160,8 @@ private:
 
 	Camera m_camera;
 
+	bool m_play = false;
+
 
 	/* Game */
 	// Logic
@@ -169,7 +179,6 @@ private:
 
 	sf::Text m_titleText;
 	sf::Text m_winnerText;
-
 
 
 

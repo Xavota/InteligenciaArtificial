@@ -21,10 +21,13 @@ void Game::Run()
 			gl::Input::Update();
 		}
 
-		if (timeSinceLastUpdate > sf::Time::Zero)
-			ImGui::SFML::Update(*m_window, timeSinceLastUpdate);
-		else
-			ImGui::NewFrame();
+		if (m_play)
+		{
+			if (timeSinceLastUpdate > sf::Time::Zero)
+				ImGui::SFML::Update(*m_window, timeSinceLastUpdate);
+			else
+				ImGui::NewFrame();
+		}
 
 		Render();
 	}
@@ -52,10 +55,15 @@ void Game::Init()
 	gl::CTexture::AddTexture("Agent", "Animaciones2.png");
 	gl::CTexture::AddTexture("Stage", "stage.png");
 	gl::CTexture::AddTexture("Player", "PlayerAnimSet.png", sf::Color(0, 255, 255));
+	gl::CTexture::AddTexture("Selector", "ArrowSelector.png");
 
 	// Fonts
 	gl::CFont::AddFont("Points", "Caramel Sweets.ttf");
+	gl::CFont::AddFont("Font", "Cubest-Medium.otf");
 
+
+	gl::UI::Init(m_window);
+	gl::UI::ChangeMenu(new Start_menu());
 
 	/* Actors */
 
@@ -97,73 +105,77 @@ void Game::Init()
 }
 
 void Game::Update()
-{
+{	
 	/* Utility */
 
 	m_camera.Update(m_window);
 
-
-	/* Actors */
-
-	m_manager.Update();
-	m_flag.Update();
+	gl::UI::Update();
 
 
-
-	/* Score */
-
-	Agent* carrier = m_flag.GetCarrier();
-	if (carrier != nullptr && !m_finished)
-	{
-		for (Team& t : m_teams)
-		{
-			if (carrier->GetTeam() == t.m_name && t.m_safeZone.intersects(sf::IntRect(carrier->getPosition().x - 1, carrier->getPosition().y - 1, 2, 2)))
-			{
-				t.m_points++;
-				if (!CheckWin(t))
-				{
-					Restart();
-				}
-			}
-		}
-	}
-	
-
-	/* Visuals */
-
-	for (int i = 0; i < m_teams.size(); i++)
-	{
-		m_pointsTexts[i].setString(to_string(m_teams[i].m_points));
-		m_pointsTexts[i].setOrigin({ m_pointsTexts[i].getGlobalBounds().width / 2, 0 });
-	}
+	if (m_play)
+	{ 
+		/* Actors */
+		m_manager.Update();
+		m_flag.Update();
 
 
-	/* Win */
 
-	if (m_finished)
-	{
-		static float winTime = 0.0f;
-		winTime += gl::DeltaTime::Time();
+		/* Score */
 
-		if (winTime >= 5.0f)
+		Agent* carrier = m_flag.GetCarrier();
+		if (carrier != nullptr && !m_finished)
 		{
 			for (Team& t : m_teams)
 			{
-				t.m_points = 0;
+				if (carrier->GetTeam() == t.m_name && t.m_safeZone.intersects(sf::IntRect(carrier->getPosition().x - 1, carrier->getPosition().y - 1, 2, 2)))
+				{
+					t.m_points++;
+					if (!CheckWin(t))
+					{
+						Restart();
+					}
+				}
 			}
-			m_finished = false;
-			winTime = 0.0f;
+		}
+		
+
+		/* Visuals */
+
+		for (int i = 0; i < m_teams.size(); i++)
+		{
+			m_pointsTexts[i].setString(to_string(m_teams[i].m_points));
+			m_pointsTexts[i].setOrigin({ m_pointsTexts[i].getGlobalBounds().width / 2, 0 });
+		}
+
+
+		/* Win */
+
+		if (m_finished)
+		{
+			static float winTime = 0.0f;
+			winTime += gl::DeltaTime::Time();
+
+			if (winTime >= 5.0f)
+			{
+				for (Team& t : m_teams)
+				{
+					t.m_points = 0;
+				}
+				m_finished = false;
+				winTime = 0.0f;
+				Restart();
+			}
+		}
+
+
+		/* Restart */
+
+		sf::Vector2f flagPos = m_flag.GetPosition();
+		if (flagPos.x <= m_center.x - m_radious || flagPos.x >= m_center.x + m_radious || flagPos.y <= m_center.y - m_radious || flagPos.y >= m_center.y + m_radious)
+		{
 			Restart();
 		}
-	}
-
-
-	/* Restart */
-
-	sf::Vector2f flagPos = m_flag.GetPosition();
-	if (flagPos.x <= m_center.x - m_radious || flagPos.x >= m_center.x + m_radious || flagPos.y <= m_center.y - m_radious || flagPos.y >= m_center.y + m_radious)
-	{
-		Restart();
 	}
 }
 
@@ -225,69 +237,74 @@ void Game::Render()
 {
 	m_window->clear(); // Clean window
 
+	gl::UI::Render(m_window);
 
-	/* Team zones */
 
-	static sf::RectangleShape shape;
-	for (int i = 0; i < m_teams.size(); i++)
+	if (m_play)
 	{
-		shape.setPosition({ (float)m_teams[i].m_spawnZone.left, (float)m_teams[i].m_spawnZone.top });
-		shape.setSize({ (float)m_teams[i].m_spawnZone.width, (float)m_teams[i].m_spawnZone.height });
-		shape.setFillColor(sf::Color(m_teams[i].m_color.r, m_teams[i].m_color.g, m_teams[i].m_color.b, 64));
+		/* Team zones */
 
-		m_window->draw(shape);
-
-
-		shape.setPosition({ (float)m_teams[i].m_safeZone.left, (float)m_teams[i].m_safeZone.top });
-		shape.setSize({ (float)m_teams[i].m_safeZone.width, (float)m_teams[i].m_safeZone.height });
-		shape.setFillColor(sf::Color(m_teams[i].m_color.r, m_teams[i].m_color.g, m_teams[i].m_color.b, 127));
-
-		m_window->draw(shape);
-
-
-		shape.setPosition(m_teams[i].m_seekPoint);
-		shape.setSize({ 10, 10 });
-		shape.setFillColor(sf::Color(m_teams[i].m_color.r, m_teams[i].m_color.g, m_teams[i].m_color.b, 255));
-
-		m_window->draw(shape);
-	}
-
-	shape.setPosition(m_center - sf::Vector2f{(float)m_radious, (float)m_radious});
-	shape.setSize({ m_radious * 2.f, m_radious * 2.f });
-	shape.setFillColor(sf::Color::Transparent);
-	shape.setOutlineColor(sf::Color(255, 255, 255, 255));
-	shape.setOutlineThickness(5);
-
-	m_window->draw(shape);
-
-	shape.setOutlineColor(sf::Color::Transparent);
-
-
-	/* Actors */
-
-	m_manager.Render(m_window);
-	m_flag.Render(m_window);
-
-
-	/* Texts */
-
-	if (!m_finished)
-	{
-		for (sf::Text& text : m_pointsTexts)
+		static sf::RectangleShape shape;
+		for (int i = 0; i < m_teams.size(); i++)
 		{
-			m_window->draw(text);
+			shape.setPosition({ (float)m_teams[i].m_spawnZone.left, (float)m_teams[i].m_spawnZone.top });
+			shape.setSize({ (float)m_teams[i].m_spawnZone.width, (float)m_teams[i].m_spawnZone.height });
+			shape.setFillColor(sf::Color(m_teams[i].m_color.r, m_teams[i].m_color.g, m_teams[i].m_color.b, 64));
+
+			m_window->draw(shape);
+
+
+			shape.setPosition({ (float)m_teams[i].m_safeZone.left, (float)m_teams[i].m_safeZone.top });
+			shape.setSize({ (float)m_teams[i].m_safeZone.width, (float)m_teams[i].m_safeZone.height });
+			shape.setFillColor(sf::Color(m_teams[i].m_color.r, m_teams[i].m_color.g, m_teams[i].m_color.b, 127));
+
+			m_window->draw(shape);
+
+
+			shape.setPosition(m_teams[i].m_seekPoint);
+			shape.setSize({ 10, 10 });
+			shape.setFillColor(sf::Color(m_teams[i].m_color.r, m_teams[i].m_color.g, m_teams[i].m_color.b, 255));
+
+			m_window->draw(shape);
 		}
+
+		shape.setPosition(m_center - sf::Vector2f{ (float)m_radious, (float)m_radious });
+		shape.setSize({ m_radious * 2.f, m_radious * 2.f });
+		shape.setFillColor(sf::Color::Transparent);
+		shape.setOutlineColor(sf::Color(255, 255, 255, 255));
+		shape.setOutlineThickness(5);
+
+		m_window->draw(shape);
+
+		shape.setOutlineColor(sf::Color::Transparent);
+
+
+		/* Actors */
+
+		m_manager.Render(m_window);
+		m_flag.Render(m_window);
+
+
+		/* Texts */
+
+		if (!m_finished)
+		{
+			for (sf::Text& text : m_pointsTexts)
+			{
+				m_window->draw(text);
+			}
+		}
+		else
+		{
+			m_window->draw(m_titleText);
+			m_window->draw(m_winnerText);
+		}
+
+
+		/* ImGui */
+
+		ImguiRender();
 	}
-	else
-	{
-		m_window->draw(m_titleText);
-		m_window->draw(m_winnerText);
-	}
-
-
-	/* ImGui */
-
-	ImguiRender();
 
 
 	m_window->display(); // Swap chain
@@ -600,6 +617,19 @@ void Game::UpdateTeamsZones()
 		m_manager.UpdateTeamAperianceRange(m_teams[i].m_name, m_teams[i].m_spawnZone);
 		m_manager.UpdateTeamBasePos(m_teams[i].m_name, m_teams[i].m_seekPoint);
 	}
+}
+
+void Game::Start(std::vector<void*> instance)
+{
+	Game* g = (Game*)instance[0];
+	g->m_play = true;
+	gl::UI::ChangeMenu(nullptr);
+}
+
+void Game::Quit(std::vector<void*> instance)
+{
+	Game* g = (Game*)instance[0];
+	g->m_window->close();
 }
 
 sf::RenderWindow* GetGameWindow(int x, int y)

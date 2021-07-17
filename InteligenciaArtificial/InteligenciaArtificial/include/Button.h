@@ -64,6 +64,7 @@ public:
 	void ConectLeft(Button* conection);
 	void ConectDown(Button* conection);
 	void ConectRight(Button* conection);
+	void SetIsSelected(bool selected) { m_isSelected = selected; }
 	void Render(sf::RenderWindow* window);
 	void Destroy();
 private:
@@ -75,7 +76,7 @@ private:
 	void AlignSelector(SelectorAligment selectorAlign, float selectorDistance);
 private:
 	friend class UI;
-	friend class GameOver_menu;
+	friend class Start_menu;
 	friend class MenuManager;
 
 	UIShape m_buttonShape;

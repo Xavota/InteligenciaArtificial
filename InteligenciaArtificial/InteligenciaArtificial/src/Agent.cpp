@@ -49,7 +49,7 @@ Agent::~Agent()
 void Agent::Update()
 {
 	m_forces.clear();
-	sf::Vector2f forceSum = {0,-1};
+	sf::Vector2f forceSum = {0, float(m_currentBehaviours.size() > 0 ? 0 : -1)};
 
 	for (eBEHAVIOUR b : m_currentBehaviours)
 	{
