@@ -64,6 +64,7 @@ namespace gl {
 	
 	private:
 		friend class Game;
+		friend class Game_FP;
 		/**
 		  * @brief		The data needed to keep track of the keboard keys inputs
 		*/

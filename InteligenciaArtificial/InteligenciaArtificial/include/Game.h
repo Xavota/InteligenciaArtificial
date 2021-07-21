@@ -36,7 +36,11 @@ struct Team
 };
 
 /**
-  * @brief		The main class. Tells everything to work and contains the main loop.
+  * @brief		The main class. Tells everything to work and contains the main loop. UML:
+  * @startuml
+  * object hola
+  * hola : saludo = "Si"
+  * @enduml
 */
 class Game
 {

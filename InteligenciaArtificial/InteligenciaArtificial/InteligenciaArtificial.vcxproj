@@ -47,8 +47,12 @@
     <ClCompile Include="src\DeltaTime.cpp" />
     <ClCompile Include="src\Flag.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Game_FP.cpp" />
+    <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\MenuManager.cpp" />
+    <ClCompile Include="src\MouseInfo.cpp" />
+    <ClCompile Include="src\Node.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\Start_menu.cpp" />
     <ClCompile Include="src\UI.cpp" />
@@ -77,9 +81,13 @@
     <ClInclude Include="include\DeltaTime.h" />
     <ClInclude Include="include\Flag.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\Game_FP.h" />
     <ClInclude Include="include\Globals.h" />
+    <ClInclude Include="include\Grid.h" />
     <ClInclude Include="include\Input.h" />
     <ClInclude Include="include\MenuManager.h" />
+    <ClInclude Include="include\MouseInfo.h" />
+    <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\Start_menu.h" />
     <ClInclude Include="include\UI.h" />
     <ClInclude Include="include\UIShape.h" />

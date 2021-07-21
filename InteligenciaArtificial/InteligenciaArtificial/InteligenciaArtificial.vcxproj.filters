@@ -19,57 +19,60 @@
     <Filter Include="Archivos de origen\Globals">
       <UniqueIdentifier>{3cc786f2-2ed1-47f9-acda-a8b0a1707314}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de encabezado\PlayerStates">
-      <UniqueIdentifier>{4dfb9fca-4229-4b43-b52a-727ba82aefd3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\AgentStates">
-      <UniqueIdentifier>{0b3f3cf3-5b11-4896-9d66-e382c6c68905}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\PlayerStates\AnimStates">
-      <UniqueIdentifier>{f03668b4-4250-469f-8dde-171ea2fdedd3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\PlayerStates\FunctionStates">
-      <UniqueIdentifier>{8a0cac39-7337-4f19-a6a6-790a8ec0edb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\AgentStates\AnimStates">
-      <UniqueIdentifier>{c3126a0d-a99e-4ff3-9324-eb04bf8e69b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\AgentStates\FunctionStates">
-      <UniqueIdentifier>{793e8a50-3341-4d3a-b2ca-3a7cb70179e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\PlayerStates">
-      <UniqueIdentifier>{77bcda02-7a01-4240-9b23-643bf5c8adfc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\PlayerStates\AnimStates">
-      <UniqueIdentifier>{35ec8e0e-b0f6-4066-827e-47ca8435d2e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\PlayerStates\FunctionStates">
-      <UniqueIdentifier>{91dea0f4-951b-4f28-ad87-9e57d0748f14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\AgentStates">
-      <UniqueIdentifier>{244e7e0f-5ebe-4c09-8f09-6be4f2991d90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\AgentStates\AnimStates">
-      <UniqueIdentifier>{14e47bcc-cab7-4bea-8307-9816ddd16212}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\AgentStates\FunctionStates">
-      <UniqueIdentifier>{f41316c4-db08-40a9-ad78-ff6464f6f035}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de origen\imgui">
       <UniqueIdentifier>{b34de6d0-3697-4e19-92a3-2b859c10850b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Capture the flag">
+      <UniqueIdentifier>{4ca2e6bc-2aa1-4944-b681-a204ed6914f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Capture the flag\AgentStates">
+      <UniqueIdentifier>{0b3f3cf3-5b11-4896-9d66-e382c6c68905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Capture the flag\AgentStates\AnimStates">
+      <UniqueIdentifier>{c3126a0d-a99e-4ff3-9324-eb04bf8e69b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Capture the flag\AgentStates\FunctionStates">
+      <UniqueIdentifier>{793e8a50-3341-4d3a-b2ca-3a7cb70179e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Capture the flag\PlayerStates">
+      <UniqueIdentifier>{4dfb9fca-4229-4b43-b52a-727ba82aefd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Capture the flag\PlayerStates\AnimStates">
+      <UniqueIdentifier>{f03668b4-4250-469f-8dde-171ea2fdedd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Capture the flag\PlayerStates\FunctionStates">
+      <UniqueIdentifier>{8a0cac39-7337-4f19-a6a6-790a8ec0edb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Capture the flag">
+      <UniqueIdentifier>{9b0fdb68-7300-494c-8213-19c53790aab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Capture the flag\AgentStates">
+      <UniqueIdentifier>{244e7e0f-5ebe-4c09-8f09-6be4f2991d90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Capture the flag\AgentStates\AnimStates">
+      <UniqueIdentifier>{14e47bcc-cab7-4bea-8307-9816ddd16212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Capture the flag\AgentStates\FunctionStates">
+      <UniqueIdentifier>{f41316c4-db08-40a9-ad78-ff6464f6f035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Capture the flag\PlayerStates">
+      <UniqueIdentifier>{77bcda02-7a01-4240-9b23-643bf5c8adfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Capture the flag\PlayerStates\AnimStates">
+      <UniqueIdentifier>{35ec8e0e-b0f6-4066-827e-47ca8435d2e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Capture the flag\PlayerStates\FunctionStates">
+      <UniqueIdentifier>{91dea0f4-951b-4f28-ad87-9e57d0748f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Path finding">
+      <UniqueIdentifier>{5130a391-939e-4be6-a17c-ac1234bf65b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Path finding">
+      <UniqueIdentifier>{e50284c1-3fd2-4ab1-b8e6-98145e1c4783}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Agent.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Flag.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\Button.cpp">
@@ -97,46 +100,43 @@
       <Filter>Archivos de origen\Globals</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_AnimHasFlagState.cpp">
-      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_AnimLoseState.cpp">
-      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_AnimRunningState.cpp">
-      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_AnimState.cpp">
-      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_AnimWinState.cpp">
-      <Filter>Archivos de origen\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\AnimStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_FollowCarrierState.cpp">
-      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_FollowFlagState.cpp">
-      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_HasFlagState.cpp">
-      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_ProtectFlagState.cpp">
-      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_State.cpp">
-      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_WinLoseState.cpp">
-      <Filter>Archivos de origen\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_StateMachine.cpp">
-      <Filter>Archivos de origen\AgentStates</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AgentManager.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates</Filter>
     </ClCompile>
     <ClCompile Include="src\Agent_AnimMachine.cpp">
-      <Filter>Archivos de origen\AgentStates</Filter>
+      <Filter>Archivos de origen\Capture the flag\AgentStates</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui_demo.cpp">
       <Filter>Archivos de origen\imgui</Filter>
@@ -159,23 +159,35 @@
     <ClCompile Include="src\Camera.cpp">
       <Filter>Archivos de origen\Globals</Filter>
     </ClCompile>
+    <ClCompile Include="src\Agent.cpp">
+      <Filter>Archivos de origen\Capture the flag</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AgentManager.cpp">
+      <Filter>Archivos de origen\Capture the flag</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Flag.cpp">
+      <Filter>Archivos de origen\Capture the flag</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Archivos de origen\Capture the flag</Filter>
+    </ClCompile>
     <ClCompile Include="src\Start_menu.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Capture the flag</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_FP.cpp">
+      <Filter>Archivos de origen\Path finding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Node.cpp">
+      <Filter>Archivos de origen\Path finding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Grid.cpp">
+      <Filter>Archivos de origen\Path finding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MouseInfo.cpp">
+      <Filter>Archivos de origen\Path finding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Game.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Agent.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AgentManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Flag.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Button.h">
       <Filter>Archivos de encabezado\Globals</Filter>
     </ClInclude>
@@ -204,49 +216,73 @@
       <Filter>Archivos de encabezado\Globals</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_AnimHasFlagState.h">
-      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_AnimLoseState.h">
-      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_AnimRunningState.h">
-      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_AnimState.h">
-      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_AnimWinState.h">
-      <Filter>Archivos de encabezado\AgentStates\AnimStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\AnimStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_AnimMachine.h">
-      <Filter>Archivos de encabezado\AgentStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_FollowCarrierState.h">
-      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_FollowFlagState.h">
-      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_HasFlagState.h">
-      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_ProtectFlagState.h">
-      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_State.h">
-      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_WinLoseState.h">
-      <Filter>Archivos de encabezado\AgentStates\FunctionStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates\FunctionStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Agent_StateMachine.h">
-      <Filter>Archivos de encabezado\AgentStates</Filter>
+      <Filter>Archivos de encabezado\Capture the flag\AgentStates</Filter>
     </ClInclude>
     <ClInclude Include="include\Camera.h">
       <Filter>Archivos de encabezado\Globals</Filter>
     </ClInclude>
+    <ClInclude Include="include\Agent.h">
+      <Filter>Archivos de encabezado\Capture the flag</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AgentManager.h">
+      <Filter>Archivos de encabezado\Capture the flag</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Flag.h">
+      <Filter>Archivos de encabezado\Capture the flag</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game.h">
+      <Filter>Archivos de encabezado\Capture the flag</Filter>
+    </ClInclude>
     <ClInclude Include="include\Start_menu.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Capture the flag</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game_FP.h">
+      <Filter>Archivos de encabezado\Path finding</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Grid.h">
+      <Filter>Archivos de encabezado\Path finding</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Node.h">
+      <Filter>Archivos de encabezado\Path finding</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MouseInfo.h">
+      <Filter>Archivos de encabezado\Path finding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

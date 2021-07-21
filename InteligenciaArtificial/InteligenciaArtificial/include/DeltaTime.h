@@ -85,6 +85,7 @@ namespace gl {
 			bool playing;
 		};
 		friend class Game;
+		friend class Game_FP;
 		static float m_time;
 		static std::vector<Timer> m_timers;
 	};
