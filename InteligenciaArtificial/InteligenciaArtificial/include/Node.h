@@ -28,13 +28,25 @@ public:
 	eNODE_STATE GetState();
 	eNODE_STATE GetTempState();
 
-public:
-	Node* m_up;
-	Node* m_right;
-	Node* m_down;
-	Node* m_left;
+	sf::Vector2f GetPosition();
+	sf::Vector2f GetSize();
 
-	Node* m_parent;
+	void SetColor(sf::Color color);
+	void SetParent(Node* parent);
+	void Searched();
+
+	void RestartSearch();
+	void RestartAll();
+
+public:
+	Node* m_up = nullptr;
+	Node* m_right = nullptr;
+	Node* m_down = nullptr;
+	Node* m_left = nullptr;
+
+	Node* m_parent = nullptr;
+
+	bool m_searched = false;
 
 private:
 	sf::RectangleShape m_shape;

@@ -1,4 +1,5 @@
 #include "MouseInfo.h"
+#include "Globals.h"
 #include <iostream>
 #include <string>
 
@@ -66,4 +67,8 @@ void MouseInfo::ChageNode(Node* newNode)
 
 void MouseInfo::Update()
 {
+	if (gl::Input::GetMouseButtonUp(0))
+	{
+		ChageNode(nullptr);
+	}
 }

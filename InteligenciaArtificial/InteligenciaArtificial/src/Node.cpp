@@ -79,10 +79,6 @@ void Node::Update(sf::RenderWindow* window)
 		{
 			MouseInfo::ChageNode(this);
 		}
-		if (gl::Input::GetMouseButtonUp(0))
-		{
-			MouseInfo::ChageNode(nullptr);
-		}
 	}/**/
 }
 
@@ -122,4 +118,48 @@ eNODE_STATE Node::GetState()
 eNODE_STATE Node::GetTempState()
 {
 	return m_tempSate;
+}
+
+sf::Vector2f Node::GetPosition()
+{
+	return m_shape.getPosition();
+}
+
+sf::Vector2f Node::GetSize()
+{
+	return m_shape.getSize();
+}
+
+void Node::SetColor(sf::Color color)
+{
+	m_shape.setFillColor(color);
+}
+
+void Node::SetParent(Node* parent)
+{
+	m_parent = parent;
+	if (m_state != eNODE_STATE::END)
+	{
+		SetColor(sf::Color(127, 127, 255, 255));
+	}
+}
+
+void Node::Searched()
+{
+	m_searched = true;
+	SetColor(sf::Color(0, 0, 255, 255));
+}
+
+void Node::RestartSearch()
+{
+	m_parent = nullptr;
+	m_shape.setFillColor(m_colors[m_state]);
+	m_searched = false;
+}
+
+void Node::RestartAll()
+{
+	RestartSearch();
+	m_state = eNODE_STATE::BLANK;
+	m_shape.setFillColor(m_colors[m_state]);
 }

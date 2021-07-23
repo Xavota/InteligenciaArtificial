@@ -1,4 +1,5 @@
 #include "Game_FP.h"
+#include "MouseInfo.h"
 #include "Globals.h"
 
 void Game_FP::Run()
@@ -70,9 +71,13 @@ void Game_FP::Update()
 
 	m_camera.Update(m_window);
 
+	MouseInfo::Update();
 	gl::UI::Update();
 
-	m_grid.Update(m_window);
+	if (gl::Input::GetKeyPressed(sf::Keyboard::Enter));
+	{
+		m_grid.Update(m_window);
+	}
 }
 
 void Game_FP::ProcessEvents()
@@ -116,7 +121,18 @@ void Game_FP::ImguiRender()
 	static bool AddingTeam = false;
 	if (ImGui::Begin("Path Findig"))
 	{
-
+		if (ImGui::Button("Start"))
+		{
+			m_grid.StartSearch();
+		}
+		if (ImGui::Button("Restart search"))
+		{
+			m_grid.RestartSearch();
+		}
+		if (ImGui::Button("Restart"))
+		{
+			m_grid.RestartAll();
+		}
 	}
 	ImGui::End();
 
