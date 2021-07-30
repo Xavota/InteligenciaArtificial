@@ -40,22 +40,26 @@ public:
 
 public:
 	Node* m_up = nullptr;
+	float m_upWeight = 0;
 	Node* m_right = nullptr;
+	float m_rightWeight = 0;
 	Node* m_down = nullptr;
+	float m_downWeight = 0;
 	Node* m_left = nullptr;
+	float m_leftWeight = 0;
 
 	Node* m_parent = nullptr;
+	float m_parentWeight = 0;
 
 	bool m_searched = false;
+
+	int m_facesSeen = 0;
 
 private:
 	sf::RectangleShape m_shape;
 
 	eNODE_STATE m_state = eNODE_STATE::NONE;
 	eNODE_STATE m_tempSate = eNODE_STATE::BLANK;
-
-	bool m_in = false;
-
 
 	static std::map<eNODE_STATE, sf::Color> m_colors;
 };

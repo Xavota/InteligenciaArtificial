@@ -49,7 +49,7 @@ void Game_FP::Init()
 
 
 	// Fonts
-
+	gl::CFont::AddFont("Numbers", "Cubest-Medium.otf");
 
 	// UI
 	gl::UI::Init(m_window);
@@ -121,9 +121,17 @@ void Game_FP::ImguiRender()
 	static bool AddingTeam = false;
 	if (ImGui::Begin("Path Findig"))
 	{
-		if (ImGui::Button("Start"))
+		if (ImGui::Button("Breath First Search"))
 		{
-			m_grid.StartSearch();
+			m_grid.BreathFirstSearch();
+		}
+		if (ImGui::Button("Depth First Search"))
+		{
+			m_grid.DepthFirstSearch();
+		}
+		if (ImGui::Button("Dijstra Search"))
+		{
+			m_grid.DijstraSearch();
 		}
 		if (ImGui::Button("Restart search"))
 		{
