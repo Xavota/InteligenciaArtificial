@@ -38,6 +38,8 @@ public:
 	void RestartSearch();
 	void RestartAll();
 
+	void ShowLines(bool active);
+
 public:
 	Node* m_up = nullptr;
 	float m_upWeight = 0;
@@ -54,6 +56,8 @@ public:
 	bool m_searched = false;
 
 	int m_facesSeen = 0;
+
+	float m_ucledianDistance = 0;
 
 private:
 	sf::RectangleShape m_shape;

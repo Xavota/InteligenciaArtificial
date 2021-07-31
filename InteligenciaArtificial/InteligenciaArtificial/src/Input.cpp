@@ -59,6 +59,17 @@ bool Input::GetMouseButtonUp(int button)
 	return false;
 }
 
+sf::Vector2i Input::GetMousePosition(sf::RenderWindow* window)
+{
+	return sf::Mouse::getPosition(*window);
+}
+
+sf::Vector2i Input::GetMousePositionInGame(sf::RenderWindow* window)
+{
+	return sf::Vector2i((window->getView().getCenter() - window->getView().getSize() * .5f) +
+	       sf::Vector2f((sf::Mouse::getPosition(*window).x * (window->getView().getSize().x / window->getSize().x)), (sf::Mouse::getPosition(*window).y * (window->getView().getSize().y / window->getSize().y))));
+}
+
 void Input::HandleInputs(sf::Keyboard::Key keyCode, bool isPressed)
 {
 	for (KEY& key : m_keys) {

@@ -66,7 +66,11 @@ private:
 
 	/* Behaviour */
 
+	sf::Vector2i m_gridSize;
+	sf::Vector2f m_cellsSize;
+
 	Grid m_grid;
+	float m_notFound = false;
 };
 
 Game_FP* getGame_FP();

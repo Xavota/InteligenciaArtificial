@@ -47,6 +47,10 @@ namespace gl {
 		  * @bug	    No know Bugs
 		*/
 		static bool GetMouseButtonUp(int button);
+
+		static sf::Vector2i GetMousePosition(sf::RenderWindow* window);
+
+		static sf::Vector2i GetMousePositionInGame(sf::RenderWindow* window);
 	
 	private:
 		/**

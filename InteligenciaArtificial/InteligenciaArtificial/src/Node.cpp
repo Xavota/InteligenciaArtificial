@@ -48,7 +48,7 @@ void Node::Init(sf::Vector2f pos, sf::Vector2f size)
 void Node::Update(sf::RenderWindow* window)
 {
 	m_shape.setFillColor(m_colors[m_state]);
-	sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
+	sf::Vector2i mousePos = gl::Input::GetMousePositionInGame(window);
 	if (mousePos.x >= m_shape.getPosition().x
 		&& mousePos.x <= m_shape.getPosition().x + m_shape.getSize().x
 		&& mousePos.y >= m_shape.getPosition().y
@@ -162,4 +162,16 @@ void Node::RestartAll()
 	RestartSearch();
 	m_state = eNODE_STATE::BLANK;
 	m_shape.setFillColor(m_colors[m_state]);
+}
+
+void Node::ShowLines(bool active)
+{
+	if (active)
+	{
+		m_shape.setOutlineThickness(2.0f);
+	}
+	else
+	{
+		m_shape.setOutlineThickness(0);
+	}
 }

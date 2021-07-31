@@ -35,13 +35,18 @@ void Game_FP::Run()
 
 void Game_FP::Init()
 {
+	m_gridSize = { 51,51 };
+	m_cellsSize = { 32.f,32.f };
+
 	/* Utility */
 
 	m_windowSize = { 1024, 1024 };
 	m_window = new sf::RenderWindow(sf::VideoMode(m_windowSize.x, m_windowSize.y), "Path Finding");
 	ImGui::SFML::Init(*m_window);
 
-	m_camera.Init(sf::FloatRect{ 0,0,(float)m_windowSize.x,(float)m_windowSize.y }, 1.5f);
+	//m_camera.Init(sf::FloatRect{ 0, 0,(float)m_windowSize.x,(float)m_windowSize.y }, 1.5f);
+	float size = m_gridSize.x * m_cellsSize.x > m_gridSize.y * m_cellsSize.y ? m_gridSize.x * m_cellsSize.x : m_gridSize.y * m_cellsSize.y;
+	m_camera.Init(sf::FloatRect{ 0, 0,(float)size,(float)size }, 1.5f);
 
 
 	/* Resources */
@@ -57,11 +62,7 @@ void Game_FP::Init()
 
 	/* Actors */
 
-	m_grid.Init({0,0,1024,1024},{21,21});
-
-	
-
-
+	m_grid.Init(m_gridSize, m_cellsSize);
 
 }
 
@@ -76,7 +77,7 @@ void Game_FP::Update()
 
 	if (gl::Input::GetKeyPressed(sf::Keyboard::Enter));
 	{
-		m_grid.Update(m_window);
+		m_notFound = m_grid.Update(m_window);
 	}
 }
 
@@ -133,6 +134,10 @@ void Game_FP::ImguiRender()
 		{
 			m_grid.DijstraSearch();
 		}
+		if (ImGui::Button("Best First Search"))
+		{
+			m_grid.BestFirstSearch();
+		}
 		if (ImGui::Button("Restart search"))
 		{
 			m_grid.RestartSearch();
@@ -141,8 +146,31 @@ void Game_FP::ImguiRender()
 		{
 			m_grid.RestartAll();
 		}
+
+		static bool showLines = true;
+		if (ImGui::Checkbox("Show Lines", &showLines))
+		{
+			m_grid.ShowLines(showLines);
+		}
+		static bool showWeights = false;
+		if (ImGui::Checkbox("Show Weights", &showWeights))
+		{
+			m_grid.ShowWeights(showWeights);
+		}
 	}
 	ImGui::End();
+	if (!m_notFound)
+	{
+		if (ImGui::Begin("Error"))
+		{
+			ImGui::Text("Path not found");
+			if (ImGui::Button("Ok"))
+			{
+				m_grid.RestartSearch();
+			}
+		}
+		ImGui::End();
+	}
 
 	ImGui::SFML::Render(*m_window);
 	ImGui::EndFrame();

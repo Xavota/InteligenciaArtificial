@@ -1,14 +1,14 @@
 #include "Grid.h"
 #include "Globals.h"
 
-Grid::Grid(sf::IntRect rect, sf::Vector2i tiles)
+Grid::Grid(sf::Vector2i tiles, sf::Vector2f size)
 {
-	Init(rect, tiles);
+	Init(tiles, size);
 }
 
-void Grid::Init(sf::IntRect rect, sf::Vector2i tiles)
+void Grid::Init(sf::Vector2i tiles, sf::Vector2f size)
 {
-	for (int i = 0; i < tiles.x; i++)
+	/*for (int i = 0; i < tiles.x; i++)
 	{
 		m_nodeGrid.push_back(std::list<Node>());
 		for (int j = 0; j < tiles.y; j++)
@@ -40,10 +40,52 @@ void Grid::Init(sf::IntRect rect, sf::Vector2i tiles)
 	}
 
 	GetFromDoubleList(&m_nodeGrid, 3, 10)->ChangeState(eNODE_STATE::START);
-	GetFromDoubleList(&m_nodeGrid, 17, 10)->ChangeState(eNODE_STATE::END);
+	GetFromDoubleList(&m_nodeGrid, 17, 10)->ChangeState(eNODE_STATE::END);*/
+
+	m_nodeGrid.clear();
+	for (int i = 0; i < tiles.x; i++)
+	{
+		m_nodeGrid.push_back(std::vector<Node>());
+		for (int j = 0; j < tiles.y; j++)
+		{
+			//m_nodeGrid[i].push_back(Node({ ((float)rect.width / tiles.x) * i, ((float)rect.height / tiles.y) * j },
+			//	{ ((float)rect.width / tiles.x),     ((float)rect.height / tiles.y) }));
+			m_nodeGrid[i].push_back(Node({ size.x * i, size.y * j }, { size.x, size.y }));
+		}
+	}
+
+	for (int i = 0; i < tiles.x; i++)
+	{
+		for (int j = 0; j < tiles.y; j++)
+		{
+			if (i > 0)
+			{
+				int weight = rand() % 10;
+				Node* temp = &m_nodeGrid[i][j];
+				Node* temp2 = &m_nodeGrid[i - 1][j];
+				temp->m_left = temp2;
+				temp->m_leftWeight = weight;
+				temp2->m_right = temp;
+				temp2->m_rightWeight = weight;
+			}
+			if (j > 0)
+			{
+				int weight = rand() % 10;
+				Node* temp = &m_nodeGrid[i][j];
+				Node* temp2 = &m_nodeGrid[i][j - 1];
+				temp->m_up = temp2;
+				temp->m_upWeight = weight;
+				temp2->m_down = temp;
+				temp2->m_downWeight = weight;
+			}
+		}
+	}
+
+	m_nodeGrid[tiles.x / 8][tiles.y / 2].ChangeState(eNODE_STATE::START);
+	m_nodeGrid[tiles.x * 7 / 8][tiles.y / 2].ChangeState(eNODE_STATE::END);
 }
 
-void Grid::Update(sf::RenderWindow* window)
+bool Grid::Update(sf::RenderWindow* window)
 {
 	if (m_isSearching)
 	{
@@ -59,27 +101,50 @@ void Grid::Update(sf::RenderWindow* window)
 		{
 			DijstraSearchUpdate();
 		}
+		else if (m_searchType == eSEARCH_TYPE::BEST_FIRST)
+		{
+			BestFirstSearchUpdate();
+		}
 	}
-	else if (!m_found)
+	else if (!m_found && !m_error)
 	{
-		for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+		/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 		{
 			for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 			{
 				itj->Update(window);
 			}
-		}
+		}/**/
+		for (int i = 0; i < m_nodeGrid.size(); i++)
+		{
+			for (int j = 0; j < m_nodeGrid[i].size(); j++)
+			{
+				m_nodeGrid[i][j].Update(window);
+			}
+		}/**/
 	}
-
+	else if (m_error)
+	{
+		return false;
+	}
+	return true;
 }
 
 void Grid::Render(sf::RenderWindow* window)
 {
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 	{
 		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 		{
 			itj->Render(window);
+		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			m_nodeGrid[i][j].Render(window);
 		}
 	}
 
@@ -91,49 +156,82 @@ void Grid::Render(sf::RenderWindow* window)
 		}
 	}
 
-	sf::Text weights;
-	weights.setFont(*gl::CFont::GetFont("Numbers"));
-	weights.setOutlineColor(sf::Color::White);
-	weights.setOutlineThickness(2);
-	weights.setFillColor(sf::Color::Black);
-	weights.setCharacterSize(15);
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	if(m_showWeghts)
 	{
-		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
+		sf::Text weights;
+		weights.setFont(*gl::CFont::GetFont("Numbers"));
+		weights.setOutlineColor(sf::Color::White);
+		weights.setOutlineThickness(2);
+		weights.setFillColor(sf::Color::Black);
+		weights.setCharacterSize(10);/**/
+		/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 		{
-			if (itj->m_right != nullptr)
+			for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 			{
-				weights.setString(to_string((int)itj->m_rightWeight));
-				weights.setOrigin({weights.getGlobalBounds().width / 2, weights.getGlobalBounds().height / 2});
-				weights.setPosition((itj->GetPosition() + itj->m_right->GetPosition() + itj->GetSize()) * 0.5f);
-				window->draw(weights);
+				if (itj->m_right != nullptr)
+				{
+					weights.setString(to_string((int)itj->m_rightWeight));
+					weights.setOrigin({weights.getGlobalBounds().width / 2, weights.getGlobalBounds().height / 2});
+					weights.setPosition((itj->GetPosition() + itj->m_right->GetPosition() + itj->GetSize()) * 0.5f);
+					window->draw(weights);
+				}
+				if (itj->m_down != nullptr)
+				{
+					weights.setString(to_string((int)itj->m_downWeight));
+					weights.setOrigin({ weights.getGlobalBounds().width / 2, weights.getGlobalBounds().height / 2 });
+					weights.setPosition((itj->GetPosition() + itj->m_down->GetPosition() + itj->GetSize()) * 0.5f);
+					window->draw(weights);
+				}
 			}
-			if (itj->m_down != nullptr)
+		}/**/
+
+		for (int i = 0; i < m_nodeGrid.size(); i++)
+		{
+			for (int j = 0; j < m_nodeGrid[i].size(); j++)
 			{
-				weights.setString(to_string((int)itj->m_downWeight));
-				weights.setOrigin({ weights.getGlobalBounds().width / 2, weights.getGlobalBounds().height / 2 });
-				weights.setPosition((itj->GetPosition() + itj->m_down->GetPosition() + itj->GetSize()) * 0.5f);
-				window->draw(weights);
+				if (m_nodeGrid[i][j].m_right != nullptr)
+				{
+					weights.setString(to_string((int)m_nodeGrid[i][j].m_rightWeight));
+					weights.setOrigin({ weights.getGlobalBounds().width / 2, weights.getGlobalBounds().height / 2 });
+					weights.setPosition((m_nodeGrid[i][j].GetPosition() + m_nodeGrid[i][j].m_right->GetPosition() + m_nodeGrid[i][j].GetSize()) * 0.5f);
+					window->draw(weights);
+				}
+				if (m_nodeGrid[i][j].m_down != nullptr)
+				{
+					weights.setString(to_string((int)m_nodeGrid[i][j].m_downWeight));
+					weights.setOrigin({ weights.getGlobalBounds().width / 2, weights.getGlobalBounds().height / 2 });
+					weights.setPosition((m_nodeGrid[i][j].GetPosition() + m_nodeGrid[i][j].m_down->GetPosition() + m_nodeGrid[i][j].GetSize()) * 0.5f);
+					window->draw(weights);
+				}
 			}
-		}
+		}/**/
 	}
 }
 
 void Grid::Destroy()
 {
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 	{
 		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 		{
 			itj->Destroy();
 		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			m_nodeGrid[i][j].Destroy();
+		}
 	}
+
 }
 
 void Grid::BreathFirstSearch()
 {
 	RestartSearch();
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 	{
 		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 		{
@@ -144,6 +242,21 @@ void Grid::BreathFirstSearch()
 			else if (itj->GetState() == eNODE_STATE::END)
 			{
 				m_end = &*itj;
+			}
+		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			if (m_nodeGrid[i][j].GetState() == eNODE_STATE::START)
+			{
+				m_start = &m_nodeGrid[i][j];
+			}
+			else if (m_nodeGrid[i][j].GetState() == eNODE_STATE::END)
+			{
+				m_end = &m_nodeGrid[i][j];
 			}
 		}
 	}
@@ -179,7 +292,7 @@ void Grid::BreathFirstSearch()
 void Grid::DepthFirstSearch()
 {
 	RestartSearch();
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 	{
 		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 		{
@@ -190,6 +303,21 @@ void Grid::DepthFirstSearch()
 			else if (itj->GetState() == eNODE_STATE::END)
 			{
 				m_end = &*itj;
+			}
+		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			if (m_nodeGrid[i][j].GetState() == eNODE_STATE::START)
+			{
+				m_start = &m_nodeGrid[i][j];
+			}
+			else if (m_nodeGrid[i][j].GetState() == eNODE_STATE::END)
+			{
+				m_end = &m_nodeGrid[i][j];
 			}
 		}
 	}
@@ -206,7 +334,7 @@ void Grid::DepthFirstSearch()
 void Grid::DijstraSearch()
 {
 	RestartSearch();
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 	{
 		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 		{
@@ -219,6 +347,21 @@ void Grid::DijstraSearch()
 				m_end = &*itj;
 			}
 		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			if (m_nodeGrid[i][j].GetState() == eNODE_STATE::START)
+			{
+				m_start = &m_nodeGrid[i][j];
+			}
+			else if (m_nodeGrid[i][j].GetState() == eNODE_STATE::END)
+			{
+				m_end = &m_nodeGrid[i][j];
+			}
+		}
 	}
 
 	if (m_start != nullptr && m_end != nullptr)
@@ -229,6 +372,84 @@ void Grid::DijstraSearch()
 		m_isSearching = true;
 		m_searchType = eSEARCH_TYPE::DIJSTRA;
 	}
+}
+
+void Grid::BestFirstSearch()
+{
+	RestartSearch();
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	{
+		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
+		{
+			if (itj->GetState() == eNODE_STATE::START)
+			{
+				m_start = &*itj;
+			}
+			else if (itj->GetState() == eNODE_STATE::END)
+			{
+				m_end = &*itj;
+			}
+		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			if (m_nodeGrid[i][j].GetState() == eNODE_STATE::START)
+			{
+				m_start = &m_nodeGrid[i][j];
+			}
+			else if (m_nodeGrid[i][j].GetState() == eNODE_STATE::END)
+			{
+				m_end = &m_nodeGrid[i][j];
+			}
+		}
+	}
+
+	if (m_start != nullptr && m_end != nullptr)
+	{
+		/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+		{
+			for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
+			{
+				itj->m_ucledianDistance = pow(pow(m_end->GetPosition().x - itj->GetPosition().x, 2) + pow(m_end->GetPosition().y - itj->GetPosition().y, 2), 0.5f);
+			}
+		}/**/
+
+		for (int i = 0; i < m_nodeGrid.size(); i++)
+		{
+			for (int j = 0; j < m_nodeGrid[i].size(); j++)
+			{
+				m_nodeGrid[i][j].m_ucledianDistance = pow(pow(m_end->GetPosition().x - m_nodeGrid[i][j].GetPosition().x, 2) + pow(m_end->GetPosition().y - m_nodeGrid[i][j].GetPosition().y, 2), 0.5f);
+			}
+		}/**/
+
+
+		if (m_start->m_up != nullptr && m_start->m_up->GetState() != eNODE_STATE::WALL)
+		{
+			m_order.push_back(m_start->m_up);
+			m_start->m_up->SetParent(m_start);
+		}
+		if (m_start->m_right != nullptr && m_start->m_right->GetState() != eNODE_STATE::WALL)
+		{
+			m_order.push_back(m_start->m_right);
+			m_start->m_right->SetParent(m_start);
+		}
+		if (m_start->m_down != nullptr && m_start->m_down->GetState() != eNODE_STATE::WALL)
+		{
+			m_order.push_back(m_start->m_down);
+			m_start->m_down->SetParent(m_start);
+		}
+		if (m_start->m_left != nullptr && m_start->m_left->GetState() != eNODE_STATE::WALL)
+		{
+			m_order.push_back(m_start->m_left);
+			m_start->m_left->SetParent(m_start);
+		}
+
+		m_isSearching = true;
+		m_searchType = eSEARCH_TYPE::BEST_FIRST;
+	}	
 }
 
 std::list<Node>* Grid::GetFromList(std::list<std::list<Node>>* list, int i)
@@ -266,42 +487,92 @@ Node* Grid::GetFromDoubleList(std::list<std::list<Node>>* list, int i, int j)
 
 void Grid::RestartSearch()
 {
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 	{
 		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 		{
 			itj->RestartSearch();
 		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			m_nodeGrid[i][j].RestartSearch();
+		}
 	}
+
 	m_isSearching = false;
-	m_found = false;
-	m_order.clear();
 	m_start = nullptr;
 	m_end = nullptr;
-	i = 0;
+	m_found = false;
+	m_error = false;
+	m_searchType = eSEARCH_TYPE::NONE;
+
+	m_order.clear();
+	m_i = 0;
+
+	m_current = nullptr;
+
+	m_paths.clear();
+
 	m_linesToTarget.clear();
 }
 
 void Grid::RestartAll()
 {
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 	{
 		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 		{
 			itj->RestartAll();
 		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			m_nodeGrid[i][j].RestartAll();
+		}
 	}
+
 	m_isSearching = false;
-	m_found = false;
-	m_order.clear();
 	m_start = nullptr;
 	m_end = nullptr;
-	i = 0;
+	m_found = false;
+	m_error = false;
+	m_searchType = eSEARCH_TYPE::NONE;
+
+	m_order.clear();
+	m_i = 0;
+
+	m_current = nullptr;
+
+	m_paths.clear();
+
 	m_linesToTarget.clear();
 
 
-	GetFromDoubleList(&m_nodeGrid, 3, 10)->ChangeState(eNODE_STATE::START);
-	GetFromDoubleList(&m_nodeGrid, 17, 10)->ChangeState(eNODE_STATE::END);
+	m_nodeGrid[m_nodeGrid.size() / 8][m_nodeGrid[0].size() / 2].ChangeState(eNODE_STATE::START);
+	m_nodeGrid[m_nodeGrid.size() * 7 / 8][m_nodeGrid[0].size() / 2].ChangeState(eNODE_STATE::END);
+}
+
+void Grid::ShowLines(bool active)
+{
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			m_nodeGrid[i][j].ShowLines(active);
+		}
+	}
+}
+
+void Grid::ShowWeights(bool active)
+{
+	m_showWeghts = active;
 }
 
 void Grid::CreateLinesToTarget()
@@ -357,42 +628,43 @@ void Grid::CreateLinesToTarget()
 
 bool Grid::BreathFirstSearchUpdate()
 {
-	if (m_order[i]->GetState() != eNODE_STATE::END)
+	if (m_order[m_i]->GetState() != eNODE_STATE::END)
 	{
-		if (m_order[i]->m_up != m_order[i]->m_parent && m_order[i]->m_up != nullptr
-			&& !m_order[i]->m_up->m_searched && m_order[i]->m_up->m_parent == nullptr
-			&& m_order[i]->m_up->GetState() != eNODE_STATE::WALL)
+		if (m_order[m_i]->m_up != m_order[m_i]->m_parent && m_order[m_i]->m_up != nullptr
+			&& !m_order[m_i]->m_up->m_searched && m_order[m_i]->m_up->m_parent == nullptr
+			&& m_order[m_i]->m_up->GetState() != eNODE_STATE::WALL)
 		{
-			m_order.push_back(m_order[i]->m_up);
-			m_order[i]->m_up->SetParent(m_order[i]);
+			m_order.push_back(m_order[m_i]->m_up);
+			m_order[m_i]->m_up->SetParent(m_order[m_i]);
 		}
-		if (m_order[i]->m_right != m_order[i]->m_parent && m_order[i]->m_right != nullptr
-			&& !m_order[i]->m_right->m_searched && m_order[i]->m_right->m_parent == nullptr
-			&& m_order[i]->m_right->GetState() != eNODE_STATE::WALL)
+		if (m_order[m_i]->m_right != m_order[m_i]->m_parent && m_order[m_i]->m_right != nullptr
+			&& !m_order[m_i]->m_right->m_searched && m_order[m_i]->m_right->m_parent == nullptr
+			&& m_order[m_i]->m_right->GetState() != eNODE_STATE::WALL)
 		{
-			m_order.push_back(m_order[i]->m_right);
-			m_order[i]->m_right->SetParent(m_order[i]);
+			m_order.push_back(m_order[m_i]->m_right);
+			m_order[m_i]->m_right->SetParent(m_order[m_i]);
 		}
-		if (m_order[i]->m_down != m_order[i]->m_parent && m_order[i]->m_down != nullptr
-			&& !m_order[i]->m_down->m_searched && m_order[i]->m_down->m_parent == nullptr
-			&& m_order[i]->m_down->GetState() != eNODE_STATE::WALL)
+		if (m_order[m_i]->m_down != m_order[m_i]->m_parent && m_order[m_i]->m_down != nullptr
+			&& !m_order[m_i]->m_down->m_searched && m_order[m_i]->m_down->m_parent == nullptr
+			&& m_order[m_i]->m_down->GetState() != eNODE_STATE::WALL)
 		{
-			m_order.push_back(m_order[i]->m_down);
-			m_order[i]->m_down->SetParent(m_order[i]);
+			m_order.push_back(m_order[m_i]->m_down);
+			m_order[m_i]->m_down->SetParent(m_order[m_i]);
 		}
-		if (m_order[i]->m_left != m_order[i]->m_parent && m_order[i]->m_left != nullptr
-			&& !m_order[i]->m_left->m_searched && m_order[i]->m_left->m_parent == nullptr
-			&& m_order[i]->m_left->GetState() != eNODE_STATE::WALL)
+		if (m_order[m_i]->m_left != m_order[m_i]->m_parent && m_order[m_i]->m_left != nullptr
+			&& !m_order[m_i]->m_left->m_searched && m_order[m_i]->m_left->m_parent == nullptr
+			&& m_order[m_i]->m_left->GetState() != eNODE_STATE::WALL)
 		{
-			m_order.push_back(m_order[i]->m_left);
-			m_order[i]->m_left->SetParent(m_order[i]);
+			m_order.push_back(m_order[m_i]->m_left);
+			m_order[m_i]->m_left->SetParent(m_order[m_i]);
 		}
-		m_order[i]->Searched();
-		i++;
+		m_order[m_i]->Searched();
+		m_i++;
 
-		if (i >= m_order.size())
+		if (m_i >= m_order.size())
 		{
 			m_isSearching = false;
+			m_error = true;
 		}
 	}
 	else
@@ -411,28 +683,28 @@ bool Grid::DepthFirstSearchUpdate()
 		if (m_current->m_up != nullptr && m_current->m_up->GetState() != eNODE_STATE::WALL
 		 && !m_current->m_up->m_searched && m_current->m_up->GetState() != eNODE_STATE::START)
 		{
-			m_current->m_up->m_parent = m_current;
+			m_current->m_up->SetParent(m_current);
 			m_current = m_current->m_up;
 			break;
 		}
 		else if (m_current->m_right != nullptr && m_current->m_right->GetState() != eNODE_STATE::WALL
 			&& !m_current->m_right->m_searched && m_current->m_right->GetState() != eNODE_STATE::START)
 		{
-			m_current->m_right->m_parent = m_current;
+			m_current->m_right->SetParent(m_current);
 			m_current = m_current->m_right;
 			break;
 		}
 		else if (m_current->m_down != nullptr && m_current->m_down->GetState() != eNODE_STATE::WALL
 			&& !m_current->m_down->m_searched && m_current->m_down->GetState() != eNODE_STATE::START)
 		{
-			m_current->m_down->m_parent = m_current;
+			m_current->m_down->SetParent(m_current);
 			m_current = m_current->m_down;
 			break;
 		}
 		else if (m_current->m_left != nullptr && m_current->m_left->GetState() != eNODE_STATE::WALL
 			&& !m_current->m_left->m_searched && m_current->m_left->GetState() != eNODE_STATE::START)
 		{
-			m_current->m_left->m_parent = m_current;
+			m_current->m_left->SetParent(m_current);
 			m_current = m_current->m_left;
 			break;
 		}
@@ -445,6 +717,7 @@ bool Grid::DepthFirstSearchUpdate()
 			else
 			{
 				m_isSearching = false;
+				m_error = true;
 				break;
 			}
 		}
@@ -460,8 +733,7 @@ bool Grid::DepthFirstSearchUpdate()
 	}
 	else
 	{
-		m_current->m_searched = true;
-		m_current->SetColor(sf::Color::Blue);
+		m_current->Searched();
 	}
 
 	return false;
@@ -469,24 +741,9 @@ bool Grid::DepthFirstSearchUpdate()
 
 void Grid::DijstraSearchUpdate()
 {
-	/*int im = 0, jm = 0, dm = 0;
-	float wm = 4294967295;
-
-	for (int i = 0; i < m_paths.size(); i++)
-	{
-		float lineWeight = 0;
-		for (int j = 0; j < m_paths[i].size(); j++)
-		{
-			if (m_paths[i][j].m_end->m_left != nullptr && lineWeight + m_paths[i][j].m_end->m_leftWeight < wm)
-			{
-				wm = lineWeight + m_paths[i][j].m_end->m_leftWeight;
-			}
-		}
-	}*/
-
 	Node* temp = m_start;
 
-	float minWeight = 999;
+	float minWeight = 99999;
 	Node* son = nullptr, *father = nullptr;
 	float fatherWeight = 0;
 
@@ -595,14 +852,89 @@ void Grid::DijstraSearchUpdate()
 			son->SetColor(sf::Color::Blue);
 		}
 	}
+	else
+	{
+		m_isSearching = false;
+		m_error = true;
+	}
 
 
-	for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
 	{
 		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
 		{
 			itj->m_searched = false;
 			itj->m_facesSeen = 0;
 		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			m_nodeGrid[i][j].m_searched = false;
+			m_nodeGrid[i][j].m_facesSeen = 0;
+		}
+	}
+}
+
+void Grid::BestFirstSearchUpdate()
+{
+	int index = 0;
+	float minDistance = 999999;
+	for (int i = 0; i < m_order.size(); i++)
+	{
+		float d = pow(pow(m_end->GetPosition().x - m_order[i]->GetPosition().x, 2) + pow(m_end->GetPosition().y - m_order[i]->GetPosition().y, 2), 0.5f);
+		if (d < minDistance)
+		{
+			minDistance = d;
+			index = i;
+		}
+	}
+
+	if (m_order[index]->GetState() != eNODE_STATE::END)
+	{
+		if (m_order[index]->m_up != m_order[index]->m_parent && m_order[index]->m_up != nullptr
+			&& !m_order[index]->m_up->m_searched && m_order[index]->m_up->m_parent == nullptr
+			&& m_order[index]->m_up->GetState() != eNODE_STATE::WALL)
+		{
+			m_order.push_back(m_order[index]->m_up);
+			m_order[index]->m_up->SetParent(m_order[index]);
+		}
+		if (m_order[index]->m_right != m_order[index]->m_parent && m_order[index]->m_right != nullptr
+			&& !m_order[index]->m_right->m_searched && m_order[index]->m_right->m_parent == nullptr
+			&& m_order[index]->m_right->GetState() != eNODE_STATE::WALL)
+		{
+			m_order.push_back(m_order[index]->m_right);
+			m_order[index]->m_right->SetParent(m_order[index]);
+		}
+		if (m_order[index]->m_down != m_order[index]->m_parent && m_order[index]->m_down != nullptr
+			&& !m_order[index]->m_down->m_searched && m_order[index]->m_down->m_parent == nullptr
+			&& m_order[index]->m_down->GetState() != eNODE_STATE::WALL)
+		{
+			m_order.push_back(m_order[index]->m_down);
+			m_order[index]->m_down->SetParent(m_order[index]);
+		}
+		if (m_order[index]->m_left != m_order[index]->m_parent && m_order[index]->m_left != nullptr
+			&& !m_order[index]->m_left->m_searched && m_order[index]->m_left->m_parent == nullptr
+			&& m_order[index]->m_left->GetState() != eNODE_STATE::WALL)
+		{
+			m_order.push_back(m_order[index]->m_left);
+			m_order[index]->m_left->SetParent(m_order[index]);
+		}
+		m_order[index]->Searched();
+		m_order.erase(m_order.begin() + index);
+
+		if (m_order.size() == 0)
+		{
+			m_isSearching = false;
+			m_error = true;
+		}
+	}
+	else
+	{
+		m_isSearching = false;
+		m_found = true;
+		CreateLinesToTarget();
 	}
 }
