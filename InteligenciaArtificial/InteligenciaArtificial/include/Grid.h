@@ -11,6 +11,7 @@ enum class eSEARCH_TYPE
 	DEPTH_FIRST,
 	DIJSTRA,
 	BEST_FIRST,
+	A_STAR,
 	COUNT
 };
 
@@ -37,6 +38,7 @@ public:
 	void DepthFirstSearch();
 	void DijstraSearch();
 	void BestFirstSearch();
+	void AStarSearch();
 
 	std::list<Node>* GetFromList(std::list<std::list<Node>>* list, int i);
 	Node* GetFromDoubleList(std::list<std::list<Node>>* list, int i, int j);
@@ -55,6 +57,7 @@ private:
 	bool DepthFirstSearchUpdate();
 	void DijstraSearchUpdate();
 	void BestFirstSearchUpdate();
+	void AStarSearchUpdate();
 
 private:
 	/* Search */
@@ -69,9 +72,6 @@ private:
 
 	/* Depth First Search */
 	Node* m_current = nullptr;
-
-	/* Dijstra Search */
-	std::vector<std::vector<sUnion>> m_paths;
 
 	//std::list<std::list<Node>> m_nodeGrid;
 	std::vector<std::vector<Node>> m_nodeGrid;

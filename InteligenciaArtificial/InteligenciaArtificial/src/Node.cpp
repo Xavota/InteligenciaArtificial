@@ -153,8 +153,11 @@ void Node::Searched()
 void Node::RestartSearch()
 {
 	m_parent = nullptr;
+	m_parentWeight = 0;
 	m_shape.setFillColor(m_colors[m_state]);
 	m_searched = false;
+	m_facesSeen = 0;
+	m_ucledianDistance = 0;
 }
 
 void Node::RestartAll()

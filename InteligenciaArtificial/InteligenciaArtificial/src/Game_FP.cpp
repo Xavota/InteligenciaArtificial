@@ -138,6 +138,10 @@ void Game_FP::ImguiRender()
 		{
 			m_grid.BestFirstSearch();
 		}
+		if (ImGui::Button("A Star Search"))
+		{
+			m_grid.AStarSearch();
+		}
 		if (ImGui::Button("Restart search"))
 		{
 			m_grid.RestartSearch();

@@ -105,6 +105,10 @@ bool Grid::Update(sf::RenderWindow* window)
 		{
 			BestFirstSearchUpdate();
 		}
+		else if (m_searchType == eSEARCH_TYPE::A_STAR)
+		{
+			AStarSearchUpdate();
+		}
 	}
 	else if (!m_found && !m_error)
 	{
@@ -365,10 +369,7 @@ void Grid::DijstraSearch()
 	}
 
 	if (m_start != nullptr && m_end != nullptr)
-	{
-		m_paths.push_back(std::vector<sUnion>());
-		m_paths[0].push_back(sUnion{nullptr, 0, m_start});
-
+	{	
 		m_isSearching = true;
 		m_searchType = eSEARCH_TYPE::DIJSTRA;
 	}
@@ -452,6 +453,62 @@ void Grid::BestFirstSearch()
 	}	
 }
 
+void Grid::AStarSearch()
+{
+	RestartSearch();
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	{
+		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
+		{
+			if (itj->GetState() == eNODE_STATE::START)
+			{
+				m_start = &*itj;
+			}
+			else if (itj->GetState() == eNODE_STATE::END)
+			{
+				m_end = &*itj;
+			}
+		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			if (m_nodeGrid[i][j].GetState() == eNODE_STATE::START)
+			{
+				m_start = &m_nodeGrid[i][j];
+			}
+			else if (m_nodeGrid[i][j].GetState() == eNODE_STATE::END)
+			{
+				m_end = &m_nodeGrid[i][j];
+			}
+		}
+	}
+
+	if (m_start != nullptr && m_end != nullptr)
+	{
+		/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+		{
+			for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
+			{
+				itj->m_ucledianDistance = pow(pow(m_end->GetPosition().x - itj->GetPosition().x, 2) + pow(m_end->GetPosition().y - itj->GetPosition().y, 2), 0.5f);
+			}
+		}/**/
+
+		for (int i = 0; i < m_nodeGrid.size(); i++)
+		{
+			for (int j = 0; j < m_nodeGrid[i].size(); j++)
+			{
+				m_nodeGrid[i][j].m_ucledianDistance = pow(pow(m_end->GetPosition().x - m_nodeGrid[i][j].GetPosition().x, 2) + pow(m_end->GetPosition().y - m_nodeGrid[i][j].GetPosition().y, 2), 0.5f);
+			}
+		}/**/
+
+		m_isSearching = true;
+		m_searchType = eSEARCH_TYPE::A_STAR;
+	}
+}
+
 std::list<Node>* Grid::GetFromList(std::list<std::list<Node>>* list, int i)
 {
 	int in = 0;
@@ -515,8 +572,6 @@ void Grid::RestartSearch()
 
 	m_current = nullptr;
 
-	m_paths.clear();
-
 	m_linesToTarget.clear();
 }
 
@@ -549,8 +604,6 @@ void Grid::RestartAll()
 	m_i = 0;
 
 	m_current = nullptr;
-
-	m_paths.clear();
 
 	m_linesToTarget.clear();
 
@@ -936,5 +989,144 @@ void Grid::BestFirstSearchUpdate()
 		m_isSearching = false;
 		m_found = true;
 		CreateLinesToTarget();
+	}
+}
+
+void Grid::AStarSearchUpdate()
+{
+	Node* temp = m_start;
+
+	float minWeight = 99999;
+	Node* son = nullptr, * father = nullptr;
+	float fatherWeight = 0;
+
+	float tempWeight = 0;
+	int face = 0;
+	while (true)
+	{
+		if (temp == m_start || temp->m_parent != nullptr)
+		{
+			if (temp->m_up != nullptr && temp->m_up->GetState() != eNODE_STATE::WALL
+				&& (temp->m_up->m_parent == nullptr || temp->m_up->m_parent == temp)
+				&& temp->m_up->GetState() != eNODE_STATE::START && (temp->m_facesSeen & 1) != 1)
+			{
+				tempWeight += temp->m_upWeight;
+				temp->m_facesSeen |= 1;
+				temp = temp->m_up;
+				temp->m_searched = true;
+				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
+					temp->SetColor(sf::Color(127, 127, 255, 255));
+				face = 0;
+				continue;
+			}
+			else if (temp->m_right != nullptr && temp->m_right->GetState() != eNODE_STATE::WALL
+				&& (temp->m_right->m_parent == nullptr || temp->m_right->m_parent == temp)
+				&& temp->m_right->GetState() != eNODE_STATE::START && (temp->m_facesSeen & 2) != 2)
+			{
+				tempWeight += temp->m_rightWeight;
+				temp->m_facesSeen |= 2;
+				temp = temp->m_right;
+				temp->m_searched = true;
+				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
+					temp->SetColor(sf::Color(127, 127, 255, 255));
+				face = 1;
+				continue;
+			}
+			else if (temp->m_down != nullptr && temp->m_down->GetState() != eNODE_STATE::WALL
+				&& (temp->m_down->m_parent == nullptr || temp->m_down->m_parent == temp)
+				&& temp->m_down->GetState() != eNODE_STATE::START && (temp->m_facesSeen & 4) != 4)
+			{
+				tempWeight += temp->m_downWeight;
+				temp->m_facesSeen |= 4;
+				temp = temp->m_down;
+				temp->m_searched = true;
+				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
+					temp->SetColor(sf::Color(127, 127, 255, 255));
+				face = 2;
+				continue;
+			}
+			else if (temp->m_left != nullptr && temp->m_left->GetState() != eNODE_STATE::WALL
+				&& (temp->m_left->m_parent == nullptr || temp->m_left->m_parent == temp)
+				&& temp->m_left->GetState() != eNODE_STATE::START && (temp->m_facesSeen & 8) != 8)
+			{
+				tempWeight += temp->m_leftWeight;
+				temp->m_facesSeen |= 8;
+				temp = temp->m_left;
+				temp->m_searched = true;
+				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
+					temp->SetColor(sf::Color(127, 127, 255, 255));
+				face = 3;
+				continue;
+			}
+			else
+			{
+				if (temp->m_parent != nullptr)
+				{
+					tempWeight -= temp->m_parentWeight;
+					temp = temp->m_parent;
+					continue;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		else
+		{
+			if (tempWeight + temp->m_ucledianDistance < minWeight)
+			{
+				minWeight = tempWeight + temp->m_ucledianDistance;
+				son = temp;
+				father = face == 0 ? temp->m_down : (face == 1 ? temp->m_left : (face == 2 ? temp->m_up : (face == 3 ? temp->m_right : nullptr)));
+				fatherWeight = face == 0 ? temp->m_downWeight : (face == 1 ? temp->m_leftWeight : (face == 2 ? temp->m_upWeight : (face == 3 ? temp->m_rightWeight : 0)));
+			}
+
+			tempWeight -= face == 0 ? temp->m_downWeight : (face == 1 ? temp->m_leftWeight : (face == 2 ? temp->m_upWeight : (face == 3 ? temp->m_rightWeight : 0)));
+			temp = face == 0 ? temp->m_down : (face == 1 ? temp->m_left : (face == 2 ? temp->m_up : (face == 3 ? temp->m_right : nullptr)));
+
+			continue;
+		}
+	}
+
+	if (son != nullptr && father != nullptr)
+	{
+		son->m_parent = father;
+		if (son->GetState() == eNODE_STATE::END)
+		{
+			m_isSearching = false;
+			m_found = true;
+			CreateLinesToTarget();
+			return;
+		}
+		else
+		{
+			son->m_parentWeight = fatherWeight;
+			son->SetColor(sf::Color::Blue);
+		}
+	}
+	else
+	{
+		m_isSearching = false;
+		m_error = true;
+	}
+
+
+	/*for (std::list<std::list<Node>>::iterator iti = m_nodeGrid.begin(); iti != m_nodeGrid.end(); iti++)
+	{
+		for (std::list<Node>::iterator itj = iti->begin(); itj != iti->end(); itj++)
+		{
+			itj->m_searched = false;
+			itj->m_facesSeen = 0;
+		}
+	}/**/
+
+	for (int i = 0; i < m_nodeGrid.size(); i++)
+	{
+		for (int j = 0; j < m_nodeGrid[i].size(); j++)
+		{
+			m_nodeGrid[i][j].m_searched = false;
+			m_nodeGrid[i][j].m_facesSeen = 0;
+		}
 	}
 }
