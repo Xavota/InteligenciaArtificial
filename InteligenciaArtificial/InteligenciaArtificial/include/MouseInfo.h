@@ -18,6 +18,10 @@ public:
 	static void ChageNode(Node* newNode);
 	static void Update();
 
+	static void ChangeState(eTYPE);
+	static eTYPE GetState();
+
+
 	static eTYPE m_state;
 	static Node* m_currentNode;
 	static Node* m_lastNode;

@@ -3,6 +3,9 @@
 #include "imgui.h"
 #include "imgui-sfml.h"
 
+#include <windows.h>
+
+
 #include "Camera.h"
 
 #include "Grid.h"
@@ -55,11 +58,16 @@ private:
 	*/
 	void Destroy();
 
+	void OpenMapFile();
+	void SaveMapFile();
+
+public:
+	static void a(std::vector<void*> params){}
+
 private:
 	/* Utility */
 
 	sf::Vector2i m_windowSize;
-	sf::RenderWindow* m_window = nullptr;
 	sf::Time timePerFrame = sf::seconds(1.f / 60.f);
 
 	Camera m_camera;
@@ -71,6 +79,12 @@ private:
 
 	Grid m_grid;
 	float m_notFound = false;
+
+public:
+	sf::RenderWindow* m_window = nullptr;	
 };
 
 Game_FP* getGame_FP();
+
+std::string OpenFileGetName(HWND owner = NULL);
+std::string SaveFileGetName(HWND owner = NULL);

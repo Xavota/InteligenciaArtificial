@@ -186,6 +186,9 @@
     <ClCompile Include="src\MouseInfo.cpp">
       <Filter>Archivos de origen\Path finding</Filter>
     </ClCompile>
+    <ClCompile Include="src\MapEditorMenu.cpp">
+      <Filter>Archivos de origen\Path finding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Button.h">
@@ -282,6 +285,9 @@
       <Filter>Archivos de encabezado\Path finding</Filter>
     </ClInclude>
     <ClInclude Include="include\MouseInfo.h">
+      <Filter>Archivos de encabezado\Path finding</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MapEditorMenu.h">
       <Filter>Archivos de encabezado\Path finding</Filter>
     </ClInclude>
   </ItemGroup>

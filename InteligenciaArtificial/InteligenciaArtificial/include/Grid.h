@@ -3,6 +3,7 @@
 #include <list>
 #include <vector>
 #include "Node.h"
+#include "MouseInfo.h"
 
 enum class eSEARCH_TYPE
 {
@@ -30,6 +31,7 @@ public:
 	~Grid() = default;
 
 	void Init(sf::Vector2i tiles, sf::Vector2f size);
+	void Init(sf::Vector2i tiles, sf::Vector2f size, std::vector<std::vector<int>> grid, std::vector<std::vector<bool>> wallGrid);
 	bool Update(sf::RenderWindow* window);
 	void Render(sf::RenderWindow* window);
 	void Destroy();
@@ -40,14 +42,13 @@ public:
 	void BestFirstSearch();
 	void AStarSearch();
 
-	std::list<Node>* GetFromList(std::list<std::list<Node>>* list, int i);
-	Node* GetFromDoubleList(std::list<std::list<Node>>* list, int i, int j);
-
 	void RestartSearch();
 	void RestartAll();
 
 	void ShowLines(bool active);
 	void ShowWeights(bool active);
+
+	Node* GetNode(sf::Vector2i pos);
 
 
 private:
@@ -75,6 +76,7 @@ private:
 
 	//std::list<std::list<Node>> m_nodeGrid;
 	std::vector<std::vector<Node>> m_nodeGrid;
+	sf::Vector2f m_cellSize;
 
 	std::vector<sf::RectangleShape> m_linesToTarget;
 

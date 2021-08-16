@@ -2,6 +2,11 @@
 #include "MouseInfo.h"
 #include "Globals.h"
 
+#include "MapEditorMenu.h"
+
+#include <fstream>
+#include <sstream>
+
 void Game_FP::Run()
 {
 	Init();
@@ -13,6 +18,10 @@ void Game_FP::Run()
 		ProcessEvents();
 
 		timeSinceLastUpdate += clock.restart();
+		if (timeSinceLastUpdate.asMicroseconds() > 5000000)
+		{
+			timeSinceLastUpdate = sf::Time::Zero;
+		}
 		while (timeSinceLastUpdate >= timePerFrame)
 		{
 			timeSinceLastUpdate -= timePerFrame;
@@ -35,7 +44,7 @@ void Game_FP::Run()
 
 void Game_FP::Init()
 {
-	m_gridSize = { 51,51 };
+	m_gridSize = { 81,81 };
 	m_cellsSize = { 32.f,32.f };
 
 	/* Utility */
@@ -51,13 +60,16 @@ void Game_FP::Init()
 
 	/* Resources */
 	// Textures
-
+	gl::CTexture::AddTexture("Grass", "All.png");
+	gl::CTexture::AddTexture("Water", "All.png");
+	gl::CTexture::AddTexture("Sand", "All.png");
 
 	// Fonts
 	gl::CFont::AddFont("Numbers", "Cubest-Medium.otf");
 
 	// UI
 	gl::UI::Init(m_window);
+	//gl::UI::ChangeMenu(new MapEditorMenu());
 
 
 	/* Actors */
@@ -107,12 +119,21 @@ void Game_FP::Render()
 {
 	m_window->clear(); // Clean window
 
-	gl::UI::Render(m_window);
+
+	/* Everything */
 
 	m_grid.Render(m_window);
+
+
+	/* UI */
+
+	gl::UI::Render(m_window);
+
+
 	/* ImGui */
 
 	ImguiRender();
+
 
 	m_window->display(); // Swap chain
 }
@@ -149,6 +170,10 @@ void Game_FP::ImguiRender()
 		if (ImGui::Button("Restart"))
 		{
 			m_grid.RestartAll();
+		}
+		if (ImGui::Button("OpenMap"))
+		{
+			OpenMapFile();
 		}
 
 		static bool showLines = true;
@@ -187,6 +212,87 @@ void Game_FP::Destroy()
 	delete m_window;
 }
 
+void Game_FP::OpenMapFile()
+{
+	std::string mapName = OpenFileGetName();
+
+	ifstream mapFile(mapName);
+	if (!mapFile)
+	{
+		return;
+	}
+	
+
+	std::vector<std::vector<int>> grid;
+	std::vector<std::vector<bool>> wallGrid;
+
+	bool readingGrid = true;
+
+
+	while (!mapFile.eof())
+	{
+		std::string line;
+		getline(mapFile, line);
+
+		std::stringstream ss(line);
+		line = "";
+		ss >> line;
+
+		if (line == "@Size")
+		{
+			int sizeX = 0;
+			int sizeY = 0;
+
+			ss >> sizeX;
+			ss >> sizeY;
+			m_gridSize = {sizeX, sizeY};
+		}
+		else if (line == "@Grid")
+		{
+			readingGrid = true;
+		}
+		else if (line == "@Walls")
+		{
+			readingGrid = false;
+		}
+		else
+		{
+			if (readingGrid)
+			{
+				grid.push_back(std::vector<int>());
+				int number = atoi(line.c_str());
+				grid[grid.size() - 1].push_back(number);
+
+				while (!ss.eof())
+				{
+					ss >> number;
+					grid[grid.size() - 1].push_back(number);
+				}
+			}
+			else
+			{
+				wallGrid.push_back(std::vector<bool>());
+				int number = atoi(line.c_str());
+				wallGrid[wallGrid.size() - 1].push_back(number == 0 ? false : true);
+
+				while (!ss.eof())
+				{
+					ss >> number;
+					wallGrid[wallGrid.size() - 1].push_back(number == 0 ? false : true);
+				}
+			}
+		}
+	}
+
+	m_grid.Init(m_gridSize, m_cellsSize, grid, wallGrid);
+
+}
+
+void Game_FP::SaveMapFile()
+{
+	std::string mapName = SaveFileGetName();
+}
+
 Game_FP* getGame_FP()
 {
 	static Game_FP* g = nullptr;
@@ -195,4 +301,56 @@ Game_FP* getGame_FP()
 		g = new Game_FP();
 	}
 	return g;
+}
+
+std::string OpenFileGetName(HWND owner)
+{
+
+	// common dialog box structure, setting all fields to 0 is important
+	OPENFILENAME ofn = { 0 };
+	TCHAR szFile[260] = { 0 };
+
+	// Initialize remaining fields of OPENFILENAME structure
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = owner;
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrFilter = ("All\0*.*\0Text\0*.TXT\0");
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+	ofn.lpstrInitialDir = NULL;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn) == TRUE)
+	{
+		return szFile;
+	}
+	return "";
+}
+
+std::string SaveFileGetName(HWND owner)
+{
+
+	// common dialog box structure, setting all fields to 0 is important
+	OPENFILENAME ofn = { 0 };
+	TCHAR szFile[260] = { 0 };
+
+	// Initialize remaining fields of OPENFILENAME structure
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = owner;
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrFilter = ("All\0*.*\0Text\0*.TXT\0");
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+	ofn.lpstrInitialDir = NULL;
+	ofn.Flags = OFN_PATHMUSTEXIST;
+
+	if (GetSaveFileName(&ofn) == TRUE)
+	{
+		return szFile;
+	}
+	return "";
 }

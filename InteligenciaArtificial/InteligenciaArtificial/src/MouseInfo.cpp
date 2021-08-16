@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-eTYPE MouseInfo::m_state = eTYPE::NONE;
+eTYPE MouseInfo::m_state = eTYPE::WALL;
 Node* MouseInfo::m_currentNode = nullptr;
 Node* MouseInfo::m_lastNode = nullptr;
 
@@ -67,8 +67,14 @@ void MouseInfo::ChageNode(Node* newNode)
 
 void MouseInfo::Update()
 {
-	if (gl::Input::GetMouseButtonUp(0))
-	{
-		ChageNode(nullptr);
-	}
+}
+
+void MouseInfo::ChangeState(eTYPE state)
+{
+	m_state = state;
+}
+
+eTYPE MouseInfo::GetState()
+{
+	return m_state;
 }

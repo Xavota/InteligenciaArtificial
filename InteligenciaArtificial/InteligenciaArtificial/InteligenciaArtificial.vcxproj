@@ -50,6 +50,7 @@
     <ClCompile Include="src\Game_FP.cpp" />
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\MapEditorMenu.cpp" />
     <ClCompile Include="src\MenuManager.cpp" />
     <ClCompile Include="src\MouseInfo.cpp" />
     <ClCompile Include="src\Node.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="include\Globals.h" />
     <ClInclude Include="include\Grid.h" />
     <ClInclude Include="include\Input.h" />
+    <ClInclude Include="include\MapEditorMenu.h" />
     <ClInclude Include="include\MenuManager.h" />
     <ClInclude Include="include\MouseInfo.h" />
     <ClInclude Include="include\Node.h" />
@@ -104,7 +106,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>

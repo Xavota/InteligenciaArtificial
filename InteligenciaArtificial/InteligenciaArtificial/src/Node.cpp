@@ -8,6 +8,11 @@ Node::Node(sf::Vector2f pos, sf::Vector2f size)
 	Init(pos, size);
 }
 
+Node::Node(sf::Vector2f pos, sf::Vector2f size, eNODE_PATH_TYPE initState, bool wall)
+{
+	Init(pos, size,  initState, wall);
+}
+
 Node::~Node()
 {
 }
@@ -42,54 +47,61 @@ void Node::Init(sf::Vector2f pos, sf::Vector2f size)
 	m_shape.setOutlineThickness(2.0f);
 	m_shape.setOutlineColor(sf::Color::Black);
 
+	m_wall.setPosition(pos);
+	m_wall.setSize(size);
+	m_wall.setTexture(gl::CTexture::GetTexture("Wall"));
+	m_wall.setTextureRect({});
+
 	m_state = eNODE_STATE::BLANK;
+}
+
+void Node::Init(sf::Vector2f pos, sf::Vector2f size, eNODE_PATH_TYPE initState, bool wall)
+{
+	Init(pos, size);
+
+	m_pathType = initState;
+
+	if (m_pathType == eNODE_PATH_TYPE::GRASS)
+	{
+		m_shape.setTexture(gl::CTexture::GetTexture("Grass"));
+		m_shape.setTextureRect({800, 192, 32, 32});
+	}
+	else if (m_pathType == eNODE_PATH_TYPE::WATER)
+	{
+		m_shape.setTexture(gl::CTexture::GetTexture("Water"));
+		m_shape.setTextureRect({ 256, 192, 32, 32 });
+	}
+	else if (m_pathType == eNODE_PATH_TYPE::SAND)
+	{
+		m_shape.setTexture(gl::CTexture::GetTexture("Sand"));
+		m_shape.setTextureRect({ 0, 0, 32, 32 });
+	}
+
+	if (wall)
+		m_state = eNODE_STATE::WALL;
 }
 
 void Node::Update(sf::RenderWindow* window)
 {
 	m_shape.setFillColor(m_colors[m_state]);
-	sf::Vector2i mousePos = gl::Input::GetMousePositionInGame(window);
-	if (mousePos.x >= m_shape.getPosition().x
-		&& mousePos.x <= m_shape.getPosition().x + m_shape.getSize().x
-		&& mousePos.y >= m_shape.getPosition().y
-		&& mousePos.y <= m_shape.getPosition().y + m_shape.getSize().y)
-	{
-		m_shape.setFillColor(m_shape.getFillColor() - sf::Color(30, 30, 30, 0));
-		if (gl::Input::GetMouseButtonDown(0))
-		{
-			if (m_state == eNODE_STATE::BLANK)
-			{
-				MouseInfo::m_state = eTYPE::WALL;
-			}
-			else if (m_state == eNODE_STATE::WALL)
-			{
-				MouseInfo::m_state = eTYPE::BLANK;
-			}
-			else if (m_state == eNODE_STATE::START)
-			{
-				MouseInfo::m_state = eTYPE::START;
-			}
-			else if (m_state == eNODE_STATE::END)
-			{
-				MouseInfo::m_state = eTYPE::END;
-			}
-		}
-
-		if (gl::Input::GetMouseButton(0))
-		{
-			MouseInfo::ChageNode(this);
-		}
-	}/**/
 }
 
 void Node::Render(sf::RenderWindow* window)
 {
 	window->draw(m_shape);
+
+	if (m_state == eNODE_STATE::WALL)
+	{
+		window->draw(m_wall);
+	}
 }
 
 void Node::Destroy()
 {
 }
+
+
+/* Editor */
 
 void Node::ChangeState(eNODE_STATE state)
 {
@@ -119,6 +131,9 @@ eNODE_STATE Node::GetTempState()
 {
 	return m_tempSate;
 }
+
+
+/* Search */
 
 sf::Vector2f Node::GetPosition()
 {

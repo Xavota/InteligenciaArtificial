@@ -12,13 +12,24 @@ enum class eNODE_STATE
 	COUNT
 };
 
+enum class eNODE_PATH_TYPE
+{
+	NONE = -1,
+	GRASS,
+	WATER,
+	SAND,
+	COUNT
+};
+
 class Node
 {
 public:
 	Node(sf::Vector2f pos, sf::Vector2f size);
+	Node(sf::Vector2f pos, sf::Vector2f size, eNODE_PATH_TYPE initState, bool wall);
 	~Node();
 
 	void Init(sf::Vector2f pos, sf::Vector2f size);
+	void Init(sf::Vector2f pos, sf::Vector2f size, eNODE_PATH_TYPE initState, bool wall);
 	void Update(sf::RenderWindow* window);
 	void Render(sf::RenderWindow* window);
 	void Destroy();
@@ -61,9 +72,11 @@ public:
 
 private:
 	sf::RectangleShape m_shape;
+	sf::RectangleShape m_wall;
 
 	eNODE_STATE m_state = eNODE_STATE::NONE;
 	eNODE_STATE m_tempSate = eNODE_STATE::BLANK;
+	eNODE_PATH_TYPE m_pathType = eNODE_PATH_TYPE::NONE;
 
 	static std::map<eNODE_STATE, sf::Color> m_colors;
 };

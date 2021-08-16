@@ -14,21 +14,26 @@ Button::Button(void (*function)(std::vector<void*>), std::vector<void*> paramete
 		selectorTex, selectorSize, selectorAlign, selectorDistance);
 }
 
-Button::Button(void(*function)(std::vector<void*>), std::vector<void*> parameters, sf::RenderWindow* window, UIShape shape, string text, sf::Font* font, sf::Color textColor, unsigned int minSize, unsigned int maxSize, TextAlignment alignment)
+Button::Button(void(*function)(std::vector<void*>), std::vector<void*> parameters, sf::RenderWindow* window, 
+	UIShape shape, 
+	string text, sf::Font* font, sf::Color textColor, unsigned int minSize, unsigned int maxSize, TextAlignment alignment)
 {
 	Init(function, parameters, window,
 		shape,
 		text, font, textColor, minSize, maxSize, alignment);
 }
 
-Button::Button(void(*function)(std::vector<void*>), std::vector<void*> parameters, sf::RenderWindow* window, UIShape shape, sf::Texture* selectorTex, sf::Vector2f selectorSize, SelectorAligment selectorAlign, float selectorDistance)
+Button::Button(void(*function)(std::vector<void*>), std::vector<void*> parameters, sf::RenderWindow* window, 
+	UIShape shape, 
+	sf::Texture* selectorTex, sf::Vector2f selectorSize, SelectorAligment selectorAlign, float selectorDistance)
 {
 	Init(function, parameters, window,
 		shape,
 		selectorTex, selectorSize, selectorAlign, selectorDistance);
 }
 
-Button::Button(void(*function)(std::vector<void*>), std::vector<void*> parameters, sf::RenderWindow* window, UIShape shape)
+Button::Button(void(*function)(std::vector<void*>), std::vector<void*> parameters, sf::RenderWindow* window, 
+	UIShape shape)
 {
 	Init(function, parameters, window,
 		shape);
