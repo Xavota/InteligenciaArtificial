@@ -123,6 +123,38 @@ bool Grid::Update(sf::RenderWindow* window)
 	}
 	else if (!m_found && !m_error)
 	{
+		Node* under = GetNode(gl::Input::GetMousePositionInGame(window));
+		if (under != nullptr)
+		{
+			under->SetColor(sf::Color(100, 100, 100, 255));
+
+			if (MouseInfo::GetTileType() == eTILE_TYPE::WALL)
+			{
+				static bool pressed = false;
+				if (gl::Input::GetMouseButton(0))
+				{
+					if (!pressed)
+					{
+						if (under->GetState() != eNODE_STATE::WALL)
+						{
+							MouseInfo::ChangeState(eTYPE::BLANK);
+						}
+						else if (under->GetState() != eNODE_STATE::BLANK)
+						{
+							MouseInfo::ChangeState(eTYPE::WALL);
+						}
+						pressed = true;
+					}
+
+					under->ChangeState(MouseInfo::GetState() == eTYPE::WALL ? eNODE_STATE::BLANK : eNODE_STATE::WALL);
+				}
+				else
+				{
+					pressed = false;
+				}
+			}
+		}
+
 		for (int i = 0; i < m_nodeGrid.size(); i++)
 		{
 			for (int j = 0; j < m_nodeGrid[i].size(); j++)
@@ -130,17 +162,7 @@ bool Grid::Update(sf::RenderWindow* window)
 				m_nodeGrid[i][j].Update(window);
 			}
 		}/**/
-
-		Node* under = GetNode(gl::Input::GetMousePositionInGame(window));
-		if (under != nullptr)
-		{
-			under->SetColor(sf::Color(255, 255, 0, 255));
-			if (MouseInfo::GetState() == eTYPE::WALL && gl::Input::GetMouseButton(0))
-			{
-				under->ChangeState(eNODE_STATE::WALL);
-			}
-		}
-	}
+}
 	else if (m_error)
 	{
 		return false;
@@ -535,7 +557,10 @@ void Grid::AStarSearch()
 		{
 			for (int j = 0; j < m_nodeGrid[i].size(); j++)
 			{
-				m_nodeGrid[i][j].m_ucledianDistance = pow(pow(m_end->GetPosition().x - m_nodeGrid[i][j].GetPosition().x, 2) + pow(m_end->GetPosition().y - m_nodeGrid[i][j].GetPosition().y, 2), 0.5f);
+				m_nodeGrid[i][j].m_ucledianDistance = pow(
+				pow((m_end->GetPosition().x - m_nodeGrid[i][j].GetPosition().x) / m_cellSize.x, 2) 
+			  + pow((m_end->GetPosition().y - m_nodeGrid[i][j].GetPosition().y) / m_cellSize.y, 2), 
+			                                          0.5f);
 			}
 		}/**/
 
@@ -682,7 +707,7 @@ void Grid::DijstraSearchUpdate()
 				temp = temp->m_up;
 				temp->m_searched = true;
 				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
-					temp->SetColor(sf::Color(127, 127, 255, 255));
+					temp->SetColor(sf::Color(200, 200, 200, 255));
 				face = 0;
 				continue;
 			}
@@ -695,7 +720,7 @@ void Grid::DijstraSearchUpdate()
 				temp = temp->m_right;
 				temp->m_searched = true;
 				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
-					temp->SetColor(sf::Color(127, 127, 255, 255));
+					temp->SetColor(sf::Color(200, 200, 200, 255));
 				face = 1;
 				continue;
 			}
@@ -708,7 +733,7 @@ void Grid::DijstraSearchUpdate()
 				temp = temp->m_down;
 				temp->m_searched = true;
 				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
-					temp->SetColor(sf::Color(127, 127, 255, 255));
+					temp->SetColor(sf::Color(200, 200, 200, 255));
 				face = 2;
 				continue;
 			}
@@ -721,7 +746,7 @@ void Grid::DijstraSearchUpdate()
 				temp = temp->m_left;
 				temp->m_searched = true;
 				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
-					temp->SetColor(sf::Color(127, 127, 255, 255));
+					temp->SetColor(sf::Color(200, 200, 200, 255));
 				face = 3;
 				continue;
 			}
@@ -769,7 +794,7 @@ void Grid::DijstraSearchUpdate()
 		else
 		{
 			son->m_parentWeight = fatherWeight;
-			son->SetColor(sf::Color::Blue);
+			son->SetColor(sf::Color(150, 150, 150, 255));
 		}
 	}
 	else
@@ -874,7 +899,7 @@ void Grid::AStarSearchUpdate()
 				temp = temp->m_up;
 				temp->m_searched = true;
 				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
-					temp->SetColor(sf::Color(127, 127, 255, 255));
+					temp->SetColor(sf::Color(200, 200, 200, 255));
 				face = 0;
 				continue;
 			}
@@ -887,7 +912,7 @@ void Grid::AStarSearchUpdate()
 				temp = temp->m_right;
 				temp->m_searched = true;
 				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
-					temp->SetColor(sf::Color(127, 127, 255, 255));
+					temp->SetColor(sf::Color(200, 200, 200, 255));
 				face = 1;
 				continue;
 			}
@@ -900,7 +925,7 @@ void Grid::AStarSearchUpdate()
 				temp = temp->m_down;
 				temp->m_searched = true;
 				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
-					temp->SetColor(sf::Color(127, 127, 255, 255));
+					temp->SetColor(sf::Color(200, 200, 200, 255));
 				face = 2;
 				continue;
 			}
@@ -913,7 +938,7 @@ void Grid::AStarSearchUpdate()
 				temp = temp->m_left;
 				temp->m_searched = true;
 				if (temp->m_parent == nullptr && temp->GetState() != eNODE_STATE::END)
-					temp->SetColor(sf::Color(127, 127, 255, 255));
+					temp->SetColor(sf::Color(200, 200, 200, 255));
 				face = 3;
 				continue;
 			}
@@ -961,7 +986,7 @@ void Grid::AStarSearchUpdate()
 		else
 		{
 			son->m_parentWeight = fatherWeight;
-			son->SetColor(sf::Color::Blue);
+			son->SetColor(sf::Color(150, 150, 150, 255));
 		}
 	}
 	else

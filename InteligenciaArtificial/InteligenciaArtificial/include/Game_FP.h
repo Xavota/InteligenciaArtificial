@@ -62,7 +62,10 @@ private:
 	void SaveMapFile();
 
 public:
-	static void a(std::vector<void*> params){}
+	static void Grass(std::vector<void*> params);
+	static void Sand(std::vector<void*> params);
+	static void Water(std::vector<void*> params);
+	static void Wall(std::vector<void*> params);
 
 private:
 	/* Utility */

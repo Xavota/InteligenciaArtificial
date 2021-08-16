@@ -63,7 +63,7 @@ void Game::Init()
 
 
 	gl::UI::Init(m_window);
-	gl::UI::ChangeMenu(new Start_menu());
+	gl::UI::ChangeUI(new Start_menu());
 
 	/* Actors */
 
@@ -623,7 +623,7 @@ void Game::Start(std::vector<void*> instance)
 {
 	Game* g = (Game*)instance[0];
 	g->m_play = true;
-	gl::UI::ChangeMenu(nullptr);
+	gl::UI::ChangeUI(nullptr);
 }
 
 void Game::Quit(std::vector<void*> instance)

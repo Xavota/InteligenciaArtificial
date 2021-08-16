@@ -63,13 +63,14 @@ void Game_FP::Init()
 	gl::CTexture::AddTexture("Grass", "All.png");
 	gl::CTexture::AddTexture("Water", "All.png");
 	gl::CTexture::AddTexture("Sand", "All.png");
+	gl::CTexture::AddTexture("Wall", "Walls.png");
 
 	// Fonts
 	gl::CFont::AddFont("Numbers", "Cubest-Medium.otf");
 
 	// UI
 	gl::UI::Init(m_window);
-	//gl::UI::ChangeMenu(new MapEditorMenu());
+	gl::UI::ChangeUI(new MapEditorMenu());
 
 
 	/* Actors */
@@ -291,6 +292,26 @@ void Game_FP::OpenMapFile()
 void Game_FP::SaveMapFile()
 {
 	std::string mapName = SaveFileGetName();
+}
+
+void Game_FP::Grass(std::vector<void*> params)
+{
+	Game_FP* g = (Game_FP*)params[0];
+}
+
+void Game_FP::Sand(std::vector<void*> params)
+{
+	Game_FP* g = (Game_FP*)params[0];	
+}
+
+void Game_FP::Water(std::vector<void*> params)
+{
+	Game_FP* g = (Game_FP*)params[0];	
+}
+
+void Game_FP::Wall(std::vector<void*> params)
+{
+	Game_FP* g = (Game_FP*)params[0];	
 }
 
 Game_FP* getGame_FP()

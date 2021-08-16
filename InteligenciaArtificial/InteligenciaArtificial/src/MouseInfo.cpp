@@ -4,6 +4,7 @@
 #include <string>
 
 eTYPE MouseInfo::m_state = eTYPE::WALL;
+eTILE_TYPE MouseInfo::m_tileType = eTILE_TYPE::WALL;
 Node* MouseInfo::m_currentNode = nullptr;
 Node* MouseInfo::m_lastNode = nullptr;
 
@@ -74,7 +75,17 @@ void MouseInfo::ChangeState(eTYPE state)
 	m_state = state;
 }
 
+void MouseInfo::ChangeTileType(eTILE_TYPE type)
+{
+	m_tileType = type;
+}
+
 eTYPE MouseInfo::GetState()
 {
 	return m_state;
+}
+
+eTILE_TYPE MouseInfo::GetTileType()
+{
+	return m_tileType;
 }

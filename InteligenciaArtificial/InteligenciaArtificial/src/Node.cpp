@@ -29,7 +29,7 @@ void Node::Init(sf::Vector2f pos, sf::Vector2f size)
 				m_colors[(eNODE_STATE)i] = sf::Color::White;
 				break;
 			case eNODE_STATE::WALL:
-				m_colors[(eNODE_STATE)i] = sf::Color(100, 100, 100);
+				m_colors[(eNODE_STATE)i] = sf::Color::White;
 				break;
 			case eNODE_STATE::START:
 				m_colors[(eNODE_STATE)i] = sf::Color::Red;
@@ -50,7 +50,7 @@ void Node::Init(sf::Vector2f pos, sf::Vector2f size)
 	m_wall.setPosition(pos);
 	m_wall.setSize(size);
 	m_wall.setTexture(gl::CTexture::GetTexture("Wall"));
-	m_wall.setTextureRect({});
+	m_wall.setTextureRect({352, 0, 32, 32});
 
 	m_state = eNODE_STATE::BLANK;
 }
@@ -155,14 +155,15 @@ void Node::SetParent(Node* parent)
 	m_parent = parent;
 	if (m_state != eNODE_STATE::END)
 	{
-		SetColor(sf::Color(127, 127, 255, 255));
+		//SetColor(sf::Color(127, 127, 255, 255));
+		SetColor(sf::Color(200, 200, 200, 255));
 	}
 }
 
 void Node::Searched()
 {
 	m_searched = true;
-	SetColor(sf::Color(0, 0, 255, 255));
+	SetColor(sf::Color(150, 150, 150, 255));
 }
 
 void Node::RestartSearch()

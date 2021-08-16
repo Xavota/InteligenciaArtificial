@@ -11,6 +11,11 @@ UIShape::UIShape(sf::FloatRect shapeTransform, sf::Texture* shapeTex)
 	Init(shapeTransform, shapeTex);
 }
 
+UIShape::UIShape(sf::FloatRect shapeTransform, sf::Texture* shapeTex, sf::IntRect textureRect)
+{
+	Init(shapeTransform, shapeTex, textureRect);
+}
+
 UIShape::UIShape(sf::FloatRect shapeTransform, sf::Color fillColor, sf::Color outlineColor, float outlineTickness)
 {
 	Init(shapeTransform, fillColor, outlineColor, outlineTickness);
@@ -30,6 +35,15 @@ void UIShape::Init(sf::FloatRect shapeTransform, sf::Texture* shapeTex)
 	m_position = { shapeTransform.left, shapeTransform.top };
 	m_shape.setPosition(m_position);
 	m_shape.setTexture(shapeTex);
+}
+
+void UIShape::Init(sf::FloatRect shapeTransform, sf::Texture* shapeTex, sf::IntRect textureRect)
+{
+	m_shape.setSize({ shapeTransform.width, shapeTransform.height });
+	m_position = { shapeTransform.left, shapeTransform.top };
+	m_shape.setPosition(m_position);
+	m_shape.setTexture(shapeTex);
+	m_shape.setTextureRect(textureRect);
 }
 
 void UIShape::Init(sf::FloatRect shapeTransform, sf::Color fillColor, sf::Color outlineColor, float outlineTickness)

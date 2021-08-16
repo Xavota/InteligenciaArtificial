@@ -7,10 +7,12 @@ class UIShape
 public:
 	UIShape();
 	UIShape(sf::FloatRect shapeTransform, sf::Texture* shapeTex);
+	UIShape(sf::FloatRect shapeTransform, sf::Texture* shapeTex, sf::IntRect textureRect);
 	UIShape(sf::FloatRect shapeTransform, sf::Color fillColor, sf::Color outlineColor, float outlineTickness);
 	~UIShape();
 	void Init();
 	void Init(sf::FloatRect shapeTransform, sf::Texture* shapeTex);
+	void Init(sf::FloatRect shapeTransform, sf::Texture* shapeTex, sf::IntRect textureRect);
 	void Init(sf::FloatRect shapeTransform, sf::Color fillColor, sf::Color outlineColor, float outlineTickness);
 	void Reposition(sf::Vector2f wordlPosition);
 	void Update();

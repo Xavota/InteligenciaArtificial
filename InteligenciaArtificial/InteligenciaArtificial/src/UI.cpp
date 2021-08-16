@@ -21,7 +21,7 @@ void UI::Update()
 	}
 }
 
-void UI::ChangeMenu(MenuManager* menu)
+void UI::ChangeUI(MenuManager* menu)
 {
 	if (m_menu != nullptr) {
 		m_menu->Destroy();

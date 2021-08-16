@@ -13,7 +13,7 @@ class UI
 public:
 	static void Init(sf::RenderWindow* window);
 	static void Update();
-	static void ChangeMenu(MenuManager* menu);
+	static void ChangeUI(MenuManager* menu);
 	static void Render(sf::RenderWindow* window);
 	static void Destroy();
 

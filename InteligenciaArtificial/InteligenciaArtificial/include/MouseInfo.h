@@ -9,6 +9,17 @@ enum class eTYPE
 	END,
 	COUNT
 };
+
+enum class eTILE_TYPE
+{
+	NONE = -1,
+	GRASS,
+	WATER,
+	SAND,
+	WALL,
+	COUNT
+};
+
 class MouseInfo
 {
 public:
@@ -18,11 +29,14 @@ public:
 	static void ChageNode(Node* newNode);
 	static void Update();
 
-	static void ChangeState(eTYPE);
+	static void ChangeState(eTYPE state);
+	static void ChangeTileType(eTILE_TYPE type);
 	static eTYPE GetState();
+	static eTILE_TYPE GetTileType();
 
 
 	static eTYPE m_state;
+	static eTILE_TYPE m_tileType;
 	static Node* m_currentNode;
 	static Node* m_lastNode;
 };

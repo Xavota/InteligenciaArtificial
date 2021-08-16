@@ -8,7 +8,7 @@ void MapEditorMenu::Init()
 	MenuManager::Init();
 
 	m_buttons.push_back(gl::Button(Game_FP::a, vector<void*>(), getGame_FP()->m_window,
-		gl::UIShape(sf::FloatRect(362, 437, 300, 50), sf::Color::Red, sf::Color::Green, 5.f)/*,
+		gl::UIShape(sf::FloatRect(362, 437, 128, 128), gl::CTexture::GetTexture("Grass"), { 800, 192, 32, 32 })/*,
 		gl::CTexture::GetTexture("Selector"), sf::Vector2f(50, 50), gl::Button::SelectorAligment::LEFT, 0/**/));
 }
 
