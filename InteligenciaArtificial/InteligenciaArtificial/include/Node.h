@@ -35,6 +35,7 @@ public:
 	void Destroy();
 
 	void ChangeState(eNODE_STATE state);
+	void ChangeTileType(eNODE_PATH_TYPE type);
 	void ChangeTempState(eNODE_STATE state);
 	eNODE_STATE GetState();
 	eNODE_STATE GetTempState();

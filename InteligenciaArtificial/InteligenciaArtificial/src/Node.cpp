@@ -117,6 +117,27 @@ void Node::ChangeState(eNODE_STATE state)
 	}
 }
 
+void Node::ChangeTileType(eNODE_PATH_TYPE type)
+{
+	m_pathType = type;
+
+	if (m_pathType == eNODE_PATH_TYPE::GRASS)
+	{
+		m_shape.setTexture(gl::CTexture::GetTexture("Grass"));
+		m_shape.setTextureRect({ 800, 192, 32, 32 });
+	}
+	else if (m_pathType == eNODE_PATH_TYPE::WATER)
+	{
+		m_shape.setTexture(gl::CTexture::GetTexture("Water"));
+		m_shape.setTextureRect({ 256, 192, 32, 32 });
+	}
+	else if (m_pathType == eNODE_PATH_TYPE::SAND)
+	{
+		m_shape.setTexture(gl::CTexture::GetTexture("Sand"));
+		m_shape.setTextureRect({ 0, 0, 32, 32 });
+	}
+}
+
 void Node::ChangeTempState(eNODE_STATE state)
 {
 	m_tempSate = state;

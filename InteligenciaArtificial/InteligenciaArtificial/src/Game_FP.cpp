@@ -297,21 +297,25 @@ void Game_FP::SaveMapFile()
 void Game_FP::Grass(std::vector<void*> params)
 {
 	Game_FP* g = (Game_FP*)params[0];
+	MouseInfo::ChangeTileType(eTILE_TYPE::GRASS);
 }
 
 void Game_FP::Sand(std::vector<void*> params)
 {
-	Game_FP* g = (Game_FP*)params[0];	
+	Game_FP* g = (Game_FP*)params[0];
+	MouseInfo::ChangeTileType(eTILE_TYPE::SAND);
 }
 
 void Game_FP::Water(std::vector<void*> params)
 {
-	Game_FP* g = (Game_FP*)params[0];	
+	Game_FP* g = (Game_FP*)params[0];
+	MouseInfo::ChangeTileType(eTILE_TYPE::WATER);
 }
 
 void Game_FP::Wall(std::vector<void*> params)
 {
-	Game_FP* g = (Game_FP*)params[0];	
+	Game_FP* g = (Game_FP*)params[0];
+	MouseInfo::ChangeTileType(eTILE_TYPE::WALL);
 }
 
 Game_FP* getGame_FP()

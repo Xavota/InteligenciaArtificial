@@ -153,6 +153,17 @@ bool Grid::Update(sf::RenderWindow* window)
 					pressed = false;
 				}
 			}
+			else
+			{
+				if (gl::Input::GetMouseButton(0))
+				{
+					under->ChangeTileType(
+						MouseInfo::GetTileType() == eTILE_TYPE::GRASS ? eNODE_PATH_TYPE::GRASS :
+					   (MouseInfo::GetTileType() == eTILE_TYPE::SAND ? eNODE_PATH_TYPE::SAND :
+					   (MouseInfo::GetTileType() == eTILE_TYPE::WATER ? eNODE_PATH_TYPE::WATER :
+						eNODE_PATH_TYPE::NONE)));
+				}
+			}
 		}
 
 		for (int i = 0; i < m_nodeGrid.size(); i++)

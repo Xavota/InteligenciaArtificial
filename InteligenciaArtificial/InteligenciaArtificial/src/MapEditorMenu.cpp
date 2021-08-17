@@ -7,9 +7,16 @@ void MapEditorMenu::Init()
 {
 	MenuManager::Init();
 
-	m_buttons.push_back(gl::Button(Game_FP::a, vector<void*>(), getGame_FP()->m_window,
-		gl::UIShape(sf::FloatRect(362, 437, 128, 128), gl::CTexture::GetTexture("Grass"), { 800, 192, 32, 32 })/*,
-		gl::CTexture::GetTexture("Selector"), sf::Vector2f(50, 50), gl::Button::SelectorAligment::LEFT, 0/**/));
+	Game_FP* g = getGame_FP();
+
+	m_buttons.push_back(gl::Button(Game_FP::Grass, vector<void*>({g}), getGame_FP()->m_window,
+		gl::UIShape(sf::FloatRect(128, 128, 128, 128), gl::CTexture::GetTexture("Grass"), { 800, 192, 32, 32 })));
+	m_buttons.push_back(gl::Button(Game_FP::Sand, vector<void*>({ g }), getGame_FP()->m_window,
+		gl::UIShape(sf::FloatRect(256, 128, 128, 128), gl::CTexture::GetTexture("Sand"), { 0, 0, 32, 32 })));
+	m_buttons.push_back(gl::Button(Game_FP::Water, vector<void*>({ g }), getGame_FP()->m_window,
+		gl::UIShape(sf::FloatRect(128, 256, 128, 128), gl::CTexture::GetTexture("Water"), { 256, 192, 32, 32 })));
+	m_buttons.push_back(gl::Button(Game_FP::Wall, vector<void*>({ g }), getGame_FP()->m_window,
+		gl::UIShape(sf::FloatRect(256, 256, 128, 128), gl::CTexture::GetTexture("Wall"), { 352, 0, 32, 32 })));
 }
 
 void MapEditorMenu::Reposition(sf::Vector2f wordlPosition)

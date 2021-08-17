@@ -16,7 +16,10 @@ void UI::Init(sf::RenderWindow* window)
 void UI::Update()
 {
 	if (m_menu != nullptr) {
-		m_menu->Reposition(m_window->getView().getCenter() + sf::Vector2f(-int(m_window->getSize().x / 2), -int(m_window->getSize().y / 2)));
+		sf::Vector2f size = m_window->getView().getSize();
+
+		m_menu->Reposition(m_window->getView().getCenter() + 
+		           sf::Vector2f(-int(m_window->getSize().x / 2), -int(m_window->getSize().y / 2)));     
 		m_menu->Update();
 	}
 }
