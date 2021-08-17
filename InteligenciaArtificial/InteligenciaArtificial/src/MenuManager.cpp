@@ -5,13 +5,13 @@ void MenuManager::Init()
 {
 }
 
-void MenuManager::Reposition(sf::Vector2f wordlPosition)
+void MenuManager::Reposition(sf::Vector2f wordlPosition, sf::Vector2f cameraSize)
 {
 	for (Button& button : m_buttons) {
-		button.SetPosition(wordlPosition);
+		button.SetPosition(wordlPosition, cameraSize);
 	}
 	for (UIShape& shape : m_shapes) {
-		shape.Reposition(wordlPosition);
+		shape.Reposition(wordlPosition, cameraSize);
 	}
 }
 

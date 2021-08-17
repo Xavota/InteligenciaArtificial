@@ -25,9 +25,9 @@ void Start_menu::Init()
 	m_buttons[0].SetIsSelected(true);
 }
 
-void Start_menu::Reposition(sf::Vector2f wordlPosition)
+void Start_menu::Reposition(sf::Vector2f wordlPosition, sf::Vector2f cameraSize)
 {
-	MenuManager::Reposition(wordlPosition);
+	MenuManager::Reposition(wordlPosition, cameraSize);
 }
 
 void Start_menu::Update()

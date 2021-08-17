@@ -14,13 +14,14 @@ public:
 	void Init(sf::FloatRect shapeTransform, sf::Texture* shapeTex);
 	void Init(sf::FloatRect shapeTransform, sf::Texture* shapeTex, sf::IntRect textureRect);
 	void Init(sf::FloatRect shapeTransform, sf::Color fillColor, sf::Color outlineColor, float outlineTickness);
-	void Reposition(sf::Vector2f wordlPosition);
+	void Reposition(sf::Vector2f wordlPosition, sf::Vector2f cameraSize);
 	void Update();
 	void SetFillColor(const sf::Color fillColor);
 	void SetOutlineColor(const sf::Color outlineColor);
 	void SetPosition(sf::Vector2f position);
 	void SetPositionRect(sf::Vector2f position);
 	void SetSize(sf::Vector2f size);
+	void SetScale(sf::Vector2f scale);
 	void SetTranform(sf::IntRect buttonTransform);
 	sf::Color GetFillColor() { return m_shape.getFillColor(); }
 	sf::Color GetOutlineColor() { return m_shape.getOutlineColor(); }

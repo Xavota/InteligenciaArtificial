@@ -38,6 +38,7 @@ public:
 	void ChangeTileType(eNODE_PATH_TYPE type);
 	void ChangeTempState(eNODE_STATE state);
 	eNODE_STATE GetState();
+	eNODE_PATH_TYPE GetTileType();
 	eNODE_STATE GetTempState();
 
 	sf::Vector2f GetPosition();

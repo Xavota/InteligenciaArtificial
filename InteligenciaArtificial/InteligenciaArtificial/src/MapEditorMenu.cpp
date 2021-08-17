@@ -19,9 +19,9 @@ void MapEditorMenu::Init()
 		gl::UIShape(sf::FloatRect(256, 256, 128, 128), gl::CTexture::GetTexture("Wall"), { 352, 0, 32, 32 })));
 }
 
-void MapEditorMenu::Reposition(sf::Vector2f wordlPosition)
+void MapEditorMenu::Reposition(sf::Vector2f wordlPosition, sf::Vector2f cameraSize)
 {
-	MenuManager::Reposition(wordlPosition);
+	MenuManager::Reposition(wordlPosition, cameraSize);
 }
 
 void MapEditorMenu::Update()

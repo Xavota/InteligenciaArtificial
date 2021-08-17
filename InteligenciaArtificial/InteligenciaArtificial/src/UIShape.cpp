@@ -56,9 +56,12 @@ void UIShape::Init(sf::FloatRect shapeTransform, sf::Color fillColor, sf::Color 
 	m_shape.setOutlineThickness(outlineTickness);
 }
 
-void UIShape::Reposition(sf::Vector2f wordlPosition)
+void UIShape::Reposition(sf::Vector2f wordlPosition, sf::Vector2f cameraSize)
 {
-	m_shape.setPosition(wordlPosition + m_position);
+	m_shape.setScale(cameraSize);
+	sf::Vector2f newPos = { cameraSize.x * m_position.x, cameraSize.y * m_position.y };
+	
+	m_shape.setPosition(wordlPosition + newPos);
 }
 
 void UIShape::Update()
@@ -77,7 +80,8 @@ void UIShape::SetOutlineColor(const sf::Color outlineColor)
 
 void UIShape::SetPosition(sf::Vector2f position)
 {
-	m_shape.setPosition(position + m_position);
+	sf::Vector2f newPos = position + m_position;
+	m_shape.setPosition(newPos);
 }
 
 void UIShape::SetPositionRect(sf::Vector2f position)
@@ -89,6 +93,11 @@ void UIShape::SetPositionRect(sf::Vector2f position)
 void UIShape::SetSize(sf::Vector2f size)
 {
 	m_shape.setSize(size);
+}
+
+void UIShape::SetScale(sf::Vector2f scale)
+{
+	m_shape.setScale(scale);
 }
 
 void UIShape::SetTranform(sf::IntRect buttonTransform)

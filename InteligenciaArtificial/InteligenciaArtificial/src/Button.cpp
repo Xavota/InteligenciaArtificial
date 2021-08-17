@@ -143,9 +143,9 @@ void Button::SetOutlineColor(const sf::Color outlineColor)
 	m_buttonShape.SetOutlineColor(outlineColor);
 }
 
-void Button::SetPosition(sf::Vector2f position)
+void Button::SetPosition(sf::Vector2f position, sf::Vector2f cameraSize)
 {
-	m_buttonShape.SetPosition(position);
+	m_buttonShape.Reposition(position, cameraSize);
 	AlignText(m_textAligment);
 	AlignSelector(m_selectorAligment, m_selectorDistance);
 }

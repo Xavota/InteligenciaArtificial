@@ -47,7 +47,7 @@ public:
 	bool Update();
 	void SetFillColor(const sf::Color fillColor);
 	void SetOutlineColor(const sf::Color outlineColor);
-	void SetPosition(sf::Vector2f position);
+	void SetPosition(sf::Vector2f position, sf::Vector2f cameraSize);
 	void SetSize(sf::Vector2f size);
 	void SetTranform(sf::IntRect buttonTransform);
 	void SetText(string text, sf::Font* font, sf::Color textColor, unsigned int minSize, unsigned int maxSize, TextAlignment alignment);

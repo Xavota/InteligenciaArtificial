@@ -75,9 +75,9 @@ void Grid::Init(sf::Vector2i tiles, sf::Vector2f size, std::vector<std::vector<i
 				Node* temp = &m_nodeGrid[i][j];
 				Node* temp2 = &m_nodeGrid[i - 1][j];
 				temp->m_left = temp2;
-				temp->m_leftWeight = weight;
+				temp->m_leftWeight = GetWeight(temp2->GetTileType());
 				temp2->m_right = temp;
-				temp2->m_rightWeight = weight;
+				temp2->m_rightWeight = GetWeight(temp->GetTileType());
 			}
 			if (j > 0)
 			{
@@ -85,9 +85,9 @@ void Grid::Init(sf::Vector2i tiles, sf::Vector2f size, std::vector<std::vector<i
 				Node* temp = &m_nodeGrid[i][j];
 				Node* temp2 = &m_nodeGrid[i][j - 1];
 				temp->m_up = temp2;
-				temp->m_upWeight = weight;
+				temp->m_upWeight = GetWeight(temp2->GetTileType());;
 				temp2->m_down = temp;
-				temp2->m_downWeight = weight;
+				temp2->m_downWeight = GetWeight(temp->GetTileType());;
 			}
 		}
 	}
@@ -162,6 +162,15 @@ bool Grid::Update(sf::RenderWindow* window)
 					   (MouseInfo::GetTileType() == eTILE_TYPE::SAND ? eNODE_PATH_TYPE::SAND :
 					   (MouseInfo::GetTileType() == eTILE_TYPE::WATER ? eNODE_PATH_TYPE::WATER :
 						eNODE_PATH_TYPE::NONE)));
+
+					if (under->m_up != nullptr)
+						under->m_up->m_downWeight = GetWeight(under->GetTileType());
+					if (under->m_right != nullptr)
+						under->m_right->m_leftWeight = GetWeight(under->GetTileType());
+					if (under->m_down != nullptr)
+						under->m_down->m_upWeight = GetWeight(under->GetTileType());
+					if (under->m_left != nullptr)
+						under->m_left->m_rightWeight = GetWeight(under->GetTileType());
 				}
 			}
 		}
@@ -1024,4 +1033,21 @@ void Grid::AStarSearchUpdate()
 			m_nodeGrid[i][j].m_facesSeen = 0;
 		}
 	}
+}
+
+float Grid::GetWeight(eNODE_PATH_TYPE type)
+{
+	if (type == eNODE_PATH_TYPE::GRASS)
+	{
+		return 1.0f;
+	}
+	else if (type == eNODE_PATH_TYPE::SAND)
+	{
+		return 2.0f;
+	}
+	else if (type == eNODE_PATH_TYPE::WATER)
+	{
+		return 3.0f;
+	}
+	return 1.0f;
 }

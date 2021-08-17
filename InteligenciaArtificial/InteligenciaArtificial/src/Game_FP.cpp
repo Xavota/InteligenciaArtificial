@@ -81,6 +81,7 @@ void Game_FP::Init()
 
 void Game_FP::Update()
 {
+
 	/* Utility */
 
 	m_camera.Update(m_window);

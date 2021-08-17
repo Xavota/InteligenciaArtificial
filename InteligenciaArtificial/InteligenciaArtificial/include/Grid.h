@@ -60,6 +60,8 @@ private:
 	void BestFirstSearchUpdate();
 	void AStarSearchUpdate();
 
+	float GetWeight(eNODE_PATH_TYPE type);
+
 private:
 	/* Search */
 	bool m_isSearching = false;

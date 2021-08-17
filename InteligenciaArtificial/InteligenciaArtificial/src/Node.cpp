@@ -148,6 +148,11 @@ eNODE_STATE Node::GetState()
 	return m_state;
 }
 
+eNODE_PATH_TYPE Node::GetTileType()
+{
+	return m_pathType;
+}
+
 eNODE_STATE Node::GetTempState()
 {
 	return m_tempSate;

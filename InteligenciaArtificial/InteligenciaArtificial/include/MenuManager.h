@@ -7,7 +7,7 @@ class MenuManager : public UI
 {
 public:
 	virtual void Init();
-	virtual void Reposition(sf::Vector2f wordlPosition);
+	virtual void Reposition(sf::Vector2f wordlPosition, sf::Vector2f cameraSize);
 	virtual void Update();
 	virtual void Render(sf::RenderWindow* window);
 	virtual void Destroy();
