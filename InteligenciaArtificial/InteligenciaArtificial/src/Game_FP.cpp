@@ -53,13 +53,13 @@ void Game_FP::Init()
 	m_window = new sf::RenderWindow(sf::VideoMode(m_windowSize.x, m_windowSize.y), "Path Finding");
 	ImGui::SFML::Init(*m_window);
 
-	//m_camera.Init(sf::FloatRect{ 0, 0,(float)m_windowSize.x,(float)m_windowSize.y }, 1.5f);
-	float size = m_gridSize.x * m_cellsSize.x > m_gridSize.y * m_cellsSize.y ? m_gridSize.x * m_cellsSize.x : m_gridSize.y * m_cellsSize.y;
-	m_camera.Init(sf::FloatRect{ 0, 0,(float)size,(float)size }, 1.5f);
+	m_camera.Init(sf::FloatRect{ 0, 0,(float)m_windowSize.x,(float)m_windowSize.y }, 1.5f);
 
 
 	/* Resources */
 	// Textures
+	gl::CTexture::AddTexture("Anim", "AnimacionesFindPath.png");
+
 	gl::CTexture::AddTexture("Grass", "All.png");
 	gl::CTexture::AddTexture("Water", "All.png");
 	gl::CTexture::AddTexture("Sand", "All.png");
@@ -74,9 +74,11 @@ void Game_FP::Init()
 
 
 	/* Actors */
+	m_stateMachine.Init();
+	m_animMachine.Init();
+	m_manager.Init(&m_stateMachine, &m_animMachine);
 
-	m_grid.Init(m_gridSize, m_cellsSize);
-
+	OpenMapFile("Map1.txt");
 }
 
 void Game_FP::Update()
@@ -93,6 +95,7 @@ void Game_FP::Update()
 	{
 		m_notFound = m_grid.Update(m_window);
 	}
+	m_manager.Update();
 }
 
 void Game_FP::ProcessEvents()
@@ -125,6 +128,8 @@ void Game_FP::Render()
 	/* Everything */
 
 	m_grid.Render(m_window);
+
+	m_manager.Render(m_window);
 
 
 	/* UI */
@@ -165,6 +170,12 @@ void Game_FP::ImguiRender()
 		{
 			m_grid.AStarSearch();
 		}
+		ImGui::Separator();
+		ImGui::Separator();
+		if (ImGui::Button("Remove Walls"))
+		{
+			m_grid.RemoveWalls();
+		}
 		if (ImGui::Button("Restart search"))
 		{
 			m_grid.RestartSearch();
@@ -173,9 +184,18 @@ void Game_FP::ImguiRender()
 		{
 			m_grid.RestartAll();
 		}
-		if (ImGui::Button("OpenMap"))
+	}
+
+	ImGui::End();
+	if (ImGui::Begin("Maping"))
+	{
+		if (ImGui::Button("Open Map"))
 		{
-			OpenMapFile();
+			OpenMapFile(OpenFileGetName());
+		}
+		if (ImGui::Button("Save Map"))
+		{
+			SaveMapFile(SaveFileGetName());
 		}
 
 		static bool showLines = true;
@@ -190,6 +210,7 @@ void Game_FP::ImguiRender()
 		}
 	}
 	ImGui::End();
+
 	if (!m_notFound)
 	{
 		if (ImGui::Begin("Error"))
@@ -209,15 +230,16 @@ void Game_FP::ImguiRender()
 
 void Game_FP::Destroy()
 {
+	m_manager.Destroy();
+	m_grid.Destroy();
+
 	ImGui::SFML::Shutdown();
 
 	delete m_window;
 }
 
-void Game_FP::OpenMapFile()
+void Game_FP::OpenMapFile(std::string mapName)
 {
-	std::string mapName = OpenFileGetName();
-
 	ifstream mapFile(mapName);
 	if (!mapFile)
 	{
@@ -286,13 +308,54 @@ void Game_FP::OpenMapFile()
 		}
 	}
 
-	m_grid.Init(m_gridSize, m_cellsSize, grid, wallGrid);
+	m_grid.Init(m_gridSize, m_cellsSize, grid, wallGrid, &m_manager);
+
+	float size = m_gridSize.x * m_cellsSize.x > m_gridSize.y * m_cellsSize.y ? 
+	             m_gridSize.x * m_cellsSize.x : m_gridSize.y * m_cellsSize.y;
+	m_camera.Init(sf::FloatRect{ 0, 0,(float)size,(float)size }, 1.5f);
 
 }
 
-void Game_FP::SaveMapFile()
+void Game_FP::SaveMapFile(std::string mapName)
 {
-	std::string mapName = SaveFileGetName();
+	std::ofstream file(mapName);
+	if (!file)
+	{
+		return;
+	}
+
+	std::vector<std::vector<Node>>* nodeGrid = m_grid.GetNodeGrid();
+
+	file << "@Size ";
+	file << nodeGrid->size();
+	file << " ";
+	file << (*nodeGrid)[0].size();
+
+	file << "\n@Grid\n";
+	for (int i = 0; i < nodeGrid->size(); i++)
+	{
+		for (int j = 0; j < (*nodeGrid)[i].size(); j++)
+		{
+			file << ((*nodeGrid)[j][i].GetTileType() == eNODE_PATH_TYPE::GRASS ? 0 :
+					((*nodeGrid)[j][i].GetTileType() == eNODE_PATH_TYPE::SAND  ? 2 :
+					((*nodeGrid)[j][i].GetTileType() == eNODE_PATH_TYPE::WATER ? 1 : 3)));
+			file << " ";
+		}
+		file << "\n";
+	}
+
+	file << "\n@Walls\n";
+	for (int i = 0; i < nodeGrid->size(); i++)
+	{
+		for (int j = 0; j < (*nodeGrid)[i].size(); j++)
+		{
+			file << ((*nodeGrid)[j][i].GetState() == eNODE_STATE::WALL ? 1 : 0);
+			file << " ";
+		}
+		file << "\n";
+	}
+
+	file.close();
 }
 
 void Game_FP::Grass(std::vector<void*> params)

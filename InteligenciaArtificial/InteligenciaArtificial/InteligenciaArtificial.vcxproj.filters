@@ -70,6 +70,24 @@
     <Filter Include="Archivos de origen\Path finding">
       <UniqueIdentifier>{e50284c1-3fd2-4ab1-b8e6-98145e1c4783}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Path finding\StateMachines">
+      <UniqueIdentifier>{3fc45b4f-54ab-4012-b45d-59ea8e89a350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Path finding\StateMachines\AnimStates">
+      <UniqueIdentifier>{d7e80427-bf9b-40e0-a8b9-89021ac896f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Path finding\StateMachines\FunctionStates">
+      <UniqueIdentifier>{b744ef4c-0ac2-43b3-a028-d385663b6966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Path finding\StateMachines">
+      <UniqueIdentifier>{c702489a-7b12-4dcc-a9c3-c48ee18d6dd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Path finding\StateMachines\AnimStates">
+      <UniqueIdentifier>{9fde0785-1d34-4800-ba36-c135dd3d8555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Path finding\StateMachines\FunctionStates">
+      <UniqueIdentifier>{971016c9-cbf5-4772-ac0c-3232049274d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -189,6 +207,54 @@
     <ClCompile Include="src\MapEditorMenu.cpp">
       <Filter>Archivos de origen\Path finding</Filter>
     </ClCompile>
+    <ClCompile Include="src\PathFindingAgentManager.cpp">
+      <Filter>Archivos de origen\Path finding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingAnimState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingAnimMachine.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingStateMachine.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PathFindingAgent.cpp">
+      <Filter>Archivos de origen\Path finding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingArriveAnimState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingWaitingAnimState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingArriveState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingWaitingState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MathF.cpp">
+      <Filter>Archivos de origen\Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingFollowingUpAnimState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingFolowingState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\FunctionStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingFollowingDownAnimState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingFollowingLeftAnimState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Agent_PathFindingFollowingRightAnimState.cpp">
+      <Filter>Archivos de origen\Path finding\StateMachines\AnimStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Button.h">
@@ -289,6 +355,54 @@
     </ClInclude>
     <ClInclude Include="include\MapEditorMenu.h">
       <Filter>Archivos de encabezado\Path finding</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PathFindingAgentManager.h">
+      <Filter>Archivos de encabezado\Path finding</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingAnimState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingAnimMachine.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingStateMachine.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PathFindingAgent.h">
+      <Filter>Archivos de encabezado\Path finding</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingArriveAnimState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingWaitingAnimState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingArriveState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingFolowingState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingWaitingState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\FunctionStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MathF.h">
+      <Filter>Archivos de encabezado\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingFollowingUpAnimState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingFollowingDownAnimState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingFollowingLeftAnimState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\AnimStates</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Agent_PathFindingFollowingRightAnimState.h">
+      <Filter>Archivos de encabezado\Path finding\StateMachines\AnimStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

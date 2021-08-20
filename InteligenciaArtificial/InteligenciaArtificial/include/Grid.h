@@ -4,6 +4,7 @@
 #include <vector>
 #include "Node.h"
 #include "MouseInfo.h"
+#include "PathFindingAgentManager.h"
 
 enum class eSEARCH_TYPE
 {
@@ -31,7 +32,8 @@ public:
 	~Grid() = default;
 
 	void Init(sf::Vector2i tiles, sf::Vector2f size);
-	void Init(sf::Vector2i tiles, sf::Vector2f size, std::vector<std::vector<int>> grid, std::vector<std::vector<bool>> wallGrid);
+	void Init(sf::Vector2i tiles, sf::Vector2f size, std::vector<std::vector<int>> grid, 
+	          std::vector<std::vector<bool>> wallGrid, PathFindingAgentManager* manager);
 	bool Update(sf::RenderWindow* window);
 	void Render(sf::RenderWindow* window);
 	void Destroy();
@@ -42,6 +44,7 @@ public:
 	void BestFirstSearch();
 	void AStarSearch();
 
+	void RemoveWalls();
 	void RestartSearch();
 	void RestartAll();
 
@@ -50,6 +53,13 @@ public:
 
 	Node* GetNode(sf::Vector2i pos);
 
+
+	bool GetIsSearching();
+	bool GetHasFound();
+	bool GetGotError();
+
+	std::vector<Node*> GetPathToEnd();
+	std::vector<std::vector<Node>>* GetNodeGrid();
 
 private:
 	void CreateLinesToTarget();
@@ -81,7 +91,10 @@ private:
 	sf::Vector2f m_cellSize;
 
 	std::vector<sf::RectangleShape> m_linesToTarget;
+	std::vector<Node*> m_path;
 
 	bool m_showWeghts = false;
+
+	PathFindingAgentManager* m_manager;
 };
 

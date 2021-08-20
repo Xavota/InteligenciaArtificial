@@ -1,17 +1,14 @@
 #pragma once
+#include "Agent_PathFindingState.h"
 #include <vector>
-#include "Agent_State.h"
 
-class Agent;
+class PathFindingAgent;
 
-/**
-  * @brief		The functional state machine. Keeps track of all the states, updates them and change them if it need to.
-*/
-class Agent_StateMachine
+class Agent_PathFindingStateMachine
 {
 public:
-	Agent_StateMachine();
-	~Agent_StateMachine();
+	Agent_PathFindingStateMachine();
+	~Agent_PathFindingStateMachine();
 
 	/**
 	  * @brief      Initialize the State machine
@@ -23,7 +20,7 @@ public:
 	  * @param      agent: the agent it will be controling
 	  * @bug	    No know Bugs
 	*/
-	void Update(Agent* agent);
+	void Update(PathFindingAgent* agent);
 	/**
 	  * @brief      Frees the memory
 	  * @bug	    No know Bugs
@@ -31,7 +28,7 @@ public:
 	void Destroy();
 
 private:
-	std::vector<Agent_State*> m_states;
-	Agent_State* m_state = nullptr;
+	std::vector<Agent_PathFindingState*> m_states;
+	Agent_PathFindingState* m_state = nullptr;
 };
 

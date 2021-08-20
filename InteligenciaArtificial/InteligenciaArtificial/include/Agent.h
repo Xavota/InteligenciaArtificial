@@ -545,6 +545,8 @@ private:
 	friend class Agent_AnimRunningState;
 	friend class Agent_AnimWinState;
 
+	friend class Agent_PathFindingAnimState;
+
 	Agent_AnimMachine* m_animMachine;
 	eAGENT_ANIM_STATE_TYPE m_animStateType = eAGENT_ANIM_STATE_TYPE::NONE;
 

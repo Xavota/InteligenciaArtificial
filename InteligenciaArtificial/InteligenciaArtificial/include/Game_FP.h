@@ -9,13 +9,12 @@
 #include "Camera.h"
 
 #include "Grid.h"
+#include "PathFindingAgentManager.h"
+#include "Agent_PathFindingStateMachine.h"
+#include "Agent_PathFindingAnimMachine.h"
 
 /**
   * @brief		The main class. Tells everything to work and contains the main loop. UML:
-  * @startuml
-  * object hola
-  * hola : saludo = "Si"
-  * @enduml
 */
 class Game_FP
 {
@@ -58,14 +57,18 @@ private:
 	*/
 	void Destroy();
 
-	void OpenMapFile();
-	void SaveMapFile();
+	void OpenMapFile(std::string mapName);
+	void SaveMapFile(std::string mapName);
 
 public:
 	static void Grass(std::vector<void*> params);
 	static void Sand(std::vector<void*> params);
 	static void Water(std::vector<void*> params);
 	static void Wall(std::vector<void*> params);
+
+public:
+	Grid m_grid;
+	PathFindingAgentManager m_manager;
 
 private:
 	/* Utility */
@@ -77,11 +80,13 @@ private:
 
 	/* Behaviour */
 
+	Agent_PathFindingStateMachine m_stateMachine;
+	Agent_PathFindingAnimMachine m_animMachine;
+
 	sf::Vector2i m_gridSize;
 	sf::Vector2f m_cellsSize;
 
-	Grid m_grid;
-	float m_notFound = false;
+	bool m_notFound = false;
 
 public:
 	sf::RenderWindow* m_window = nullptr;	
