@@ -8,6 +8,8 @@ Grid::Grid(sf::Vector2i tiles, sf::Vector2f size)
 
 void Grid::Init(sf::Vector2i tiles, sf::Vector2f size)
 {
+	RestartAll();
+
 	m_cellSize = size;
 	m_nodeGrid.clear();
 	for (int i = 0; i < tiles.x; i++)
@@ -55,6 +57,8 @@ void Grid::Init(sf::Vector2i tiles, sf::Vector2f size)
 void Grid::Init(sf::Vector2i tiles, sf::Vector2f size, std::vector<std::vector<int>> grid, 
                 std::vector<std::vector<bool>> wallGrid, PathFindingAgentManager* manager)
 {
+	RestartAll();
+
 	m_manager = manager;
 
 
@@ -352,7 +356,10 @@ void Grid::RestartSearch()
 
 	m_linesToTarget.clear();
 
-	m_manager->SetAgentPosition(m_start->GetPosition());
+	if (m_manager != nullptr && m_start != nullptr)
+	{
+		m_manager->SetAgentPosition(m_start->GetPosition());
+	}
 }
 
 void Grid::RestartAll()
@@ -378,12 +385,17 @@ void Grid::RestartAll()
 	m_linesToTarget.clear();
 
 
-	m_nodeGrid[m_nodeGrid.size() / 8][m_nodeGrid[0].size() / 2].ChangeState(eNODE_STATE::START);
-	m_start = &m_nodeGrid[m_nodeGrid.size() / 8][m_nodeGrid[0].size() / 2];
-	m_nodeGrid[m_nodeGrid.size() * 7 / 8][m_nodeGrid[0].size() / 2].ChangeState(eNODE_STATE::END);
-	m_end = &m_nodeGrid[m_nodeGrid.size() * 7 / 8][m_nodeGrid[0].size() / 2];
-
-	m_manager->SetAgentPosition(m_start->GetPosition());
+	if (m_nodeGrid.size() > 1 && m_nodeGrid[0].size() > 1)
+	{
+		m_nodeGrid[m_nodeGrid.size() / 8][m_nodeGrid[0].size() / 2].ChangeState(eNODE_STATE::START);
+		m_start = &m_nodeGrid[m_nodeGrid.size() / 8][m_nodeGrid[0].size() / 2];
+		m_nodeGrid[m_nodeGrid.size() * 7 / 8][m_nodeGrid[0].size() / 2].ChangeState(eNODE_STATE::END);
+		m_end = &m_nodeGrid[m_nodeGrid.size() * 7 / 8][m_nodeGrid[0].size() / 2];
+	}
+	if (m_manager != nullptr && m_start != nullptr)
+	{
+		m_manager->SetAgentPosition(m_start->GetPosition());
+	}
 }
 
 Node* Grid::GetNode(sf::Vector2i pos)

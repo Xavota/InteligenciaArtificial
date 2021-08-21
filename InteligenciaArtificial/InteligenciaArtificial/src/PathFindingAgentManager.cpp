@@ -37,3 +37,8 @@ sf::Vector2f PathFindingAgentManager::GetAgentPosition()
 {
 	return m_agent.GetPosition();
 }
+
+void PathFindingAgentManager::SetAgentVelocity(float vel)
+{
+	m_agent.SetVelocity(vel);	
+}

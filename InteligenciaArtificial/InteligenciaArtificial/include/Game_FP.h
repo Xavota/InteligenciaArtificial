@@ -19,6 +19,10 @@
 class Game_FP
 {
 public:
+	/**
+	  * @brief      Starts the MainLoop of the game
+	  * @bug	    No know Bugs
+	*/
 	void Run();
 
 	Game_FP() = default;
@@ -57,13 +61,47 @@ private:
 	*/
 	void Destroy();
 
+	/**
+	  * @brief      Open a file that contains info of a map
+	  * @param      mapName: the directory and name of the map
+	  * @bug	    No know Bugs
+	*/
 	void OpenMapFile(std::string mapName);
+	/**
+	  * @brief      Save a file that contains info of a map
+	  * @param      mapName: the directory and name of the map
+	  * @bug	    No know Bugs
+	*/
 	void SaveMapFile(std::string mapName);
 
 public:
+	/**
+	  * @brief      Changes the MouseInfo state to Grass, for the grid to know its gonna place a 
+	  *             grass block
+	  * @param      params: the parameters of the function (in this case, doesn't needed)
+	  * @bug	    No know Bugs
+	*/
 	static void Grass(std::vector<void*> params);
+	/**
+	  * @brief      Changes the MouseInfo state to Sand, for the grid to know its gonna place a
+	  *             sand block
+	  * @param      params: the parameters of the function (in this case, doesn't needed)
+	  * @bug	    No know Bugs
+	*/
 	static void Sand(std::vector<void*> params);
+	/**
+	  * @brief      Changes the MouseInfo state to Water, for the grid to know its gonna place a
+	  *             water block
+	  * @param      params: the parameters of the function (in this case, doesn't needed)
+	  * @bug	    No know Bugs
+	*/
 	static void Water(std::vector<void*> params);
+	/**
+	  * @brief      Changes the MouseInfo state to Wall, for the grid to know its gonna place or
+	  *             remove walls.
+	  * @param      params: the parameters of the function (in this case, doesn't needed)
+	  * @bug	    No know Bugs
+	*/
 	static void Wall(std::vector<void*> params);
 
 public:

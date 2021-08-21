@@ -185,8 +185,8 @@ void Game_FP::ImguiRender()
 			m_grid.RestartAll();
 		}
 	}
-
 	ImGui::End();
+
 	if (ImGui::Begin("Maping"))
 	{
 		if (ImGui::Button("Open Map"))
@@ -208,6 +208,13 @@ void Game_FP::ImguiRender()
 		{
 			m_grid.ShowWeights(showWeights);
 		}
+	}
+	ImGui::End();
+	if (ImGui::Begin("Data"))
+	{
+		static int vel = 100;
+		ImGui::DragInt("Velocity", &vel, 1, 50, 200);
+		m_manager.SetAgentVelocity(vel);
 	}
 	ImGui::End();
 

@@ -152,3 +152,8 @@ void PathFindingAgent::CanMove(bool can)
 {
 	m_canMove = can ? 1 : 0;
 }
+
+void PathFindingAgent::SetVelocity(float vel)
+{
+	m_force = vel;
+}
