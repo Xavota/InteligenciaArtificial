@@ -156,24 +156,6 @@
     <ClCompile Include="src\Agent_AnimMachine.cpp">
       <Filter>Archivos de origen\Capture the flag\AgentStates</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui_demo.cpp">
-      <Filter>Archivos de origen\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui_draw.cpp">
-      <Filter>Archivos de origen\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui-SFML.cpp">
-      <Filter>Archivos de origen\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui.cpp">
-      <Filter>Archivos de origen\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master\imgui_tables.cpp">
-      <Filter>Archivos de origen\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\Externals\imgui-master-sfml\imgui_widgets.cpp">
-      <Filter>Archivos de origen\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="src\Camera.cpp">
       <Filter>Archivos de origen\Globals</Filter>
     </ClCompile>
@@ -254,6 +236,24 @@
     </ClCompile>
     <ClCompile Include="src\Agent_PathFindingFollowingRightAnimState.cpp">
       <Filter>Archivos de origen\Path finding\StateMachines\AnimStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\Externals\imgui-master-sfml\imgui.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\Externals\imgui-master-sfml\imgui_demo.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\Externals\imgui-master-sfml\imgui_draw.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\Externals\imgui-master-sfml\imgui_tables.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\Externals\imgui-master-sfml\imgui_widgets.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\Externals\imgui-master-sfml\imgui-SFML.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
