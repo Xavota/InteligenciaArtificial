@@ -253,9 +253,6 @@ sf::Vector2f Agent::Seek(sf::Vector2f target)
 {
 	sf::Vector2f desiredDirection = target - m_shape.getPosition();
 	sf::Vector2f steering = truncateVector(normalizeVector(desiredDirection) + m_orientation, vectorLength(desiredDirection));
-	/*m_forces.push_back(sf::RectangleShape());
-	placeLineFromTwoPoints(m_forces[m_forces.size()-1], m_shape.getPosition(), m_shape.getPosition() + steering);
-	m_forces[m_forces.size() - 1].setFillColor(sf::Color(255, 255, 125));/**/
 	return steering;
 }
 
